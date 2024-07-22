@@ -3,7 +3,7 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: calc(100% - 180px);
     height: 80px;
     background: #24292D;
     color: #828690;
@@ -12,6 +12,9 @@ header{
     
     z-index: 100;
 
+    position: fixed;
+    right: 0;
+    top: 0;
     .text_logo{
         width: 25%;
         h1{
@@ -34,7 +37,7 @@ header{
                 position: absolute;
                 z-index: 1;
                 font-size: 1.5rem;
-                margin: .8% 0 0 1%;
+                margin: 1% 0 0 1%;
             }
             input{
                 position: relative;
@@ -72,6 +75,7 @@ header{
                 font-size: 1.5rem;
                 position: relative;
                 z-index: 0;
+                cursor: pointer;
             }
         }
     
@@ -95,6 +99,7 @@ header{
                 width: 100%;
                 height: auto;
                 padding: 2% 2% 0 10%;
+                cursor: pointer;
                 h1{
                     font-size: 1rem;
                     color: white;

@@ -2,6 +2,7 @@ import React from 'react'
 import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
 import Dashboard from '../Page/Dashboard/Dashboard'
+import Profil from '../Profil/Profil'
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
                 </div>
                 <div className="content">
                     <Dashboard/>
+                    {/* <Profil/> */}
                 </div>
             </div>
         </div>

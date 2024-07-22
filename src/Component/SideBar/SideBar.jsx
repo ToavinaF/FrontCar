@@ -24,8 +24,9 @@ const SideBar = () => {
                         <MdDashboard className='icon-dash' />
                         <p>Dashboard</p>
                     </div>
+                    
                     <div className='li-dash'>
-                        <FaCableCar className='icon-dash' />
+                        <FaCableCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)}/>
                         <p>
                             Car <FaChevronDown className={`down ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)} />
                         </p>
@@ -36,7 +37,7 @@ const SideBar = () => {
                     </div>
 
                     <div className='li-dash'>
-                        <FaUserLarge className='icon-dash' />
+                        <FaUserLarge className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)} />
                         <p>
                             User <FaChevronDown className={`down ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)} />
                         </p>
