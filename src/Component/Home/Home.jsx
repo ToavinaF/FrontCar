@@ -1,6 +1,7 @@
 import React from 'react'
 import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
+import Profil from '../Profil/Profil'
 
 const Home = () => {
     return (
@@ -11,7 +12,7 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
-                    <h1>Ato le miasa eh</h1>
+                    <Profil/>
                 </div>
             </div>
         </div>

@@ -1,0 +1,89 @@
+.Profil {
+    width: 100%;
+    height: auto;
+
+    .headprofil {
+        h1{
+            font-size: 1.5rem;
+        }
+        .content-profil {
+            margin: 4% 0 0 0;
+            padding: 1% 1% 1% 1%;
+            background: #2f363e;
+            box-shadow: 0 0 5px black;
+            border-radius: 10px;
+
+            .imagePdc {
+                padding: 1% 1% 1% 1%;
+
+                img {
+                    width: 100%;
+                    height: 350px;
+                    border-radius: 10px;
+                }
+            }
+
+            .prof-cont {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                padding: 2% 0 2% 0;
+
+                .image-text {
+                    width: 100%;
+                    height: auto;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 3%;
+
+                    img {
+                        width: 120px;
+                        height: 120Px;
+                        border-radius: 100%;
+                        margin: -8% 0 0 -25%;
+                    }
+
+
+                    .cont-span {
+                        h2 {
+                            font-size: 20px;
+                            margin: 0 0 10% 0;
+                        }
+
+                        h3 {
+                            color: #828690;
+                            margin: 0 0 5% 0;
+                        }
+
+                        p {
+                            color: #828690;
+                        }
+                    }
+                }
+
+                .three-point {
+                    width: 15%;
+                    height: auto;
+                    display: flex;
+                    justify-content: center;
+                    text-align: center;
+
+                    p {
+                        padding:0 10% 10% 10%;
+                        border-radius: 10px;
+                        background: rgba(255, 195, 139, 0.1);
+                        font-size:2rem;
+                        border: 1px solid rgba(255, 195, 139, 0.1);
+                        cursor: pointer;
+                    }
+
+                }
+            }
+        }
+    }
+}

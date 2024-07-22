@@ -24,6 +24,7 @@ const SideBar = () => {
                         <MdDashboard className='icon-dash' />
                         <p>Dashboard</p>
                     </div>
+                    
                     <div className='li-dash'>
                         <FaCableCar className='icon-dash' />
                         <p>
