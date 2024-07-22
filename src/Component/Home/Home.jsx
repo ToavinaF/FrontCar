@@ -1,6 +1,7 @@
 import React from 'react'
 import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
+import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
+                    <Profil/>
                     <h1>Ato le miasa eh</h1>
                     <AllUser/>
                 </div>

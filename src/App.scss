@@ -9,25 +9,19 @@
         flex-direction: row;
         justify-content: center;
         width: 100%;
-        // background: #24292D;
-        position: fixed;
-        top: 0;
-        z-index: 0;
+        background: #24292D;
     }
 
     .content{
-        width: 86.9%;
-        height: auto;
+        width: 87%;
+        height: 100%;
         background: #24292D;
-        /* background: white; */
         position: absolute;
         right: 0;
-        height: 600vh;
+        height: auto;
         color: white;
-        // text-align: center;
-        padding:2% 5% 0 5%;
-        margin: 6.5% 0 0 0;
-        // overflow-y: scroll;
+        padding:2% 5% 5% 5%;
+        margin: 80px 0 0 0;
         z-index: -1;
     }
 }
