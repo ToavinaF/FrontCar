@@ -1,0 +1,142 @@
+.block{
+    width: 111%;
+    height:600px;
+    margin-left: -6%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    .form{
+        width: 95%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        // border: solid 2px white;
+        background: #2f363e;
+        border-radius: 10px;
+        .parti-left{
+            width: 40%;
+            height: 90%;
+            // border: solid 2px white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            .image{
+                width: 40%;
+                height: 35%;
+                border-radius: 100%;
+                border: solid 2px white;
+                
+            }
+            .caracter{
+                width: 90%;
+                height: 20%;
+                // border: solid 2px white;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                padding-left: 20% ;
+                label{
+                    font-size: 1.2rem;
+                    color: #828685;
+                }
+                .input{
+                    width: 85%;
+                    height: 50%;
+                    border-radius: 10px;
+                    margin-top: 3%;
+                    background: #24292d;
+                    color: #60696d;
+                    font-size: 1rem;
+                    padding-left: 4%;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+        .parti-right{
+            width: 50%;
+            height: 90%;
+            // border: solid 2px white;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-end;
+            .caracter{
+                width: 49%;
+                height: 20%;
+                // border: solid 2px white;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                padding-left: 2% ;
+                label{
+                    font-size: 1.2rem;
+                    color: #828685;
+                }
+                .input{
+                    width: 85%;
+                    height: 50%;
+                    border-radius: 10px;
+                    margin-top: 3%;
+                    background: #24292d;
+                    color: #60696d;
+                    font-size: 1rem;
+                    padding-left: 4%;
+                    border: none;
+                }
+                .nbr{
+                    width: 40%;
+                }
+                
+            }
+            .apro{
+                width: 64%;
+                height: 35%;
+                // border: solid 2px white;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                padding-left: 2% ;
+                label{
+                    font-size: 1.2rem;
+                    color: #828685;
+                }
+                .desc{
+                    width: 85%;
+                    height: 80%;
+                    border-radius: 10px;
+                    margin-top: 3%;
+                    background: #24292d;
+                    color: #60696d;
+                    font-size: 1rem;
+                    padding-left: 4%;
+                    border: none;
+                }
+            }
+            .btn{
+                width: 25%;
+                height: 10%;
+                margin-bottom: 5%;
+                border-radius: 10px;
+                border: none;
+                background: #ffc107;
+                font-size: 1.2rem;
+                color: white;
+                font-weight: bold;
+                
+                &:hover{
+                    background: #60696d;
+                }
+            }
+            
+        }
+    }
+}

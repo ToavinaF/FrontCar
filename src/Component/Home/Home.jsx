@@ -1,7 +1,8 @@
 import React from 'react'
 import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
-
+import Addcar from '../AddCar/Addcar'
+import ListCar from '../listCar/listCar'
 const Home = () => {
     return (
         <div>
@@ -11,7 +12,8 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
-                    <h1>Ato le miasa eh</h1>
+                     <Addcar/>
+                     {/* <ListCar/> */}
                 </div>
             </div>
         </div>
