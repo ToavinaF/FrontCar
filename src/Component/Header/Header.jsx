@@ -1,8 +1,8 @@
 import React from 'react'
 import './Header.scss'
-import { FaInbox } from "react-icons/fa";
+import { FaInbox, FaCommentDots } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
-import Image from "../../assets/46.jpg";
+import Image from "../../assets/images/profile-02.png";
 const Header = () => {
     return (
         <header>
@@ -17,7 +17,7 @@ const Header = () => {
                 <div className="icon_head">
                     <div>
                         <span>5</span>
-                        <FaInbox className='icon' />
+                        <FaCommentDots className='icon' />
                     </div>
                     <div>
                         <span>2</span>

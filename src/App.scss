@@ -1,9 +1,29 @@
+:root{
+    --color-principal: #ffc107;
+    --blanch: #fff;
+    --body-bg: #2f363e;
+    --color-hover: rgba(98, 98, 5, 0.402);
+    --color-text:  #1a1b1d;
+    --body-color: #23282c;
+    --card-01-bg: linear-gradient(#dfdfdf, #424141);
+    --card-02-bg: linear-gradient(#3f3f3f, #878383);
+    --card-03-bg: #484754;
+    --card-04-bg: #3f3f3f;
+    --heading-color: #fff;
+    --header-color:#2f363e;
+    --small-text-color: #808191;
+    --recommend-car01-bg: #e1dfa4;
+    --recommend-car02-bg: #e3ecf1;
+    --recommend-car03-bg: #f4e3e5;
+
+}
 .content-fluid{
     width: 100%;
     height: auto;
     color: white;
     position: relative;
-
+    
+    
     .head_content{
         display: flex;
         flex-direction: row;
@@ -26,7 +46,7 @@
         color: white;
         // text-align: center;
         padding:2% 5% 0 5%;
-        margin: 6.5% 0 0 0;
+        margin: 75px 0 0 0;
         // overflow-y: scroll;
         z-index: -1;
     }

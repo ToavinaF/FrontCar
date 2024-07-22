@@ -1,0 +1,79 @@
+@mixin taille($w,$h){
+    width: $w;
+    height: $h;
+}
+
+
+@mixin njrfont($fz,$fw){
+    font-size: $fz;
+    font-weight: $fw;
+    
+}
+
+@mixin njrflexbox($dp,$fd,$jc,$al:center){
+    display: $dp;
+    flex-direction: $fd;
+    justify-content: $jc;
+    align-items: $al;
+}
+
+@mixin navigateur(){
+    list-style: none;
+    text-decoration: none;
+}
+@mixin color-text{
+    color: white;
+}
+// mes animation-----------------
+@mixin hover-nav{ //effet scall
+    &:hover
+    {
+        background: rgba(246, 14, 14, 0.445);
+        transform: scale(1.1);
+        transition: 0.7s;
+        border-radius: 10px;
+        text-align: center;
+    }
+}
+//efffet des button---------------
+
+//fin animation
+
+@mixin before-effet-scal{
+    position: absolute;
+    content: "";
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,transparent,transparent,
+        rgba(243, 1, 1, 0.577),
+        transparent,transparent,transparent
+    );
+    transform: translatex(-80%);
+    transition: 0.5s;
+}
+
+@mixin njrposition($pos,$top,$left,$index){
+    position:$pos;
+    top: $top;
+    left: $left;
+    z-index: $index;
+}
+@mixin njrmargin($top,$left){
+    margin-top:$top;
+    margin-left:$left;
+
+}
+@mixin njrpadding($top,$left){
+    padding-top:$top;
+    padding-left:$left;
+
+}
+// effet
+@mixin scale($trans,$anim){
+    transform: $trans;
+    transition: $anim;
+}
