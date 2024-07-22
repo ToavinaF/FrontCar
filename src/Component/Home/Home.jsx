@@ -3,6 +3,8 @@ import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
 import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
+import AddUser from '../user/AddUser'
+import EditUser from '../user/EditUser'
 
 const Home = () => {
     return (
@@ -13,9 +15,12 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
-                    <Profil/>
+                
                     <h1>Ato le miasa eh</h1>
-                    <AllUser/>
+                    {/* <AllUser/> */}
+                    {/* <AddUser/> */}
+                    <EditUser/>
+
                 </div>
             </div>
         </div>
