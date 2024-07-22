@@ -1,10 +1,82 @@
-.block{
-    width: 111%;
-    height:600px;
-    margin-left: -6%;
+.contenaire{
+    width: 105%;
+    height:auto;
+    margin-left: -1%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     // border: solid 2px white;
+    flex-wrap: wrap;
+    gap: 3%;
+    .ListBlock{
+        width: 28%;
+        height: 450px;
+        background: #2f363e;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 3%;
+      
+        .photoCar{
+            width: 90%;
+            height: 40%;
+            box-shadow: 0 0 1px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 110%;
+            }
+        }
+        .aprop{
+            width: 100%;
+            height: 15%;
+            // border: solid 2px white;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            .icon{
+                width: 20%;
+                height: 97%;
+                // border: solid 2px white;
+                border-radius: 100%;
+                background: #595233;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                .imgIcon{
+                    font-size: 1.2rem;
+                    color: #ffc107;
+                }
+                h3{
+                    color: beige;
+                    font-size: 1rem;
+                    font-weight: normal;
+                }
+            }
+            
+        }
+        .btn{
+            width: 45%;
+            height: 40px;
+            border: solid 1px;
+            border-color: #ffc107;
+            border-radius: 10px;
+            background: #2f363e;
+            color: white;
+            font-size: 1rem;
+            &:hover{
+                background: #ffc107;
+                transition: 0.2s;
+            }
+        }
+    }
 }

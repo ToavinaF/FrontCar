@@ -12,8 +12,8 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
-                     <Addcar/>
-                     {/* <ListCar/> */}
+                     {/* <Addcar/> */}
+                     <ListCar/>
                 </div>
             </div>
         </div>

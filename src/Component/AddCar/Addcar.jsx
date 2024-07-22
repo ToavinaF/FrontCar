@@ -16,6 +16,10 @@ const Addcar = () => {
                         <div className="caracter">
                         <label htmlFor="">Matricule du vehicule</label>
                             <input type="text" placeholder='Matricule du vehicule' className='input' />
+                        </div>
+                        <div className="caracter">
+                        <label htmlFor="">Type de transmission</label>
+                            <input type="text" placeholder='transmission' className='input' />
                         </div>                      
                     </div>
                     <div className="parti-right">

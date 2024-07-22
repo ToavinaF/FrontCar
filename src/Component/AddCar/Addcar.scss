@@ -1,7 +1,7 @@
 .block{
     width: 111%;
     height:600px;
-    margin-left: -6%;
+    margin-left: -4%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -131,9 +131,11 @@
                 font-size: 1.2rem;
                 color: white;
                 font-weight: bold;
+                transition: 0.2s;
                 
                 &:hover{
-                    background: #60696d;
+                    background: rgba(153, 146, 5, 0.715);
+                    transition: 0.2s;
                 }
             }
             
