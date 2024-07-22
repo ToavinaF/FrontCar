@@ -3,7 +3,7 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
+    width: calc(100% - 180px);
     height: 80px;
     background: #24292D;
     color: #828690;
