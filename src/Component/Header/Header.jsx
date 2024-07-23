@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Header.scss'
 import { FaInbox } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import Image from "../../assets/46.jpg";
+import { FaRegUser } from "react-icons/fa";
+import { CiLogout } from 'react-icons/ci';
 const Header = () => {
+    const [Active, setActive] = useState(null);
+
+    const handleClick = (index)=>{
+        setActive(Active === index ? null : index);
+    }
+
     return (
         <header>
             <div className="text_logo">
@@ -26,11 +34,19 @@ const Header = () => {
                 </div>
                 <div className="profil_show">
                     <img src={Image} alt="" />
-                    <div className="cont_prof">
+                    <div className="cont_prof"  onClick={()=>handleClick(0)}>
                         <h1>Jhon Doe</h1>
                         <p>Super Admin</p>
                     </div>
+                    <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
+                        <div className="menu">
+                            <li><FaRegUser className='icon'/> Profile</li>
+                            <li><CiLogout className='icon'/> Logout</li>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
 
         </header>

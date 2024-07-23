@@ -1,4 +1,4 @@
-header{
+header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -7,36 +7,41 @@ header{
     height: 80px;
     background: #24292D;
     color: #828690;
-    padding:2% 0 2% 0;
+    padding: 2% 0 2% 0;
     box-shadow: 0 0 5px 0 #828690;
     position: fixed;
     right: 0;
     top: 0;
-    .text_logo{
+
+    .text_logo {
         width: 25%;
-        h1{
+
+        h1 {
             color: white;
             text-align: center;
         }
     }
 
-    .left_cont{
+    .left_cont {
         width: 75%;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: right;
-        .search{
+
+        .search {
             width: 25%;
             height: auto;
-            margin:0 2% 0 2%;
-            .iconSearch{
+            margin: 0 2% 0 2%;
+
+            .iconSearch {
                 position: absolute;
                 z-index: 1;
                 font-size: 1.5rem;
                 margin: 1% 0 0 1%;
             }
-            input{
+
+            input {
                 position: relative;
                 z-index: 0;
                 width: 140%;
@@ -45,12 +50,13 @@ header{
                 border: none;
                 background: #171a1d;
                 color: white;
-                padding:0 5% 0 30%;
+                padding: 0 5% 0 30%;
                 outline: none;
                 font-weight: bold;
             }
         }
-        .icon_head{
+
+        .icon_head {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -58,25 +64,27 @@ header{
             text-align: center;
             margin: 1% 2% 0 10%;
             align-items: center;
-            span{
+
+            span {
                 background: #ff9900;
-                border-radius:100%;
-                padding:0px 5px 0px 5px;
+                border-radius: 100%;
+                padding: 0px 5px 0px 5px;
                 color: white;
                 font-weight: bold;
-                margin:-5px 0 0 15px;
+                margin: -5px 0 0 15px;
                 position: absolute;
                 z-index: 1;
             }
-            .icon{
+
+            .icon {
                 font-size: 1.5rem;
                 position: relative;
                 z-index: 0;
                 cursor: pointer;
             }
         }
-    
-        .profil_show{
+
+        .profil_show {
             width: 25%;
             height: auto;
             display: flex;
@@ -84,26 +92,80 @@ header{
             justify-content: center;
             gap: 5%;
             border-left: 2px solid #828690;
-            padding:0 2% 0 3%;
+            padding: 0 2% 0 3%;
             margin: 0 0 0 4%;
-            img{
+
+            img {
                 width: 40Px;
                 height: 40px;
                 border-radius: 10px;
             }
-    
-            .cont_prof{
+
+            .cont_prof {
                 width: 100%;
                 height: auto;
                 padding: 2% 2% 0 10%;
                 cursor: pointer;
-                h1{
+
+                h1 {
                     font-size: 1rem;
                     color: white;
                 }
-                p{
+
+                p {
                     font-size: .8rem;
                 }
+            }
+
+            .sub-menu {
+                position: absolute;
+                width: 200px;
+                height: auto;
+                padding: 0% 0 0% 0%;
+                background: #24292D;
+                margin: 6% 0 0 0;
+                box-shadow: 0 0 2px #828690;
+                border-radius: 10px;
+                overflow: hidden;
+                display: none;
+
+                &.active {
+                    transition: 1s;
+                    display: block;
+                }
+
+                .menu {
+                    color: white;
+                    text-align: left;
+
+                    li {
+                        list-style-type: none;
+                        margin: 0% 0 0% 0%;
+                        padding: 5% 0% 5% 10%;
+                        cursor: pointer;
+                        transition: .5s;
+                        font-weight: 600;
+                        font-size: 15px;
+
+                        .icon {
+                            font-size: 1.3rem;
+                            margin: 0 5% 0 2%;
+                            color: white;
+                        }
+
+                        &:hover {
+                            background: #828690;
+                            color: #ff9900;
+                            font-weight: 600;
+
+                            .icon {
+                                color: white;
+                            }
+                        }
+                    }
+                }
+
+
             }
         }
     }
