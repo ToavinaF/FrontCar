@@ -6,6 +6,7 @@ import Chart from './Chart/Chart';
 import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
+import Utilisateur from './Utilisateur/Utilisateur';
 
 const Dashboard = () => {
     return (
@@ -28,6 +29,7 @@ const Dashboard = () => {
             </div>
             <div className="recommend__car__wrapper">
                 <Car/>
+                <Utilisateur/>
             </div>
             
         </div>
