@@ -3,11 +3,11 @@ import './Header.scss'
 import { FaInbox, FaCommentDots } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import Image from "../../assets/images/profile-02.png";
-const Header = () => {
+const Header = ({activepage}) => {
     return (
         <header>
             <div className="text_logo">
-                <h1>Dashboard</h1>
+                <h1>{activepage}</h1>
             </div>
             <div className="left_cont">
                 <div className="search">

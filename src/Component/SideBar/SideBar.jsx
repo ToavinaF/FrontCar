@@ -4,8 +4,9 @@ import { IoCarSport } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { FaChevronDown } from 'react-icons/fa';
 import { FaCableCar, FaUserLarge } from "react-icons/fa6";
+import { NavLink } from 'react-router-dom';
 
-const SideBar = () => {
+const SideBar = ({ setActivePage }) => {
     const [activeDropdown, setActiveDropdown] = useState(null);
 
     const handleDropdownClick = (index) => {
@@ -20,32 +21,38 @@ const SideBar = () => {
 
             <div className="navlink">
                 <ul>
-                    <div className='li-dash'>
-                        <MdDashboard className='icon-dash' />
-                        <p>Dashboard</p>
-                    </div>
                     
-                    <div className='li-dash'>
-                        <FaCableCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)}/>
-                        <p>
-                            Car <FaChevronDown className={`down ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)} />
-                        </p>
-                        <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
-                            <li className='nav_link'><a href="" className='nav_item'>All Car</a></li>
-                            <li className='nav_link'><a href="" className='nav_item'>Add Car</a></li>
-                        </div>
-                    </div>
+                        <NavLink to='/dashboard' className='li-dash' onClick={() => setActivePage('Dashboard')}>
+                            <MdDashboard className='icon-dash' />
+                            <p>Dashboard</p>
+                        </NavLink>
+                    
 
-                    <div className='li-dash'>
-                        <FaUserLarge className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)} />
-                        <p>
-                            User <FaChevronDown className={`down ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)} />
-                        </p>
-                        <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
-                            <li className='nav_link'><a href="" className='nav_item'>All Users</a></li>
-                            <li className='nav_link'><a href="" className='nav_item'>Add User</a></li>
+                    <li className='li-dash'>
+                        <div onClick={() => handleDropdownClick(0)}>
+                            <FaCableCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} />
+                            <p>
+                                Car <FaChevronDown className={`down ${activeDropdown === 0 ? 'active' : ''}`} />
+                            </p>
                         </div>
-                    </div>
+                        <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
+                            <li className='nav_link'><NavLink to='/addCar' className='nav_item' onClick={() => setActivePage('All Car')}>All Car</NavLink></li>
+                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('Add Car')}>Add Car</a></li>
+                        </div>
+                    </li>
+
+                    <li className='li-dash'>
+                        <div onClick={() => handleDropdownClick(1)}>
+                            <FaUserLarge className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} />
+                            <p>
+                                User <FaChevronDown className={`down ${activeDropdown === 1 ? 'active' : ''}`} />
+                            </p>
+                        </div>
+                        <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
+                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('All Users')}>All Users</a></li>
+                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('Add User')}>Add User</a></li>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

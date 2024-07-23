@@ -11,31 +11,54 @@ import { MdLinearScale } from "react-icons/md";
 
 const Car = () => {
   return (
-    <div>
+    <>
       <div className='recommend__car-card'>
-          <div className='recommend__car-top'>
-            <h5><span><FaChartArea/></span></h5>
-          </div>
-          <div className='recommend__car-img'>
-            <img src={Cars}/>
-          </div>
-          <div className='recommend__car-bottom'>
-            <h4>Marque</h4>
-            
-            <div className='recommend__car-other'>
-              <div className='recommend__car-icons'>
-                <p>Matricule</p>
-                <p><IoMdSettings/></p>
-                <p><FaStopwatch/></p>
-                <p>Prix/jour</p>
-              </div>
-            </div>
-
-          </div>
-          
+        <div className='recommend__car-top'>
+          <h5><span><FaChartArea /></span></h5>
         </div>
-    </div>
-  
+        <div className='recommend__car-img'>
+          <img src={Cars} />
+        </div>
+        <div className='recommend__car-bottom'>
+          <h4>Marque</h4>
+
+          <div className='recommend__car-other'>
+            <div className='recommend__car-icons'>
+              <p>Matricule</p>
+              <p><IoMdSettings /></p>
+              <p><FaStopwatch /></p>
+              <p>Prix/jour</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div className='recommend__car-card'>
+        <div className='recommend__car-top'>
+          <h5><span><FaChartArea /></span></h5>
+        </div>
+        <div className='recommend__car-img'>
+          <img src={Cars2} />
+        </div>
+        <div className='recommend__car-bottom'>
+          <h4>Marque</h4>
+
+          <div className='recommend__car-other'>
+            <div className='recommend__car-icons'>
+              <p>Matricule</p>
+              <p><IoMdSettings /></p>
+              <p><FaStopwatch /></p>
+              <p>Prix/jour</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+   
+    </>
+
   )
 }
 

@@ -1,14 +1,13 @@
-import { useState } from 'react'
-import './App.scss'
-import Home from './Component/Home/Home'
+import React from 'react';
+import './App.scss';
+import Home from './Component/Home/Home';
 
 function App() {
-
   return (
-    <>
-      <Home/>
-    </>
-  )
+    <div className='App'>
+      <Home />
+    </div>
+  );
 }
 
-export default App
+export default App;

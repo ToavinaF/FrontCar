@@ -91,26 +91,33 @@
 .recommend__car{
     &__wrapper{
         display: grid;
-        grid-template-columns: repeat(3,1fr);
-        margin-top: 3rem;
+        grid-template-columns: repeat(2,1fr);
+        margin-top: 2rem;
         
         column-gap: 2rem;
-        
+        @include taille(100%, auto);
+        justify-content: space-around;      
     }
     &-card{
         padding: 22px;
+        align-items: center;
         border-radius: 25px;
-        width: 300px;
+        width: 100%;
         cursor: pointer;
         &:nth-child(1){
-            background: var(--recommend-car01-bg);;
+            background: var(--recommend-car01-bg);
         }
         &:nth-child(2){
-            background: var(--recommend-car02-bg);;
+            background: var(--recommend-car02-bg);
         }
         &:nth-child(3){
-            background: var(--recommend-car03-bg);;
+            background: var(--recommend-car03-bg);
         }
+    }
+    &-img img{
+        object-fit: cover;
+        width: 35rem;
+        padding: 20px;
     }
     &-top h5{
         display: flex;
