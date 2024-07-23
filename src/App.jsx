@@ -4,12 +4,11 @@ import Home from './Component/Home/Home'
 import Login from './Component/Login/Login'
 
 function App() {
-
   return (
-    <>
-      <Home/>
-    </>
+    <div className='App'>
+      <Home />
+    </div>
   )
 }
 
-export default App
+export default App;

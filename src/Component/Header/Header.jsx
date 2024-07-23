@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './Header.scss'
-import { FaInbox } from "react-icons/fa";
+import { FaInbox, FaCommentDots } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import Image from "../../assets/46.jpg";
 import { FaRegUser } from "react-icons/fa";
 import { CiLogout } from 'react-icons/ci';
-const Header = () => {
+import { NavLink } from 'react-router-dom';
+const Header = ({activepage}) => {
     const [Active, setActive] = useState(null);
 
     const handleClick = (index)=>{
@@ -15,7 +16,7 @@ const Header = () => {
     return (
         <header>
             <div className="text_logo">
-                <h1>Dashboard</h1>
+                <h1>{activepage}</h1>
             </div>
             <div className="left_cont">
                 <div className="search">
@@ -25,7 +26,7 @@ const Header = () => {
                 <div className="icon_head">
                     <div>
                         <span>5</span>
-                        <FaInbox className='icon' />
+                        <FaCommentDots className='icon' />
                     </div>
                     <div>
                         <span>2</span>
@@ -40,7 +41,7 @@ const Header = () => {
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
-                            <li><FaRegUser className='icon'/> Profile</li>
+                            <li><NavLink to={'/Profile'}><FaRegUser className='icon'/> Profile</NavLink></li>
                             <li><CiLogout className='icon'/> Logout</li>
                         </div>
                     </div>
