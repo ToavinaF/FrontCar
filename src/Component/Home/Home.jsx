@@ -17,7 +17,6 @@ const Home = () => {
                 </div>
                 <div className="content">
 
-                    <h1>Ato le miasa eh</h1>
                     <Routes>
                         <Route path="/" element={<AllUser />} />
                         <Route path="/editUser/:id" element={<EditUser />} />
