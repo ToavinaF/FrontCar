@@ -1,12 +1,13 @@
-.block{
+.block {
     width: 111%;
-    height:600px;
+    height: 600px;
     margin-left: -4%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    .form{
+
+    .form {
         width: 95%;
         height: 100%;
         display: flex;
@@ -16,7 +17,8 @@
         // border: solid 2px white;
         background: #2f363e;
         border-radius: 10px;
-        .parti-left{
+
+        .parti-left {
             width: 40%;
             height: 90%;
             // border: solid 2px white;
@@ -24,14 +26,34 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
-            .image{
+
+            .image {
                 width: 40%;
                 height: 35%;
                 border-radius: 100%;
-                border: solid 2px white;
-                
+                background-color: #8e8b8b;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+
+                img {
+                    width: 150%;
+                }
+
+                .cam {
+                    font-size: 8rem;
+                }
+                .put{
+                    display: none;
+                }
             }
-            .caracter{
+
+            .caracter {
                 width: 90%;
                 height: 20%;
                 // border: solid 2px white;
@@ -39,12 +61,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                padding-left: 20% ;
-                label{
+                padding-left: 20%;
+
+                label {
                     font-size: 1.2rem;
                     color: #828685;
                 }
-                .input{
+
+                .input {
                     width: 85%;
                     height: 50%;
                     border-radius: 10px;
@@ -58,7 +82,8 @@
                 }
             }
         }
-        .parti-right{
+
+        .parti-right {
             width: 50%;
             height: 90%;
             // border: solid 2px white;
@@ -67,7 +92,8 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             align-items: flex-end;
-            .caracter{
+
+            .caracter {
                 width: 49%;
                 height: 20%;
                 // border: solid 2px white;
@@ -75,12 +101,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                padding-left: 2% ;
-                label{
+                padding-left: 2%;
+
+                label {
                     font-size: 1.2rem;
                     color: #828685;
                 }
-                .input{
+
+                .input {
                     width: 85%;
                     height: 50%;
                     border-radius: 10px;
@@ -91,12 +119,14 @@
                     padding-left: 4%;
                     border: none;
                 }
-                .nbr{
+
+                .nbr {
                     width: 40%;
                 }
-                
+
             }
-            .apro{
+
+            .apro {
                 width: 64%;
                 height: 35%;
                 // border: solid 2px white;
@@ -104,12 +134,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                padding-left: 2% ;
-                label{
+                padding-left: 2%;
+
+                label {
                     font-size: 1.2rem;
                     color: #828685;
                 }
-                .desc{
+
+                .desc {
                     width: 85%;
                     height: 80%;
                     border-radius: 10px;
@@ -121,7 +153,8 @@
                     border: none;
                 }
             }
-            .btn{
+
+            .btn {
                 width: 25%;
                 height: 10%;
                 margin-bottom: 5%;
@@ -132,13 +165,109 @@
                 color: white;
                 font-weight: bold;
                 transition: 0.2s;
-                
-                &:hover{
+
+                &:hover {
                     background: rgba(153, 146, 5, 0.715);
                     transition: 0.2s;
                 }
             }
-            
+
         }
     }
+
+    .image-upload {
+        position: fixed;
+        width: 700px;
+        height: 400px;
+        top: 20%;
+        left: 30%;
+        transition: 1s;
+        background-color: #5c6064;
+        padding: 20px 20px 0 20px;
+        border-radius: 4px;
+        z-index: 1000;
+
+        .dropzone {
+            border: 2px dashed #515050;
+            height: 200px;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #b0b0b0;
+
+            p {
+                color: #60696d4e;
+            }
+
+            .plus {
+                font-size: 3rem;
+                color: #60696d4e;
+
+            }
+        }
+
+        .x {
+            font-size: 2rem;
+            color: #c9d0d3a3;
+            margin: -1% 0 3% 96%;
+            cursor: pointer;
+            
+        }
+        .barImg{
+            width: 100%;
+            height: 120px;
+            // border: solid 2px white;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items:center;
+            overflow:none;
+            
+            .partImg{
+                width: 18%;
+                height: 92%;
+                // border: solid 2px white;
+                // box-shadow: 0 0 2px 0;
+                margin-left: 5px;
+                margin-top: 2px;
+                border-radius: 10px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                .image-container{
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    img{
+                        width: 120%;
+                        height: 100%;
+                    }
+                    .cach{
+                        width: 100%;
+                        height: 100%;
+                        background: #24292da5;
+                        position: absolute;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .check{
+                            font-size: 3rem;
+                            color: #a7a8a9;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+
 }

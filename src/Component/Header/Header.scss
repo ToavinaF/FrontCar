@@ -3,12 +3,15 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
+    width: calc(100% - 180px);
     height: 80px;
     background: #24292D;
     color: #828690;
-    padding:2% 0 2% 0;
+    padding:1% 0 1% 0;
     box-shadow: 0 0 5px 0 #828690;
+    
+    z-index: 100;
+
     position: fixed;
     right: 0;
     top: 0;
