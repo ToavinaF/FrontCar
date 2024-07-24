@@ -37,6 +37,9 @@ $input-focus-border-color: $primary-color;
             margin-bottom: 5px;
             font-weight: bold;
         }
+        p{
+            margin-left: 165px;
+        }
         .linkcar {
             color: black;
             width: 50%;
@@ -47,6 +50,31 @@ $input-focus-border-color: $primary-color;
             padding: 2% 0 2% 0;
             border-radius: 10px;
             margin: 4% 0 0 0;
+        }
+        .photo-label {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .icon {
+            font-size: 10rem; // Adjust size as needed
+            color: #007bff; // Adjust color as needed
+            margin-left: 130px;
+        }
+        .imgdiv{
+            border-radius: 50px;
+        }
+        .image-preview {
+            margin-top: -200px;
+            margin-left: 120px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 90px;
+            width: 170px;
+            height: 170px;
+        }
+        .form-input{
+            display: none;
         }
 
         .form-control {

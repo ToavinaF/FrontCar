@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import axios from "axios";
-import "./AllUser.scss";
-import Image from "../../assets/46.jpg";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './AllUser.scss';
 import { FaPhone, FaEnvelope, FaEdit } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const AllUser = () => {
-    // Exemples d'utilisateurs
-    const [users] = useState([
-        { id: 1, name: 'John Doe', job: 'Developer', role: 'Admin', contact: '123456789', email: 'john@example.com', image: Image },
-        { id: 2, name: 'Jane Smith', job: 'Designer', role: 'Editor', contact: '987654321', email: 'jane@example.com', image: Image },
-        { id: 3, name: 'Alice Johnson', job: 'Manager', role: 'HR', contact: '555555555', email: 'alice@example.com', image: Image },
-        { id: 4, name: 'Aloce Johnson', job: 'Manadger', role: 'HRe', contact: '5555e55555', email: 'alice@eexample.com', image: Image }
-   
-   
-    ]);
-
+    const [allUserData, setAllUserData] = useState([]);
     const [hoveredUserId, setHoveredUserId] = useState(null);
+     const navigate = useNavigate(); 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/users');
+            setAllUserData(response.data);
+        } catch (error) {
+            console.log('Vérifiez le code');
+        }
+    };
 
     const handleMouseEnter = (id) => {
         setHoveredUserId(id);
@@ -26,7 +31,7 @@ const AllUser = () => {
     };
 
     const handleEditClick = (id) => {
-        alert(`Edit Profile clicked for user ${id}`);
+        navigate(`/EditUser/${id}`); // Use navigate to redirect
     };
 
     return (
@@ -38,29 +43,29 @@ const AllUser = () => {
                 <button className="btn">Tous les utilisateurs</button>
             </div>
             <div className="user-cards">
-                {users.map((user) => (
-                    <div 
+                {allUserData.map((user) => (
+                    <div
                         key={user.id}
                         className="user-card"
                         onMouseEnter={() => handleMouseEnter(user.id)}
                         onMouseLeave={handleMouseLeave}
                     >
                         {hoveredUserId === user.id && (
-                            <div 
-                                className="edit-profile" 
+                            <div
+                                className="edit-profile"
                                 onClick={() => handleEditClick(user.id)}
                             >
-                                <FaEdit /> Edit user
+                                <FaEdit /> Edit Profile
                             </div>
                         )}
                         <div className="user-card-header">
                             <div className="user-info">
-                                <span>{user.name}</span>
-                                <p>Job: {user.job}</p>
-                                <p>Role: {user.role}</p>
+                                <span>{user.name} {user.firstname}</span>
+                                <p>Job: {user.Job}</p>
+                                <p> {user.Role}</p>
                             </div>
                             <div className="user-image">
-                                <img src={user.image} alt={user.name} />
+                                <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name} />
                             </div>
                         </div>
                         <div className="user-card-body">

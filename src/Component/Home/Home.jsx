@@ -5,6 +5,7 @@ import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
 import AddUser from '../user/AddUser'
 import EditUser from '../user/EditUser'
+import { Routes, Route } from 'react-router-dom'; // Importer Routes et Route
 
 const Home = () => {
     return (
@@ -15,12 +16,12 @@ const Home = () => {
                     <Header />
                 </div>
                 <div className="content">
-                
-                    <h1>Ato le miasa eh</h1>
-                    {/* <AllUser/> */}
-                    {/* <AddUser/> */}
-                    <EditUser/>
 
+                    <h1>Ato le miasa eh</h1>
+                    <Routes>
+                        <Route path="/" element={<AllUser />} />
+                        <Route path="/editUser/:id" element={<EditUser />} />
+                    </Routes>
                 </div>
             </div>
         </div>

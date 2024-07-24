@@ -1,55 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FaUser, FaEnvelope, FaPhone, FaFileImage } from "react-icons/fa";
-import { FaComputer } from "react-icons/fa6";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { FaUser, FaEnvelope, FaPhone, FaPlusCircle, FaTimes } from "react-icons/fa";
+import { useDropzone } from "react-dropzone";
 import "./EditUser.scss";
 
 const EditUser = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [image, setImage] = useState(null);
 
-    const onSubmit = async (data) => {
-        const formData = new FormData();
-        Object.keys(data).forEach(key => formData.append(key, data[key]));
-        if (image) {
-            formData.append("photo", image);
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/user/${id}`);
+                const data = response.data;
+                setValue("name", data.name);
+                setValue("firstname", data.firstname);
+                setValue("email", data.email);
+                setValue("Job", data.Job || "");
+                setValue("contact", data.contact || "");
+                setValue("Role", data.Role || "");
+                setImage(data.photo ? `http://127.0.0.1:8000/storage/${data.photo}` : null);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+        fetchUserData();
+    }, [id, setValue]);
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'image/*',
+        onDrop: (acceptedFiles) => {
+            setAcceptedFiles(acceptedFiles);
+            if (acceptedFiles.length > 0) {
+                setImage(URL.createObjectURL(acceptedFiles[0]));
+            }
         }
+    });
+
+    const modify = async (data) => {
+        const formData = new FormData();
+        if (acceptedFiles.length > 0) {
+            formData.append('photo', acceptedFiles[0]);
+        }
+        formData.append('name', data.name);
+        formData.append('firstname', data.firstname);
+        formData.append('email', data.email);
+        formData.append('password', data.password || ''); // Ajouter le mot de passe uniquement s'il est fourni
+        formData.append('Job', data.Job);
+        formData.append('contact', data.contact);
+        formData.append('Role', data.Role);
 
         try {
-            const response = await fetch("/api/users/update", {
-                method: "POST",
-                body: formData,
+            const response = await axios.post(`http://127.0.0.1:8000/api/updateUser/${id}`, formData, {
                 headers: {
-                    "Accept": "application/json"
+                    'Content-Type': 'multipart/form-data'
                 }
             });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok.");
-            }
-
-            const result = await response.json();
-            alert(result.message);
+            console.log('Réponse :', response.data);
+            navigate('/');
         } catch (error) {
-            console.error("Error:", error);
+            console.error('Erreur :', error.response ? error.response.data : error.message);
         }
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-        if (file) {
-            setImage(URL.createObjectURL(file));
-        } else {
-            setImage(null);
-        }
+    const handleRemoveImage = () => {
+        setImage(null);
+        setAcceptedFiles([]);
     };
 
     return (
         <div className="edit-user-form">
             <h2>Edit User</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
+            <form onSubmit={handleSubmit(modify)}>
+            <div className="form-group">
+                    <label htmlFor="photo" className="photo-label">
+                      <div {...getRootProps()} className="dropzone">    
+                        <FaPlusCircle className="icon" />
+                      
+                            <input {...getInputProps()} />
+                             {image && (
+                            <div className="image-preview-container">
+                                <img src={image} alt="Preview" className="image-preview" />
+                                <FaTimes className="remove-icon" onClick={handleRemoveImage} />
+                            </div>
+                        )}
+                        </div>
+                       
+                    </label>
+                </div>
+               
+               <div className="form-group">
                     <label htmlFor="name">
                         <FaUser /> Name:
                     </label>
@@ -86,25 +131,11 @@ const EditUser = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="password">
-                        <FaUser /> Password:
-                    </label>
+                    <label htmlFor="Job">Job:</label>
                     <input
-                        id="password"
-                        type="password"
-                        {...register("password", { required: "Password is required" })}
-                    />
-                    {errors.password && <p>{errors.password.message}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="job">
-                        <FaComputer/> Job:
-                    </label>
-                    <input
-                        id="job"
+                        id="Job"
                         type="text"
-                        {...register("job")}
+                        {...register("Job")}
                     />
                 </div>
 
@@ -119,35 +150,24 @@ const EditUser = () => {
                     />
                 </div>
 
+               
+
                 <div className="form-group">
-                    <label htmlFor="photo">
-                        <FaFileImage /> Photo:
-                    </label>
-                    <input
-                        id="photo"
-                        type="file"
-                        {...register("photo")}
-                        onChange={handleImageChange}
-                    />
-                    {image && <img src={image} alt="Preview" className="image-preview" />}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="role">
+                    <label htmlFor="Role">
                         <FaUser /> Role:
                     </label>
                     <select
-                        id="role"
-                        {...register("role", { required: "Role is required" })} 
-                        className="roleSA"
+                        id="Role"
+                        {...register("Role", { required: "Role is required" })}
+                        className="role-select"
                     >
-                        <option value="superAdmin">Super Admin</option>
+                        <option value="SuperAdmin">Super Admin</option>
                         <option value="Admin">Admin</option>
                     </select>
-                    {errors.role && <p>{errors.role.message}</p>}
+                    {errors.Role && <p>{errors.Role.message}</p>}
                 </div>
 
-                <button type="submit" className="btnSave">Save Changes</button>
-                <button type="submit" className="btnDelete">Delete</button>
+                <button type="submit" className="btn-save">Save Changes</button>
             </form>
         </div>
     );
