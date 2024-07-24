@@ -7,57 +7,49 @@ const Count = () => {
     <div className='dash__cards'>
          <div className='single__car'>
             <div className='card__content'>
-            <hr/>
                 <h4>Vehicule</h4>
                 <span>41</span>
             </div>
             <div className='card__icon'>
-            <hr/>
-                <FaCar color="#3888a7"/>
+                <FaCar color="rgb(130, 5, 161)"/>
             </div>
         </div>
         
         <div className='single__car'>
         
             <div className='card__content'>
-            <hr/>
 
                 <h4>Utilisateur</h4>
                 <span>41</span>
             </div>
             <span className='card__icon'>
-            <hr/>
 
-                <FaUsers color="var(--color-principal)"/>
+                <FaUsers color="rgb(255, 251, 0)"/>
             </span>
         </div>
 
         <div className='single__car'>
         
             <div className='card__content'>
-            <hr/>
 
                 <h4>Reservation</h4>
                 <span>41</span>
             </div>
             <span className='card__icon'>
-            <hr/>
 
-                <FiCalendar color="var(--color-principal)"/>
+                <FiCalendar color="rgb(255, 251, 0)"/>
             </span>
         </div>
 
         <div className='single__car'>
         
             <div className='card__content'>
-            <hr/>
 
                 <h4>Message</h4>
                 <span>41</span>
             </div>
             <span className='card__icon'>
-            <hr/>
-                <FaCommentDots color='#2884ff' />
+                <FaCommentDots color='rgb(0, 255, 213)' />
             </span>
         </div>
     </div>
