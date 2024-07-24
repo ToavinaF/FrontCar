@@ -1,11 +1,14 @@
 import React from 'react'
 import './Profil.scss'
 import Image from '../../assets/46.jpg'
+import { useTranslation } from 'react-i18next';
 const Profil = () => {
+    const { t } = useTranslation();
+
     return (
         <div className='Profil'>
             <div className="headprofil">
-                <h1>Salut! bienvenu à nouveau</h1>
+                <h1>{t('salut')} </h1>
 
                 <div className="content-profil">
                     <div className="imagePdc">
