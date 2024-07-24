@@ -8,14 +8,12 @@ import EditUser from '../user/EditUser'
 import { Routes, Route } from 'react-router-dom'; // Importer Routes et Route
 
 const Home = () => {
-    const [activePage, setActivePage] = useState('Dashboard');
-
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
-                    <SideBar setActivePage={setActivePage} />
-                    <Header activepage={activePage} />
+                    <SideBar />
+                    <Header />
                 </div>
                 <div className="content">
 
@@ -27,7 +25,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Home;
+export default Home
