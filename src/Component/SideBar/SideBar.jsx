@@ -47,8 +47,8 @@ const SideBar = ({ setActivePage }) => {
                             </p>
                         </div>
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
-                            <li className='nav_link'><NavLink className='nav_item' onClick={() => setActivePage('All Car')}>{t('all_car')}</NavLink></li>
-                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('Add Car')}>{t('add_car')}</a></li>
+                            <li className='nav_link'><NavLink className='nav_item' to={'/listcar'} onClick={() => setActivePage('All Car')}>{t('all_car')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/addcar'} className='nav_item' onClick={() => setActivePage('Add Car')}>{t('add_car')}</NavLink></li>
                         </div>
                     </li>
 
@@ -60,8 +60,8 @@ const SideBar = ({ setActivePage }) => {
                             </p>
                         </div>
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
-                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</a></li>
-                            <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</a></li>
+                            <li className='nav_link'><NavLink to={'/listUser'}  className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/AjoutUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
                         </div>
                     </li>
 

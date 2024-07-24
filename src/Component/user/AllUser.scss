@@ -1,0 +1,119 @@
+.user-list {
+    padding: 20px;
+    background-color: #24292D;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.project-stats {
+    margin: 20px 0;
+}
+
+.project-stats .btn {
+    background-color: #ffcb05;
+    border: none;
+    padding: 10px 20px;
+    color: #24292D;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.user-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: #24292D;
+}
+.user-cards {
+    flex-direction: row;
+}
+.user-card {
+    background-color: #24292D;
+    border-radius: 8px;
+    box-shadow: 0 0 5px black;
+    width: calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-direction: row;
+}
+
+.user-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    // border-bottom: 1px solid #ccc;
+}
+
+.user-card-header .user-info {
+    display: flex;
+    flex-direction: column;
+}
+.user-info span{
+    font-size: 1.5rem;
+}
+.user-info p {
+    margin: 10px;
+    color: #828690;
+}
+
+.user-card-header .user-image img {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    border:  solid 2px white;
+    margin-left: 30px;
+}
+
+.user-card-body {
+    padding: 10px;
+    color: #828690;
+}
+
+.user-card-body p {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    
+}
+
+.user-card-body p svg {
+    margin-right: 5px;
+}
+.user-card:hover {
+    box-shadow: 0 0 10px black;
+}
+.edit-profile {
+    position: absolute;
+    background-color: rgba(53, 47, 47, 0.9);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: -30px;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 1);
+    }
+    svg {
+        margin-right: 5px;
+    }
+}
