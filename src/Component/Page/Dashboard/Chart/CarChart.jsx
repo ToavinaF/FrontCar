@@ -1,36 +1,18 @@
 import React from 'react'
 import {ResponsiveContainer, XAxis, BarChart, Bar, Tooltip} from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 const CarChart = () => {
+  const { t } = useTranslation();
+
     const statistique = [
-        {
-          name: "Sat",
-          Stats: 6000,
-        },
-        {
-          name: "Sun",
-          Stats: 5000,
-        },
-        {
-          name: "Mon",
-          Stats: 7000,
-        },
-        {
-          name: "Tue",
-          Stats: 5780,
-        },
-        {
-          name: "Wed",
-          Stats: 4890,
-        },
-        {
-          name: "Thu",
-          Stats: 6390,
-        },
-        {
-          name: "Fri",
-          Stats: 5490,
-        },
+      { name: t('Sat'), Stats: 6000 },
+      { name: t('Sun'), Stats: 5000 },
+      { name: t('Mon'), Stats: 7000 },
+      { name: t('Tue'), Stats: 5780 },
+      { name: t('Wed'), Stats: 4890 },
+      { name: t('Thu'), Stats: 6390 },
+      { name: t('Fri'), Stats: 5490 }
       ];
   return (
     <ResponsiveContainer width='100%' >

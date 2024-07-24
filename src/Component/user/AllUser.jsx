@@ -3,11 +3,13 @@ import axios from 'axios';
 import './AllUser.scss';
 import { FaPhone, FaEnvelope, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const AllUser = () => {
+    const { t } = useTranslation();
     const [allUserData, setAllUserData] = useState([]);
     const [hoveredUserId, setHoveredUserId] = useState(null);
-     const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData();
@@ -37,10 +39,10 @@ const AllUser = () => {
     return (
         <div className="user-list">
             <header className="header">
-                <h1>Utilisateurs</h1>
+                <h1>{t('allUser.title')}</h1>
             </header>
             <div className="project-stats">
-                <button className="btn">Tous les utilisateurs</button>
+                <button className="btn">{t('allUser.allUsers')}</button>
             </div>
             <div className="user-cards">
                 {allUserData.map((user) => (
@@ -55,14 +57,14 @@ const AllUser = () => {
                                 className="edit-profile"
                                 onClick={() => handleEditClick(user.id)}
                             >
-                                <FaEdit /> Edit Profile
+                                <FaEdit /> {t('allUser.editProfile')}
                             </div>
                         )}
                         <div className="user-card-header">
                             <div className="user-info">
                                 <span>{user.name} {user.firstname}</span>
-                                <p>Job: {user.Job}</p>
-                                <p> {user.Role}</p>
+                                <p>{t('allUser.job')}: {user.Job}</p>
+                                <p>{t('allUser.role')}: {user.Role}</p>
                             </div>
                             <div className="user-image">
                                 <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name} />

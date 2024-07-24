@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddUser.scss';
 import { FaPlusCircle, FaTimes } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 function Register() {
+    const { t } = useTranslation();
     const [name, setName] = useState('');
     const [firstname, setFirstname] = useState('');
     const [email, setEmail] = useState('');
@@ -14,7 +16,7 @@ function Register() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
         const formData = new FormData();
         formData.append('name', name);
         formData.append('firstname', firstname);
@@ -23,12 +25,7 @@ function Register() {
         if (photo) {
             formData.append('photo', photo);
         }
-    
-        // Affichez les données envoyées pour vérification
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-    
+
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
                 headers: {
@@ -37,10 +34,11 @@ function Register() {
             });
             console.log('Inscription réussie:', response.data);
         } catch (error) {
-            setError('Erreur lors de l\'inscription');
+            setError(t('register.error'));
             console.error('Erreur lors de l\'inscription:', error.response ? error.response.data : error.message);
         }
     }
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -49,6 +47,7 @@ function Register() {
             setImage(imageUrl);
         }
     };
+
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
@@ -71,10 +70,10 @@ function Register() {
     return (
         <div className="container">
             <div className="registration-form">
-                <h2 className="text-center">Inscription</h2>
+                <h2 className="text-center">{t('register.title')}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-fields">
-                    <div className="form-group">
+                        <div className="form-group">
                             <label htmlFor="photo" className="photo-label">
                                 <div
                                     className="dropzone"
@@ -103,12 +102,12 @@ function Register() {
                                             <FaTimes className="remove-icon" onClick={handleRemoveImage} />
                                         </div>
                                     )}
-                                    {!image && <p>Photo profil</p>}
+                                    {!image && <p>{t('register.profilePhoto')}</p>}
                                 </div>
                             </label>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="name">Nom</label><br />
+                            <label htmlFor="name">{t('register.name')}</label><br />
                             <input
                                 type="text"
                                 className="form-control"
@@ -120,7 +119,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="firstName">Prénom</label>
+                            <label htmlFor="firstName">{t('register.firstname')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -132,7 +131,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">{t('register.email')}</label>
                             <input
                                 type="email"
                                 className="form-control"
@@ -144,7 +143,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">Mot de passe</label>
+                            <label htmlFor="password">{t('register.password')}</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -156,7 +155,7 @@ function Register() {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block mt-3">S'inscrire</button>
+                    <button type="submit" className="btn btn-primary btn-block mt-3">{t('register.registerButton')}</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>

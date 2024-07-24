@@ -1,25 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SideBar from '../SideBar/SideBar'
 import Header from '../Header/Header'
 import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
 import AddUser from '../user/AddUser'
 import EditUser from '../user/EditUser'
-import { Routes, Route } from 'react-router-dom'; // Importer Routes et Route
 
+import Addcar from '../AddCar/Addcar'
+import ListCar from '../listCar/listCar'
+import DeatilCar from '../DetailCar/DeatilCar'
+
+import { Route, Routes } from 'react-router-dom'
+import Reservation from '../Reservation/Reservation'
+import Dashboard from '../Page/Dashboard/Dashboard'
 const Home = () => {
+    const [activePage, setActivePage] = useState('Dashboard');
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
-                    <SideBar />
-                    <Header />
+                    <SideBar setActivePage={setActivePage}  />
+                    <Header  activepage={activePage} />
                 </div>
                 <div className="content">
-
                     <Routes>
-                        <Route path="/" element={<AllUser />} />
-                        <Route path="/editUser/:id" element={<EditUser />} />
+                        <Route path="/listcar" element={<ListCar/>} />
+                        <Route path='/addcar' element={<Addcar/>}/>
+                        <Route path="/detail" element={<DeatilCar/>} />
+                        <Route path="/reservation" element={<Reservation/>} />
+                        <Route path='/dashboard' element={<Dashboard/>}/>
+                        <Route path='/Profile' element={<Profil/>}/>
+                        <Route path='/listUser' element={<AllUser/>}/>
+                        <Route path="/AjoutUser" element={<AddUser/>}/>
                     </Routes>
                 </div>
             </div>
