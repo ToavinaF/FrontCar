@@ -1,14 +1,30 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import{FaTaxi, FaCar, FaCommentDots, FaUsers} from 'react-icons/fa';
 import{FiCamera, FiCalendar} from 'react-icons/fi';
 
 const Count = () => {
+    const [Count ,SetCount ]= useState(0);
+    const [Countvehi, SetCountVehi] = useState(0);
+    useEffect(()=>{
+        fetchData();
+    },[])
+    const fetchData = async () => {
+        try {
+            const usercount =await axios.get("http://127.0.0.1:8000/api/CountUser")
+            SetCount(usercount.data.count);
+            SetCountVehi(usercount.data.vehi);
+            // console.log(usercount);
+        } catch (error) {
+            console.log("verifier le code");
+        }
+    }
   return (
     <div className='dash__cards'>
          <div className='single__car'>
             <div className='card__content'>
                 <h4>Vehicule</h4>
-                <span>41</span>
+                <span>{Countvehi}</span>
             </div>
             <div className='card__icon'>
                 <FaCar color="rgb(130, 5, 161)"/>
@@ -20,7 +36,7 @@ const Count = () => {
             <div className='card__content'>
 
                 <h4>Utilisateur</h4>
-                <span>41</span>
+                <span>{Count}</span>
             </div>
             <span className='card__icon'>
 

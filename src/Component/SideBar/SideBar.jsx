@@ -22,7 +22,7 @@ const SideBar = ({ setActivePage }) => {
             <div className="navlink">
                 <ul>
                     
-                        <NavLink to='/dashboard' className='li-dash' onClick={() => setActivePage('Dashboard')}>
+                        <NavLink to='' className='li-dash' onClick={() => setActivePage('Dashboard')}>
                             <MdDashboard className='icon-dash' />
                             <p>Dashboard</p>
                         </NavLink>
@@ -38,6 +38,7 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'><NavLink  className='nav_item' onClick={() => setActivePage('All Car')}>All Car</NavLink></li>
                             <li className='nav_link'><a href="#" className='nav_item' onClick={() => setActivePage('Add Car')}>Add Car</a></li>
+                            <li className='nav_link'><NavLink to={'/Historique'} className='nav_item' onClick={() => setActivePage('Historique')}>Historique</NavLink></li>
                         </div>
                     </li>
 
