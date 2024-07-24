@@ -1,7 +1,7 @@
 .SideBar {
     width: 180px;
     height: 100vh;
-    background:#ffc107;
+    background: #ffc107;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,11 +20,12 @@
         position: fixed;
 
         .icon_logo {
-            background: #24292D;
+            background: #181e22c7;
             color: white;
             font-size: 3rem;
             border-radius: 20px;
-            padding: 2px 2px 2px 2px;
+            padding: 10px 10px 10px 10px;
+            border-bottom-right-radius: 10%;
         }
     }
 
@@ -48,10 +49,11 @@
                 cursor: pointer;
                 margin: 10% 0 10% 0;
                 top: 0;
+                text-decoration: none;
 
                 .icon-dash {
-                    font-size: 3rem;
-                    color: white;
+                    font-size: 3.5rem;
+                    color:#000;
                     background-color: rgba(0, 0, 0, 0.1);
                     padding: 5% 5% 5% 5%;
                     border-radius: 10px;
@@ -62,7 +64,8 @@
                     transition: .5s;
                     text-align: center;
 
-                    &.active{
+                    &.active {
+                        color: white;
                         background: #000;
                     }
                 }
@@ -72,12 +75,14 @@
                     color: #000;
 
                     .down {
-                        padding: 5px 0 0 0;
-                        font-size: 1rem;
-                        transition: 1s;
+                        margin: 15px 0 0 0;
+                        font-size: .8rem;
+                        transition: .5s;
+                        transform: rotate(-90deg);
 
                         &.active {
-                            transform: rotate(180deg);
+                            margin: 15px 0 0 0;
+                            transform: rotate(0deg);
                             padding: 0px 0 0 0;
                             // transform-origin: bottom;
                         }
@@ -115,6 +120,7 @@
                             font-weight: normal;
                             padding: 20% 0 5% 0;
                             transition: .5s;
+
                             &:hover {
                                 color: white;
                                 // padding: 15% 0 5% 0;

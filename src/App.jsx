@@ -3,7 +3,6 @@ import './App.scss'
 import Home from './Component/Home/Home'
 
 function App() {
-
   return (
     <>
       <Home/>
@@ -11,4 +10,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

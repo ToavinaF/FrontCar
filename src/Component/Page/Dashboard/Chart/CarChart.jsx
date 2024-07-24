@@ -33,10 +33,10 @@ const CarChart = () => {
         },
       ];
   return (
-    <ResponsiveContainer width='100%'>
+    <ResponsiveContainer width='100%' >
         <BarChart data={statistique}>
         <XAxis dataKey='name' stroke='var(--blanch)'/>
-        <Bar dataKey="Stats" stroke="var(--blanch)" fill='var(--color-principal)' barSize={30} radius={15}/>
+        <Bar dataKey="Stats" stroke="var(--blanch)" fill='var(--color-principal)' barSize={15} radius={10}/>
         <Tooltip wrapperClassName='tooltip__style' cursor={false} />
         </BarChart>
     </ResponsiveContainer>

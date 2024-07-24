@@ -6,6 +6,7 @@ import { GiCarDoor } from "react-icons/gi";
 import { TbManualGearboxFilled } from "react-icons/tb";
 import Sary from '../../assets/exemple.jfif'
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 const listCar = () => {
     const [ViewCar, setViewCar] = useState([]);
     useEffect(()=>{
@@ -57,7 +58,7 @@ const listCar = () => {
                             </div>
                         </div>
                         <h2>{list.prix}/jrs</h2>
-                        <button className='btn'>Details</button>
+                        <NavLink className='btn' to='/detail'>Details</NavLink>
                     </div>
                     )
                 })

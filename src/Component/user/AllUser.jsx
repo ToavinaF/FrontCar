@@ -1,0 +1,82 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './AllUser.scss';
+import { FaPhone, FaEnvelope, FaEdit } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
+const AllUser = () => {
+    const [allUserData, setAllUserData] = useState([]);
+    const [hoveredUserId, setHoveredUserId] = useState(null);
+     const navigate = useNavigate(); 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/users');
+            setAllUserData(response.data);
+        } catch (error) {
+            console.log('Vérifiez le code');
+        }
+    };
+
+    const handleMouseEnter = (id) => {
+        setHoveredUserId(id);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredUserId(null);
+    };
+
+    const handleEditClick = (id) => {
+        navigate(`/EditUser/${id}`); // Use navigate to redirect
+    };
+
+    return (
+        <div className="user-list">
+            <header className="header">
+                <h1>Utilisateurs</h1>
+            </header>
+            <div className="project-stats">
+                <button className="btn">Tous les utilisateurs</button>
+            </div>
+            <div className="user-cards">
+                {allUserData.map((user) => (
+                    <div
+                        key={user.id}
+                        className="user-card"
+                        onMouseEnter={() => handleMouseEnter(user.id)}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        {hoveredUserId === user.id && (
+                            <div
+                                className="edit-profile"
+                                onClick={() => handleEditClick(user.id)}
+                            >
+                                <FaEdit /> Edit Profile
+                            </div>
+                        )}
+                        <div className="user-card-header">
+                            <div className="user-info">
+                                <span>{user.name} {user.firstname}</span>
+                                <p>Job: {user.Job}</p>
+                                <p> {user.Role}</p>
+                            </div>
+                            <div className="user-image">
+                                <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name} />
+                            </div>
+                        </div>
+                        <div className="user-card-body">
+                            <p><FaPhone /> {user.contact}</p>
+                            <p><FaEnvelope /> {user.email}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default AllUser;

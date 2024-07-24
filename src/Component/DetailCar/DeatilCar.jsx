@@ -5,6 +5,7 @@ import { BsFillSuitcase2Fill } from "react-icons/bs"
 import { GiCarDoor } from "react-icons/gi";
 import { TbManualGearboxFilled } from "react-icons/tb";
 import Sary from '../../assets/saert.jpeg'
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -46,7 +47,7 @@ const DeatilCar = () => {
           <h1>Automatique</h1>
         </div>
         <h1>30.000Ar/jrs</h1>
-        <button className='btn'><FaCalendarAlt className='ico' />Reservation</button>
+        <NavLink className='btn' to='/reservation'><FaCalendarAlt className='ico' />Reservation</NavLink>
       </div>
     </div>
   )

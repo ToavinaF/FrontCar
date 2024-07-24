@@ -6,10 +6,11 @@ import Chart from './Chart/Chart';
 import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
+import Utilisateur from './Utilisateur/Utilisateur';
 
 const Dashboard = () => {
     return (
-        <div>
+        <div className='content-dash'>
             <div className='dash__cards'>
                 <Count />
             </div>
@@ -17,22 +18,18 @@ const Dashboard = () => {
                 <div className='stats'>
                     <h3 className='stats__titre'>Statistiques de client par semaine</h3>
                     <CarChart/>
-                    
                 </div>
                 <div className='statiq'>
                     <div className='stats'>
                         <h3 className='stats__titre'>Statiques de reservation par semaine</h3>
                         <Chart />
                     </div>
-                    <div className='skills'>
-                        <Skills/>
-                    </div>
                 </div>
                 
             </div>
             <div className="recommend__car__wrapper">
                 <Car/>
-               
+                <Utilisateur/>
             </div>
             
         </div>

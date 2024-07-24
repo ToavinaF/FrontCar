@@ -1,0 +1,154 @@
+.content-login {
+    width: 100%;
+    height: auto;
+    background: #24292D;
+    display: flex;
+    justify-content: center;
+    color: #828690;
+    padding: 2% 0 2% 0;
+    text-align: center;
+
+    .cont-log {
+        width: 40%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #2f363e;
+        padding: 5% 4% 5% 4%;
+
+        .logo {
+            width: 100%;
+            text-align: center;
+
+            .cont-logo {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                .icon_logo {
+                    font-size: 3rem;
+                    background: #fcf107;
+                    border-radius: 50%;
+                    padding: 2% 2% 2% 2%;
+                    border-bottom-right-radius: 5px;
+                    color: white;
+                }
+
+                h1 {
+                    color: #fcf0076c;
+                    margin: 5% 0 0 2%;
+                    font-size: 2.5rem;
+                }
+            }
+
+            h2 {
+                margin: 2% 0 2% 0;
+                color: white;
+                font-weight: bold;
+            }
+        }
+
+
+        .inp-lab {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            margin: 5% 0 5% 0;
+
+            label {
+                font-weight: bold;
+            }
+
+            input {
+                width: 100%;
+                height: 45px;
+                background: #24292D;
+                border: 1px solid #828690;
+                border-radius: 8px;
+                outline: none;
+                padding: 0 0 0 4%;
+                font-weight: bold;
+                color: white;
+                margin: 1% 0 0 0;
+            }
+
+            button {
+                width: 100%;
+                height: 45px;
+                background: #fcf007da;
+                border: none;
+                font-weight: bold;
+                color: white;
+                font-size: 1rem;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: .2s;
+
+                &:hover {
+                    background: #fcf0077e;
+                }
+            }
+        }
+
+        .inp-rem {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .chek-rem {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 5px;
+
+                input {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    border-radius: 5px;
+                    border: none;
+                }
+
+                p {
+                    margin:2px 0 0 0;
+                    font-weight: 600;
+                }
+            }
+
+            .forgmy {
+                a {
+                    text-decoration: none;
+                    color: #828690;
+                    font-weight: 500;
+                    margin: 2px 0 0 0;
+
+                    &:hover {
+                        color: white;
+                        font-weight: 500;
+                        margin: 2px 0 0 0;
+
+                    }
+                }
+            }
+        }
+
+        .signup {
+            text-align: left;
+
+            p {
+                a {
+                    text-decoration: none;
+                    color: white;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+
+}
