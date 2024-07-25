@@ -7,9 +7,11 @@ import { useDropzone } from 'react-dropzone';
 import './Addcar.scss';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Addcar = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [ShowUpload, setShowUpload] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
   const [profile, setProfile] = useState(null);
@@ -67,6 +69,7 @@ const Addcar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
+      navigate('/listcar')
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -104,7 +107,10 @@ const Addcar = () => {
             </div>
             <div className="caracter">
               <label htmlFor="transmission">{t('Type de transmission')}</label>
-              <input type="text" placeholder={t('Type de transmission')} className='input' name='transmission' onChange={handleChange} />
+              <select name="transmission" className='input' onChange={handleChange}>
+                <option value="Automatique">Automatique</option>
+                <option value="Manuelle">Manuelle</option>
+              </select>
             </div>
           </div>
           <div className="parti-right">
@@ -113,16 +119,30 @@ const Addcar = () => {
               <input type="text" placeholder={t('prix du vehicule')} className='input' name='prix' onChange={handleChange} />
             </div>
             <div className="caracter">
-              <label htmlFor="bagage">{t('poids du bagage')}</label>
-              <input type="text" placeholder={t('poids du bagage')} className='input' name='bagage' onChange={handleChange} />
+              <label htmlFor="bagage">{t('Nombre de bagage')}</label>
+              <select name="bagage" className='input' onChange={handleChange}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
             </div>
             <div className="caracter">
               <label htmlFor="place">{t('Nombre de place')}</label>
-              <input type="text" placeholder={t('Nombre de place')} className='input' name='place' onChange={handleChange} />
+              <select name="place" className='input' onChange={handleChange}>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+
+              </select>
             </div>
             <div className="caracter">
               <label htmlFor="porte">{t('Nombre de porte')}</label>
-              <input type="text" placeholder={t('Nombre de porte')} className='input' name='porte' onChange={handleChange} />
+              <select name="porte" className='input' onChange={handleChange}>
+                <option value="3">3</option>
+                <option value="5">5</option>
+              </select>
             </div>
             <div className="apro">
               <label htmlFor="description">{t('Apropos du vehicule')}</label>
