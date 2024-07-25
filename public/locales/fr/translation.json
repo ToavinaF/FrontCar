@@ -56,5 +56,11 @@
     "editProfile": "Modifier le profil",
     "job": "Emploi",
     "role": "Rôle"
-  }
+  },
+  "Nombre de bagage": "Number of luggage",
+  "Boite de vitesse": "Gearbox",
+  "Automatique": "Automatic",
+  "Ar/jrs": "Ar/jrs",
+  "Reservation": "Reservation"
+
 }

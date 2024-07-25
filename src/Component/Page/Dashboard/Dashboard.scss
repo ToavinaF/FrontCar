@@ -53,6 +53,7 @@
                 }
 
                 span {
+                    color: var(--first-color);
                     color: var(--heading-color);
                     @include njrfont(2rem, 100);
                 }
@@ -141,8 +142,13 @@
             color: var(--body-bg);
             margin-bottom: 10px;
 
-            span i {
-                font-size: 1.2rem;
+            span {
+                color: var(--first-color);
+                color: var(--heading-color);
+                @include njrfont(2rem, 100);
+                i {
+                   font-size: 1.2rem;
+                }
             }
         }
 

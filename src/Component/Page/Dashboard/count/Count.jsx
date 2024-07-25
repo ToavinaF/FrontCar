@@ -11,7 +11,7 @@ const Count = () => {
         <div className='dash__cards'>
             <div className='single__car'>
                 <div className='card__content'>
-                    <h4>{t('car')}</h4>
+                    <h4><span>{t('car')} </span></h4>
                     <span>41</span>
                 </div>
                 <div className='card__icon'>
@@ -21,7 +21,9 @@ const Count = () => {
 
             <div className='single__car'>
                 <div className='card__content'>
-                    <h4>{t('user')}</h4>
+                    <h4><span>
+                        {t('user')}
+                    </span> </h4>
                     <span>41</span>
                 </div>
                 <span className='card__icon'>
@@ -31,7 +33,9 @@ const Count = () => {
 
             <div className='single__car'>
                 <div className='card__content'>
-                    <h4>{t('reservation')}</h4>
+                    <h4><span>
+                        {t('reservation')}
+                    </span> </h4>
                     <span>41</span>
                 </div>
                 <span className='card__icon'>
@@ -41,7 +45,7 @@ const Count = () => {
 
             <div className='single__car'>
                 <div className='card__content'>
-                    <h4>{t('message')}</h4>
+                    <h4><span>{t('message')}</span> </h4>
                     <span>41</span>
                 </div>
                 <span className='card__icon'>

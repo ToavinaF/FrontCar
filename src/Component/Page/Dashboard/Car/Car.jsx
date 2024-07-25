@@ -51,10 +51,10 @@ const Car = () => {
               <h4>{t('Marque')}</h4>
               <div className='recommend__car-other'>
                 <div className='recommend__car-icons'>
-                  <p>{t('Matricule')}</p>
-                  <p><IoMdSettings /></p>
-                  <p><FaStopwatch /></p>
-                  <p>{t('Prix/jour')}</p>
+                  <p><span> {t('Matricule')} </span></p>
+                  <p><span> <IoMdSettings /> </span></p>
+                  <p><span> <FaStopwatch /> </span></p>
+                  <p><span> {t('Prix/jour')} </span></p>
                 </div>
               </div>
             </div>
@@ -69,13 +69,13 @@ const Car = () => {
               <img src={Cars2} alt={t('Marque')} />
             </div>
             <div className='recommend__car-bottom'>
-              <h4>{t('Marque')}</h4>
+              <h4><span>{t('Marque')}</span></h4>
               <div className='recommend__car-other'>
                 <div className='recommend__car-icons'>
-                  <p>{t('Matricule')}</p>
-                  <p><IoMdSettings /></p>
-                  <p><FaStopwatch /></p>
-                  <p>{t('Prix/jour')}</p>
+                  <p><span> {t('Matricule')} </span></p>
+                  <p><span> <IoMdSettings /> </span></p>
+                  <p><span> <FaStopwatch /> </span></p>
+                  <p><span> {t('Prix/jour')} </span></p>
                 </div>
               </div>
             </div>

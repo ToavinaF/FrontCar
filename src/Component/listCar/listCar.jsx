@@ -42,15 +42,15 @@ const ListCar = () => {
                 <div className="aprop">
                   <div className="icon">
                     <FaUser className='imgIcon' />
-                    <h3>{list.place} {t('place')}</h3>
+                    <h3>{list.place} </h3>
                   </div>
                   <div className="icon">
                     <BsFillSuitcase2Fill className='imgIcon' />
-                    <h3>{list.bagage} {t('bagage')}</h3>
+                    <h3>{list.bagage} </h3>
                   </div>
                   <div className="icon">
                     <GiCarDoor className='imgIcon' />
-                    <h3>{list.porte} {t('porte')}</h3>
+                    <h3>{list.porte} </h3>
                   </div>
                   <div className="icon">
                     <TbManualGearboxFilled className='imgIcon' />

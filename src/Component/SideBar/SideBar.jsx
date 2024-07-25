@@ -30,13 +30,32 @@ const SideBar = ({ setActivePage }) => {
         <div className='SideBar'>
             <div className="logo">
                 <IoCarSport className='icon_logo' />
+                <li className='language-selector'>
+                       <ul>
+                            {languages.map(({ code, name, country_code }) => (
+                                <li className='nav_link' key={country_code}>
+                                        
+                                        <span
+                                          onClick={() => handleLanguageChange(code)}
+                                            disabled={code === currentLanguageCode}
+                                            className={`flag-icon flag-icon-${country_code}`}
+                                            style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
+                                        ></span>
+                                    
+                                </li>
+                            ))}
+                       </ul> 
+                        
+                    </li>
             </div>
 
             <div className="navlink">
                 <ul>
+
                     <NavLink to='/dashboard' className='li-dash' onClick={() => setActivePage('Dashboard')}>
                         <MdDashboard className='icon-dash' />
                         <p>{t('dashboard')}</p>
+                        
                     </NavLink>
 
                     <li className='li-dash'>
@@ -65,24 +84,7 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                     </li>
 
-                    <li className='language-selector'>
-                        <ul>
-                            {languages.map(({ code, name, country_code }) => (
-                                <li key={country_code}>
-                                    <button
-                                        onClick={() => handleLanguageChange(code)}
-                                        disabled={code === currentLanguageCode}
-                                    >
-                                        {name}
-                                        <span
-                                            className={`flag-icon flag-icon-${country_code}`}
-                                            style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
-                                        ></span>
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
+                    
                 </ul>
             </div>
         </div>

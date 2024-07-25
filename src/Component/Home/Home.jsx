@@ -13,6 +13,7 @@ import DeatilCar from '../DetailCar/DeatilCar'
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
 import Dashboard from '../Page/Dashboard/Dashboard'
+import Theme from '../Page/Themes/Theme'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     return (
@@ -21,6 +22,7 @@ const Home = () => {
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
                     <Header  activepage={activePage} />
+                    <Theme/>
                 </div>
                 <div className="content">
                     <Routes>

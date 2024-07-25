@@ -56,5 +56,12 @@
     "editProfile": "Edit Profile",
     "job": "Job",
     "role": "Role"
-  }
+  },
+  
+  "Nombre de bagage": "Nombre de bagage",
+  
+  "Boite de vitesse": "Boite de vitesse",
+  "Automatique": "Automatique",
+  "Ar/jrs": "Ar/jrs",
+  "Reservation": "Reservation"
 }

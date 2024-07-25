@@ -1,10 +1,14 @@
 :root{
     --color-principal: #ffc107;
+    --title-color: hsl(0, 0%, 40%);
+    --text-color: hsl(0, 0%, 50%);
+    --container-color: hsl(0, 0%, 93%);
+    --border-color: hsl(0, 0%, 87%);
+    --body-color: hsl(0, 0%, 100%);
+    --border-car-one: rgb(130, 5, 161);
     --blanch: #fff;
-    --body-bg: #2f363e;
     --color-hover: rgba(98, 98, 5, 0.402);
     --color-text:  #1a1b1d;
-    --body-color: #23282c;
     --card-01-bg: linear-gradient(#dfdfdf, #424141);
     --card-02-bg: linear-gradient(#3f3f3f, #878383);
     --card-03-bg: #484754;
@@ -12,10 +16,43 @@
     --heading-color: #fff;
     --header-color:#2f363e;
     --small-text-color: #808191;
+    --recommend-car01-bg: #808191;
+    --recommend-car02-bg: #101229;
+    --recommend-car03-bg: #433f44;
+    --big-font-size: 56px;
+    --h1-font-size: 50px;
+    --h2-font-size: 32px;
+    --h3-font-size: 24px;
+    --large-font-size: 18px;
+    --normal-font-size: 16px;
+    --small-font-size: 15px;
+    --smaller-font-size: 14px;
+    --tiny-font-size: 12px;
+    --weight-400:400;
+    --weight-500:500;
+    --weight-600:600;
+    --weight-700:700;
+    --weight-800:800;
+    --body-content: #24292D;
+    --body-bg: #2f363e;
+
+}
+.light-theme{
+    --blanch: rgb(20, 18, 18);
+    --color-principal: #0413bbce;
+    --body-bg: #dfdfdf;
+
+    --body-content: hsl(0, 0%, 80%);
+    --heading-color: #23282c;
+    --title-color: hsl(0, 0%, 100%);
+    --text-color: hsl(0, 0%, 80%);
+    --body-color: #23282c;
+    --container-color: hsl(0, 1%, 17%);
+    --border-color: hsl(0, 0%, 15%);
     --recommend-car01-bg: #e1dfa4;
     --recommend-car02-bg: #e3ecf1;
     --recommend-car03-bg: #f4e3e5;
-
+    
 }
 .content-fluid{
     width: 100%;
@@ -35,7 +72,7 @@
     .content{
         width: calc(100% - 180px);
         height: 100%;
-        background: #24292D;
+        background: var(--body-content);
         position: absolute;
         right: 0;
         height: auto;
@@ -43,6 +80,12 @@
         padding:2% 5% 5% 5%;
         margin: 80px 0 0 0;
         z-index: -1;
+    }
+    span {
+        color: var(--first-color);
+        color: var(--heading-color);
+        
+        
     }
 }
 

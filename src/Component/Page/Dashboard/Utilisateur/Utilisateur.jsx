@@ -57,10 +57,10 @@ const Utilisateur = () => {
                         </div>
                         <div className='detail'>
                             <div className='nom'>
-                                <h1>Alan Gerard</h1>
+                                <h1><span> Alan Gerard </span> </h1>
                             </div>
                             <div className='profession'>
-                                <p>UI/UX developpeur</p>
+                                <p><span>UI/UX developpeur</span> </p>
                             </div>
                         </div>
                         <div className='icon'>
@@ -81,10 +81,10 @@ const Utilisateur = () => {
                         </div>
                         <div className='detail'>
                             <div className='nom'>
-                                <h1>Ramah Hery</h1>
+                                <h1><span>Ramah Hery</span> </h1>
                             </div>
                             <div className='profession'>
-                                <p>UI/UX developpeur</p>
+                                <p><span>UI/UX developpeur</span> </p>
                             </div>
                         </div>
                         <div className='icon'>
@@ -106,10 +106,10 @@ const Utilisateur = () => {
                         </div>
                         <div className='detail'>
                             <div className='nom'>
-                                <h1>Booster flow </h1>
+                                <h1><span>Booster flow</span>  </h1>
                             </div>
                             <div className='profession'>
-                                <p>UI/UX developpeur</p>
+                                <p><span>UI/UX developpeur</span> </p>
                             </div>
                         </div>
                         <div className='icon'>
@@ -133,10 +133,10 @@ const Utilisateur = () => {
                         </div>
                         <div className='detail'>
                             <div className='nom'>
-                                <h1>Alan Green</h1>
+                                <h1><span>Alan Green</span> </h1>
                             </div>
                             <div className='profession'>
-                                <p>UI/UX developpeur</p>
+                                <p><span>UI/UX developpeur</span> </p>
                             </div>
                         </div>
                         <div className='icon'>
