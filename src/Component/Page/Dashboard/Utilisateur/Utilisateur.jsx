@@ -12,9 +12,9 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 // import required modules
-import {  Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 
-const Utilisateur = () => {
+const Utilisateur = ({ User }) => {
     const progressCircle = useRef(null);
     const progressContent = useRef(null);
     const onAutoplayTimeLeft = (s, time, progress) => {
@@ -40,114 +40,42 @@ const Utilisateur = () => {
                     modifier: 1,
                     slideShadows: true,
                 }}
-                
+
                 pagination={true}
                 modules={[EffectCoverflow, Pagination, Autoplay]}
                 // onAutoplayTimeLeft={onAutoplayTimeLeft}
 
                 className="mySwiper"
             >
-                <SwiperSlide>
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span> Alan Gerard </span> </h1>
+                {
+                    User.map((user, i) => (
+                        <SwiperSlide key={i}>
+                            <div className='card'>
+                                <div className='profil'>
+                                    <BsThreeDotsVertical />
+                                </div>
+                                <div className='image'>
+                                    <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${user.photo}`} alt="profil" />
+                                </div>
+                                <div className='detail'>
+                                    <div className='nom'>
+                                        <h1>{user.name}{user.firstname}</h1>
+                                    </div>
+                                    <div className='profession'>
+                                        <p>{user.Job}</p>
+                                    </div>
+                                </div>
+                                <div className='icon'>
+                                    <div className='icons'><IoCall /> </div>
+                                    <div className='icons'><BiMessageDetail /> </div>
+                                    <div className='icons'><FaVideo /> </div>
+                                </div>
                             </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
+                        </SwiperSlide>
+                    ))
 
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Ramah Hery</span> </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
+                }
 
-                </SwiperSlide>
-                <SwiperSlide>
-
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Booster flow</span>  </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
-
-
-                </SwiperSlide>
-                <SwiperSlide>
-
-
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Alan Green</span> </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-
-                    </div>
-
-                </SwiperSlide>
                 <div className="autoplay-progress" slot="container-end">
                     <svg viewBox="0 0 48 48" ref={progressCircle}>
                         <circle cx="0" cy="0" r="0"></circle>

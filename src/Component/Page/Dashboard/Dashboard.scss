@@ -15,7 +15,7 @@
         padding: 2% 0 0 0;
 
         .single__car {
-            padding: 2% 2% 2% 2%;
+            padding: 3% 3% 3% 3%;
             margin: 0 0 2% 0;
             width: 25%;
             display: flex;
@@ -60,7 +60,7 @@
             }
 
             .card__icon {
-                @include njrfont(4rem, 400 !important);
+                @include njrfont(3rem, 400 !important);
                 color: rgba(255, 255, 255, 0.845);
             }
 

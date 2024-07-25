@@ -58,7 +58,7 @@ const SideBar = ({ setActivePage }) => {
                         
                     </NavLink>
 
-                    <li className='li-dash'>
+                    <div className='li-dash'>
                         <div onClick={() => handleDropdownClick(0)}>
                             <FaCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} />
                             <p>
@@ -68,10 +68,12 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'><NavLink className='nav_item' to={'/listcar'} onClick={() => setActivePage('All Car')}>{t('all_car')}</NavLink></li>
                             <li className='nav_link'><NavLink to={'/addcar'} className='nav_item' onClick={() => setActivePage('Add Car')}>{t('add_car')}</NavLink></li>
-                        </div>
-                    </li>
+                            <li className='nav_link'><NavLink to={'/Historique'} className='nav_item' onClick={() => setActivePage('Add Car')}>{t('Historique')}</NavLink></li>
 
-                    <li className='li-dash'>
+                        </div>
+                    </div>
+
+                    <div className='li-dash'>
                         <div onClick={() => handleDropdownClick(1)}>
                             <FaUser className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} />
                             <p>
@@ -82,9 +84,26 @@ const SideBar = ({ setActivePage }) => {
                             <li className='nav_link'><NavLink to={'/listUser'}  className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</NavLink></li>
                             <li className='nav_link'><NavLink to={'/AjoutUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
                         </div>
-                    </li>
+                    </div>
 
-                    
+                    <div className='li-dash'>
+                        <div>
+                            {languages.map(({ code, name, country_code }) => (
+                                <div key={country_code}>
+                                    <button
+                                        onClick={() => handleLanguageChange(code)}
+                                        disabled={code === currentLanguageCode}
+                                    >
+                                        {name}
+                                        <span
+                                            className={`flag-icon flag-icon-${country_code}`}
+                                            style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
+                                        ></span>
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </ul>
             </div>
         </div>

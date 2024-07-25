@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import Car from './Car/Car';
 import CarChart from './Chart/CarChart';
@@ -8,10 +8,31 @@ import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
 import Utilisateur from './Utilisateur/Utilisateur';
+import axios from 'axios';
 
 const Dashboard = () => {
     const { t } = useTranslation();
 
+
+    const [Vehicule, SetVehicule] = useState([]);
+    const [User, SetUser] = useState([]);
+    console.log(Vehicule);
+    useEffect(() => {
+      fetchData();
+    }, [])
+    const fetchData = async () => {
+      try {
+        const vehicul = await axios.get("http://127.0.0.1:8000/api/ViewCar")
+        SetVehicule(vehicul.data.vehicules);
+        const UserAll = await axios.get("http://127.0.0.1:8000/api/users")
+        SetUser(UserAll.data);
+        console.log(UserAll.data);
+      } catch (error) {
+        console.log("verifier le code");
+      }
+    }
+
+    // console.log(User);
     return (
         <div className='content-dash'>
             <div className='dash__cards'>
@@ -31,8 +52,8 @@ const Dashboard = () => {
                 
             </div>
             <div className="recommend__car__wrapper">
-                <Car/>
-                <Utilisateur/>
+                <Car Vehicule={Vehicule}/>
+                <Utilisateur User={User}/>
             </div>
             
         </div>

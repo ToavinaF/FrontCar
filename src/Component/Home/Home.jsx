@@ -9,6 +9,8 @@ import EditUser from '../user/EditUser'
 import Addcar from '../AddCar/Addcar'
 import ListCar from '../listCar/listCar'
 import DeatilCar from '../DetailCar/DeatilCar'
+import Historique from '../Historique/Historique'
+
 
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
@@ -26,15 +28,18 @@ const Home = () => {
                 </div>
                 <div className="content">
                     <Routes>
-                        <Route path="/listcar" element={<ListCar/>} />
-                        <Route path='/addcar' element={<Addcar/>}/>
-                        <Route path="/detail" element={<DeatilCar/>} />
-                        <Route path="/reservation" element={<Reservation/>} />
-                        <Route path='/dashboard' element={<Dashboard/>}/>
-                        <Route path='/Profile' element={<Profil/>}/>
-                        <Route path='/listUser' element={<AllUser/>}/>
-                        <Route path="/AjoutUser" element={<AddUser/>}/>
+                        <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path="/listcar" element={<ListCar />} />
+                        <Route path='/addcar' element={<Addcar />} />
+                        <Route path="/detail" element={<DeatilCar />} />
+                        <Route path="/reservation" element={<Reservation />} />
+                        <Route path='/Profile' element={<Profil />} />
+                        <Route path='/listUser' element={<AllUser />} />
+                        <Route path="/AjoutUser" element={<AddUser />} />
+                        <Route path="/Historique" element={<Historique />} />
                     </Routes>
+
+
                 </div>
             </div>
         </div>
