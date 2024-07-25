@@ -4,7 +4,7 @@ import{FaTaxi, FaCar, FaCommentDots, FaUsers} from 'react-icons/fa';
 import{FiCamera, FiCalendar} from 'react-icons/fi';
 
 const Count = () => {
-    const [Count ,SetCount ]= useState(0);
+    const [Counter ,SetCount ]= useState(0);
     const [Countvehi, SetCountVehi] = useState(0);
     useEffect(()=>{
         fetchData();
@@ -12,9 +12,9 @@ const Count = () => {
     const fetchData = async () => {
         try {
             const usercount =await axios.get("http://127.0.0.1:8000/api/CountUser")
-            SetCount(usercount.data.count);
+            SetCount(usercount.data.counter);
             SetCountVehi(usercount.data.vehi);
-            // console.log(usercount);
+            console.log(usercount);
         } catch (error) {
             console.log("verifier le code");
         }
@@ -36,7 +36,7 @@ const Count = () => {
             <div className='card__content'>
 
                 <h4>Utilisateur</h4>
-                <span>{Count}</span>
+                <span>{Counter}</span>
             </div>
             <span className='card__icon'>
 
@@ -44,32 +44,27 @@ const Count = () => {
             </span>
         </div>
 
-        <div className='single__car'>
-        
-            <div className='card__content'>
-
-                <h4>Reservation</h4>
-                <span>41</span>
+            <div className='single__car'>
+                <div className='card__content'>
+                    <h4>reservation</h4>
+                    <span>41</span>
+                </div>
+                <span className='card__icon'>
+                    <FiCalendar color="rgb(255, 251, 0)" />
+                </span>
             </div>
-            <span className='card__icon'>
 
-                <FiCalendar color="rgb(255, 251, 0)"/>
-            </span>
-        </div>
-
-        <div className='single__car'>
-        
-            <div className='card__content'>
-
-                <h4>Message</h4>
-                <span>41</span>
+            <div className='single__car'>
+                <div className='card__content'>
+                    <h4>message</h4>
+                    <span>41</span>
+                </div>
+                <span className='card__icon'>
+                    <FaCommentDots color='rgb(0, 255, 213)' />
+                </span>
             </div>
-            <span className='card__icon'>
-                <FaCommentDots color='rgb(0, 255, 213)' />
-            </span>
         </div>
-    </div>
-  )
-}
+    );
+};
 
-export default Count
+export default Count;

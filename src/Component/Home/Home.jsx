@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Header from '../Header/Header';
-import Login from '../Login/Login'
+import React, { useState } from 'react'
+import SideBar from '../SideBar/SideBar'
+import Header from '../Header/Header'
+import Profil from '../Profil/Profil'
+import AllUser from '../user/AllUser'
+import AddUser from '../user/AddUser'
+import EditUser from '../user/EditUser'
+
+import Addcar from '../AddCar/Addcar'
+import ListCar from '../listCar/listCar'
+import DeatilCar from '../DetailCar/DeatilCar'
+import Historique from '../Historique/Historique'
 
 
-import '../Page/Dashboard/Dashboard.scss'; // Importation du style pour Dashboard si nécessaire
-import '../Profil/Profil.scss'; // Importation du style pour Profil si nécessaire
-import {Routes, Route} from 'react-router-dom';
-import Dashboard from '../Page/Dashboard/Dashboard';
-import Profil from '../Profil/Profil';
-import Historique from '../Historique/Historique';
-
+import { Route, Routes } from 'react-router-dom'
+import Reservation from '../Reservation/Reservation'
+import Dashboard from '../Page/Dashboard/Dashboard'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
-
     return (
         <div>
             <div className='content-fluid'>
@@ -23,16 +26,22 @@ const Home = () => {
                 </div>
                 <div className="content">
                     <Routes>
-                        <Route path='' element={<Dashboard/>}/>
-                        <Route path='/Profile' element={<Profil/>}/>
-                        <Route path='/Historique' element={<Historique />}/>
+                        <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path="/listcar" element={<ListCar />} />
+                        <Route path='/addcar' element={<Addcar />} />
+                        <Route path="/detail" element={<DeatilCar />} />
+                        <Route path="/reservation" element={<Reservation />} />
+                        <Route path='/Profile' element={<Profil />} />
+                        <Route path='/listUser' element={<AllUser />} />
+                        <Route path="/AjoutUser" element={<AddUser />} />
+                        <Route path="/Historique" element={<Historique />} />
                     </Routes>
 
-                    
+
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Home;
+export default Home
