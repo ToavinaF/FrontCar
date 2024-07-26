@@ -9,6 +9,8 @@ import EditUser from '../user/EditUser'
 import Addcar from '../AddCar/Addcar'
 import ListCar from '../listCar/listCar'
 import DeatilCar from '../DetailCar/DeatilCar'
+import Historique from '../Historique/Historique'
+
 
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
@@ -19,8 +21,8 @@ const Home = () => {
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
-                    <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} />
+                    <SideBar setActivePage={setActivePage} />
+                    <Header activepage={activePage} />
                 </div>
                 <div className="content">
                     <Routes>
@@ -34,6 +36,8 @@ const Home = () => {
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
                         <Route path="/*" element={<AddUser/>}/>
                     </Routes>
+
+
                 </div>
             </div>
         </div>
