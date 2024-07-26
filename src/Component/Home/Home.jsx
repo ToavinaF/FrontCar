@@ -31,7 +31,8 @@ const Home = () => {
                         <Route path='/dashboard' element={<Dashboard/>}/>
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
-                        <Route path="/AjoutUser" element={<AddUser/>}/>
+                        <Route path='/EditUser/:id' element={<EditUser/>}/>
+                        <Route path="/*" element={<AddUser/>}/>
                     </Routes>
                 </div>
             </div>
