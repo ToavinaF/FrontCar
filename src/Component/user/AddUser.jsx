@@ -3,6 +3,7 @@ import axios from 'axios';
 import './AddUser.scss';
 import { FaPlusCircle, FaTimes } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { Navigate } from 'react-router-dom';
 
 function Register() {
     const { t } = useTranslation();
@@ -10,6 +11,7 @@ function Register() {
     const [firstname, setFirstname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordCn, setPasswordCn] = useState('');
     const [photo, setPhoto] = useState(null);
     const [image, setImage] = useState(null);
     const [error, setError] = useState('');
@@ -17,11 +19,17 @@ function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (password !== passwordCn) {
+            setError(t('register.passwordMismatch'));
+            return;
+        }
+
         const formData = new FormData();
         formData.append('name', name);
         formData.append('firstname', firstname);
         formData.append('email', email);
         formData.append('password', password);
+        formData.append('password_confirmation', passwordCn); // Ajout de la confirmation du mot de passe
         if (photo) {
             formData.append('photo', photo);
         }
@@ -33,6 +41,7 @@ function Register() {
                 }
             });
             console.log('Inscription réussie:', response.data);
+            Navigate('Home')
         } catch (error) {
             setError(t('register.error'));
             console.error('Erreur lors de l\'inscription:', error.response ? error.response.data : error.message);
@@ -86,14 +95,7 @@ function Register() {
                                         className="form-input"
                                         name="photo"
                                         accept="image/*"
-                                        onChange={(e) => {
-                                            const file = e.target.files[0];
-                                            if (file) {
-                                                setPhoto(file);
-                                                const imageUrl = URL.createObjectURL(file);
-                                                setImage(imageUrl);
-                                            }
-                                        }}
+                                        onChange={handleImageChange}
                                     />
                                     <FaPlusCircle className="icon" />
                                     {image && (
@@ -119,12 +121,12 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="firstName"><span> {t('register.firstname')} </span></label>
+                            <label htmlFor="firstname"><span> {t('register.firstname')} </span></label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="firstName"
-                                name="firstName"
+                                id="firstname"
+                                name="firstname"
                                 value={firstname}
                                 onChange={(e) => setFirstname(e.target.value)}
                                 required
@@ -154,10 +156,21 @@ function Register() {
                                 required
                             />
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="password_confirmation"><span> {t('passwordConfirmation')} </span></label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                value={passwordCn}
+                                onChange={(e) => setPasswordCn(e.target.value)}
+                                required
+                            />
+                        </div>
                     </div>
                     <button type="submit" className="btn btn-primary btn-block mt-3"><span> {t('register.registerButton')} </span></button>
                 </form>
-                {error && <p className="error-message">{error}</p>}
             </div>
         </div>
     );

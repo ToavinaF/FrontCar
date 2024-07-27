@@ -62,7 +62,7 @@ const EditUser = () => {
                 }
             });
             console.log('Réponse :', response.data);
-            navigate('/');
+            navigate('/Home');
         } catch (error) {
             console.error('Erreur :', error.response ? error.response.data : error.message);
         }
