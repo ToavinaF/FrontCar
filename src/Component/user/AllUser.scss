@@ -1,7 +1,8 @@
 .user-list {
     padding: 20px;
-    background-color: #24292D;
+    background-color: var(--body-bg);
     color: white;
+    border-radius: 15px;
 }
 
 .header {
@@ -22,7 +23,7 @@
 }
 
 .project-stats .btn {
-    background-color: #ffcb05;
+    background-color: var(--color-principal);
     border: none;
     padding: 10px 20px;
     color: #24292D;

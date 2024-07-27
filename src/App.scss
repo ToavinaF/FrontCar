@@ -1,10 +1,10 @@
 :root{
     --color-principal: #ffc107;
     --title-color: hsl(0, 0%, 40%);
-    --text-color: hsl(0, 0%, 50%);
+    --text-color: hsl(0, 7%, 79%);
     --container-color: hsl(0, 0%, 93%);
     --border-color: hsl(0, 0%, 87%);
-    --body-color: hsl(0, 0%, 100%);
+    --body-color:  #23282c;
     --border-car-one: rgb(130, 5, 161);
     --blanch: #fff;
     --color-hover: rgba(98, 98, 5, 0.402);
@@ -35,24 +35,30 @@
     --weight-800:800;
     --body-content: #24292D;
     --body-bg: #2f363e;
-
+    --label:#828685;
+    --profile:rgba(255, 195, 139, 0.1);
 }
 .light-theme{
     --blanch: rgb(20, 18, 18);
-    --color-principal: #0413bbce;
+    --color-principal: #ffc107;
     --body-bg: #dfdfdf;
-
+    --heading-color: rgb(53, 53, 53);
     --body-content: hsl(0, 0%, 80%);
     --heading-color: #23282c;
     --title-color: hsl(0, 0%, 100%);
-    --text-color: hsl(0, 0%, 80%);
-    --body-color: #23282c;
+    --text-color: hsl(0, 1%, 29%);
+    --body-color:hsl(0, 0%, 100%);
     --container-color: hsl(0, 1%, 17%);
     --border-color: hsl(0, 0%, 15%);
     --recommend-car01-bg: #e1dfa4;
     --recommend-car02-bg: #e3ecf1;
     --recommend-car03-bg: #f4e3e5;
-    
+    --label:#242323;
+    --profile:rgba(57, 56, 55, 0.1);
+}
+
+body{
+    background: var(--body-color);
 }
 .content-fluid{
     width: 100%;
@@ -80,6 +86,7 @@
         padding:2% 5% 5% 5%;
         margin: 80px 0 0 0;
         z-index: -1;
+        min-height: 695px;
     }
     span {
         color: var(--first-color);

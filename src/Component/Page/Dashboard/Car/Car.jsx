@@ -39,7 +39,7 @@ const Car = ({Vehicule}) => {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         className="mySwiper"
       >
-        {
+        {/* {
           Vehicule.map((veh, i) => (
             <SwiperSlide key={i}>
               <div className='recommend__car-card'>
@@ -56,14 +56,56 @@ const Car = ({Vehicule}) => {
                       <p>{veh.matricule}</p>
                       <p><IoMdSettings /></p>
                       <p><FaStopwatch /></p>
-                      <p>{veh.prix}/jour</p>
+                      <p>{veh.prix}{t('/jours')}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </SwiperSlide>
           ))
-        }
+        } */}
+        <SwiperSlide>
+          <div className='recommend__car-card'>
+            <div className='recommend__car-top'>
+              <h5><span><FaChartArea /></span></h5>
+            </div>
+            <div className='recommend__car-img'>
+              <img src={Cars} alt={t('Marque')} />
+            </div>
+            <div className='recommend__car-bottom'>
+              <h4>{t('Marque')}</h4>
+              <div className='recommend__car-other'>
+                <div className='recommend__car-icons'>
+                  <p><span> {t('Matricule')} </span></p>
+                  <p><span> <IoMdSettings /> </span></p>
+                  <p><span> <FaStopwatch /> </span></p>
+                  <p><span>13500 {t('jours')} </span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className='recommend__car-card'>
+            <div className='recommend__car-top'>
+              <h5><span><FaChartArea /></span></h5>
+            </div>
+            <div className='recommend__car-img'>
+              <img src={Cars2} alt={t('Marque')} />
+            </div>
+            <div className='recommend__car-bottom'>
+              <h4><span>{t('Marque')}</span></h4>
+              <div className='recommend__car-other'>
+                <div className='recommend__car-icons'>
+                  <p><span> {t('Matricule')} </span></p>
+                  <p><span> <IoMdSettings /> </span></p>
+                  <p><span> <FaStopwatch /> </span></p>
+                  <p><span> 9000{t('jours')} </span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
 
         <div className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>

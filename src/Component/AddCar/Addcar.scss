@@ -15,7 +15,7 @@
         align-items: center;
         justify-content: space-around;
         // border: solid 2px white;
-        background: #2f363e;
+        background: var(--body-bg);
         border-radius: 10px;
 
         .parti-left {
@@ -65,7 +65,7 @@
 
                 label {
                     font-size: 1.2rem;
-                    color: #828685;
+                    color: var(--label);
                 }
 
                 .input {
@@ -73,8 +73,8 @@
                     height: 50%;
                     border-radius: 10px;
                     margin-top: 3%;
-                    background: #24292d;
-                    color: #60696d;
+                    background: var(--body-color);
+                    color: var(--text-color);
                     font-size: 1rem;
                     padding-left: 4%;
                     border: none;
@@ -105,7 +105,7 @@
 
                 label {
                     font-size: 1.2rem;
-                    color: #828685;
+                    color: var(--label);
                 }
 
                 .input {
@@ -113,8 +113,9 @@
                     height: 50%;
                     border-radius: 10px;
                     margin-top: 3%;
-                    background: #24292d;
-                    color: #60696d;
+                    background: var(--body-color);
+                    color: var(--text-color);
+                    
                     font-size: 1rem;
                     padding-left: 4%;
                     border: none;
@@ -138,7 +139,7 @@
 
                 label {
                     font-size: 1.2rem;
-                    color: #828685;
+                    color: var(--label);
                 }
 
                 .desc {
@@ -146,8 +147,8 @@
                     height: 80%;
                     border-radius: 10px;
                     margin-top: 3%;
-                    background: #24292d;
-                    color: #60696d;
+                    background: var(--body-color);
+                    color: var(--text-color);
                     font-size: 1rem;
                     padding-left: 4%;
                     border: none;
@@ -160,7 +161,7 @@
                 margin-bottom: 5%;
                 border-radius: 10px;
                 border: none;
-                background: #ffc107;
+                background: var(--color-principal);
                 font-size: 1.2rem;
                 color: white;
                 font-weight: bold;

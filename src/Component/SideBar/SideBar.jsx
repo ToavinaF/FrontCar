@@ -30,23 +30,7 @@ const SideBar = ({ setActivePage }) => {
         <div className='SideBar'>
             <div className="logo">
                 <IoCarSport className='icon_logo' />
-                <li className='language-selector'>
-                       <ul>
-                            {languages.map(({ code, name, country_code }) => (
-                                <li className='nav_link' key={country_code}>
-                                        
-                                        <span
-                                          onClick={() => handleLanguageChange(code)}
-                                            disabled={code === currentLanguageCode}
-                                            className={`flag-icon flag-icon-${country_code}`}
-                                            style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
-                                        ></span>
-                                    
-                                </li>
-                            ))}
-                       </ul> 
-                        
-                    </li>
+                
             </div>
 
             <div className="navlink">
@@ -68,7 +52,7 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'><NavLink className='nav_item' to={'/listcar'} onClick={() => setActivePage('All Car')}>{t('all_car')}</NavLink></li>
                             <li className='nav_link'><NavLink to={'/addcar'} className='nav_item' onClick={() => setActivePage('Add Car')}>{t('add_car')}</NavLink></li>
-                            <li className='nav_link'><NavLink to={'/Historique'} className='nav_item' onClick={() => setActivePage('Add Car')}>{t('Historique')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/Historique'} className='nav_item' onClick={() => setActivePage('Historiques')}>{t('Historique')}</NavLink></li>
 
                         </div>
                     </div>

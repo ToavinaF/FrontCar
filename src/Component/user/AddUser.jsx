@@ -70,7 +70,7 @@ function Register() {
     return (
         <div className="container">
             <div className="registration-form">
-                <h2 className="text-center">{t('register.title')}</h2>
+                <h2 className="text-center"><span> {t('register.title')} </span></h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-fields">
                         <div className="form-group">
@@ -102,12 +102,12 @@ function Register() {
                                             <FaTimes className="remove-icon" onClick={handleRemoveImage} />
                                         </div>
                                     )}
-                                    {!image && <p>{t('register.profilePhoto')}</p>}
+                                    {!image && <p><span> {t('register.profilePhoto')} </span></p>}
                                 </div>
                             </label>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="name">{t('register.name')}</label><br />
+                            <label htmlFor="name"><span> {t('register.name')} </span></label><br />
                             <input
                                 type="text"
                                 className="form-control"
@@ -119,7 +119,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="firstName">{t('register.firstname')}</label>
+                            <label htmlFor="firstName"><span> {t('register.firstname')} </span></label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -131,7 +131,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="email">{t('register.email')}</label>
+                            <label htmlFor="email"><span> {t('register.email')} </span></label>
                             <input
                                 type="email"
                                 className="form-control"
@@ -143,7 +143,7 @@ function Register() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">{t('register.password')}</label>
+                            <label htmlFor="password"><span> {t('register.password')} </span></label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -155,7 +155,7 @@ function Register() {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block mt-3">{t('register.registerButton')}</button>
+                    <button type="submit" className="btn btn-primary btn-block mt-3"><span> {t('register.registerButton')} </span></button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
