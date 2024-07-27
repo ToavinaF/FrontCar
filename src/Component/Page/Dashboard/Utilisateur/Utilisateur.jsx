@@ -52,7 +52,7 @@ const Utilisateur = ({ User }) => {
                         <SwiperSlide key={i}>
                             <div className='card'>
                                 <div className='profil'>
-                                   <span> <BsThreeDotsVertical /></span>
+                                    <span> <BsThreeDotsVertical /></span>
                                 </div>
                                 <div className='image'>
                                     <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${user.photo}`} alt="profil" />
@@ -75,107 +75,7 @@ const Utilisateur = ({ User }) => {
                     ))
 
                 }
-                <SwiperSlide>
-                    <div className='card'>
-                        <div className='profil'>
-                           <span> <BsThreeDotsVertical /></span>
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span> Alan Gerard </span> </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
 
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Ramah Hery</span> </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
-
-                </SwiperSlide>
-                <SwiperSlide>
-
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Booster flow</span>  </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-                    </div>
-
-
-                </SwiperSlide>
-                <SwiperSlide>
-
-
-                    <div className='card'>
-                        <div className='profil'>
-                            <BsThreeDotsVertical />
-                        </div>
-                        <div className='image'>
-                            <img src={profil} alt="profil" />
-                        </div>
-                        <div className='detail'>
-                            <div className='nom'>
-                                <h1><span>Alan Green</span> </h1>
-                            </div>
-                            <div className='profession'>
-                                <p><span>UI/UX developpeur</span> </p>
-                            </div>
-                        </div>
-                        <div className='icon'>
-                            <div className='icons'><IoCall /> </div>
-                            <div className='icons'><BiMessageDetail /> </div>
-                            <div className='icons'><FaVideo /> </div>
-                        </div>
-
-                    </div>
-
-                </SwiperSlide>
                 <div className="autoplay-progress" slot="container-end">
                     <svg viewBox="0 0 48 48" ref={progressCircle}>
                         <circle cx="0" cy="0" r="0"></circle>
