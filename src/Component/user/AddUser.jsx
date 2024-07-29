@@ -3,7 +3,7 @@ import axios from 'axios';
 import './AddUser.scss';
 import { FaPlusCircle, FaTimes } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Register() {
     const { t } = useTranslation();
@@ -15,6 +15,7 @@ function Register() {
     const [photo, setPhoto] = useState(null);
     const [image, setImage] = useState(null);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -41,7 +42,7 @@ function Register() {
                 }
             });
             console.log('Inscription réussie:', response.data);
-            Navigate('Home')
+            navigate('../../Home')
         } catch (error) {
             setError(t('register.error'));
             console.error('Erreur lors de l\'inscription:', error.response ? error.response.data : error.message);

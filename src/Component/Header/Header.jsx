@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Header.scss';
+import axios from 'axios';
+
 import { FaCommentDots, FaRegUser } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import { CiLogout } from 'react-icons/ci';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const Header = ({ activepage, setActivePage }) => {
@@ -15,9 +17,38 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const firstname = localStorage.getItem('userFirstname'); // Assurez-vous que ce nom est correct
     const role = localStorage.getItem('Role');
+
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
     };
+    const handleLogout = async () => {
+    
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/logout', {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (response.status === 401) { // Vérifiez que le code de statut est 204 pour 'noContent'
+                // Supprimez les informations d'authentification du localStorage
+                localStorage.removeItem('accessToken'); // Assurez-vous que le nom est correct
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userFirstname');
+                localStorage.removeItem('email');
+                localStorage.removeItem('Role');
+                localStorage.removeItem('Job');
+                localStorage.removeItem('contact');
+    
+                // Redirigez l'utilisateur vers la page de connexion ou autre
+                Navigate('');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la déconnexion:', error.response ? error.response.data : error.message);
+        }
+    };
+    
+
 
     return (
         <header>
@@ -47,8 +78,10 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
-                            <li><NavLink to={'/Profile'} onClick={() => setActivePage('Profile')}><FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
-                            <li><CiLogout className='icon' /> {t('Logout')}</li>
+                            <li><NavLink to={'/Profile'} onClick={() => setActivePage('Profile')}>
+                            <FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
+                            <li><CiLogout className='icon' onClick={handleLogout} /> {t('Logout')}</li>
+
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,8 @@ import Reservation from '../Reservation/Reservation'
 import Dashboard from '../Page/Dashboard/Dashboard'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
+    const accesstoken = localStorage.getItem('accessToken');
+    console.log(accesstoken)
     return (
         <div>
             <div className='content-fluid'>
@@ -34,7 +36,7 @@ const Home = () => {
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
-                        <Route path="/*" element={<AddUser/>}/>
+                        <Route path="/AjoutUser" element={<AddUser/>}/>
                     </Routes>
 
 
