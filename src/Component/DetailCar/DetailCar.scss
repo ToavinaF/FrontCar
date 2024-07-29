@@ -16,12 +16,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        img{
-            width: 110%;
+        .boucle{
+            width: 100%;
+            height: 429px;
+            // border: solid 2px white;
+            // background-color: #ffc107;
+            object-fit: cover;
+            margin: 0% 0 0 0;
+            img{
+                width: 100%;
+            }
         }
+        
         .swiper-container{
             width: 100%;
             height: 100%;
+            border: solid 2px rgb(137, 15, 15);
+
         }
     }
     .blockRight{

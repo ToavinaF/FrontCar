@@ -7,11 +7,14 @@ import { TbManualGearboxFilled } from "react-icons/tb";
 import Sary from '../../assets/saert.jpeg'
 import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+
+// Import Swiper styles
+import 'swiper/scss';
+import 'swiper/scss/navigation';
+import 'swiper/scss/pagination';
 // import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
 
@@ -49,21 +52,29 @@ const DeatilCar = () => {
   return (
     <div className='contDetail'>
       <div className='blockLeft'>
-      <div className='swiper-container'>
-        <Swiper
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-        >
-          {Galerie.map((image, index) => (
-            <SwiperSlide key={index}>
-              <img src={`http://127.0.0.1:8000/storage/viewGalerie/${image}`} alt={`Galerie image ${index}`} />
-            </SwiperSlide>
+      <Swiper
+      // install Swiper modules
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
+      spaceBetween={5}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: false }}
+      onSwiper={(swiper) => console.log(swiper)}
+      onSlideChange={() => console.log('slide change')}
+    >
+      {Galerie.map((view, index) => (
+
+          <SwiperSlide key={index}>
+            <div className="boucle">
+            <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${view.image}`} alt={`Galerie image ${index}`} />
+            </div>
+        </SwiperSlide>
+        
+           
           ))}
-        </Swiper>
-      </div>
+      
+    </Swiper>
 
 
       </div>

@@ -7,11 +7,12 @@ import { TbManualGearboxFilled } from "react-icons/tb";
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const ListCar = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [ViewCar, setViewCar] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
 
@@ -45,6 +46,9 @@ const ListCar = () => {
       )
     })
     setViewCar(newList);
+  }
+  const handleEdit = async (id) => {
+    navigate('/modifCar/'+id);
   }
 
   return (
@@ -84,7 +88,7 @@ const ListCar = () => {
                   </div>
                   <div className="icon">
                     <TbManualGearboxFilled className='imgIcon' />
-                    <h3>{list.transmission === 'Automatique' ? 'Auto' : 'Man.'}</h3>
+                    <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
                   </div>
                 </div>
                 <h2>{list.prix}/jrs</h2>
