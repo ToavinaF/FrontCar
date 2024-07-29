@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import './Reservation.scss'
 import Sary from '../../assets/saert.jpeg'
 import { FaCalendarCheck } from 'react-icons/fa'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 function Reservation() {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [CarCheck, setCarCheck] = useState([]);
     const [ListUser, setListUser] = useState([]);
@@ -53,7 +54,7 @@ function Reservation() {
         console.log(data);
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/Reservation/' + id, data);
-            console.log(response.data);
+            navigate('/Historique');
         } catch (error) {
             console.error(error);
 

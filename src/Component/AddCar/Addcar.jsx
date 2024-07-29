@@ -69,7 +69,7 @@ const Addcar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      navigate('/listcar')
+      navigate('/Home/listcar')
       console.log(response.data);
     } catch (error) {
       console.error(error);

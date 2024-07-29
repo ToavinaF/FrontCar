@@ -92,7 +92,7 @@ const ListCar = () => {
                   </div>
                 </div>
                 <h2>{list.prix}/jrs</h2>
-                <NavLink className='btn' to={`/detail/${list.id}`}>{t('Details')}</NavLink>
+                <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
               </div>
             )
           })
