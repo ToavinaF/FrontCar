@@ -5,6 +5,13 @@ import { useTranslation } from 'react-i18next';
 const Profil = () => {
     const { t } = useTranslation();
 
+    const image = localStorage.getItem('photo');
+    const name = localStorage.getItem('userName');
+    const firstname = localStorage.getItem('userFirstname'); // Assurez-vous que ce nom est correct
+    const email = localStorage.getItem('email');
+    const job = localStorage.getItem('Job');
+
+    // console.log(image);
     return (
         <div className='Profil'>
             <div className="headprofil">
@@ -17,13 +24,13 @@ const Profil = () => {
 
                     <div className="prof-cont">
                         <div className="image-text">
-                            <img src={Image} alt="" />
+                            <img src={`http://127.0.0.1:8000/storage/image/${image}`} alt="" />
                             <div className="cont-span">
-                                <h2><span> Mitchell C.Shay</span></h2>
-                                <p>Concepteur UX / UI</p>
+                                <h2><span> {name} {firstname}</span></h2>
+                                <p>{job}</p>
                             </div>
                             <div className="cont-span">
-                                <h3>InfoExemple@gmail.com</h3>
+                                <h3>{email}</h3>
                                 <p>E-mail</p>
                             </div>
                         </div>

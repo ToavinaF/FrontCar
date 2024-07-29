@@ -42,7 +42,7 @@ const Header = ({ activepage, setActivePage }) => {
                 <div className="profil_show">
                     <img src={'http://127.0.0.1:8000/storage/'+image || 'default-profile.png'} alt="Profile" /> {/* Utilisez une image par défaut si aucune image n'est disponible */}
                     <div className="cont_prof" onClick={() => handleClick(0)}>
-                        <h1>{name} {firstname}</h1>
+                        <h1>{name}</h1>
                         <p>{role}</p>
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
