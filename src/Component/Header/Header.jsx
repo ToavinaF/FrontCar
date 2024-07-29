@@ -47,7 +47,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
-                            <li><NavLink to={'/Profile'} onClick={() => setActivePage('Profile')}><FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
+                            <li><NavLink to={'/Home/Profile'} onClick={() => setActivePage('Profile')}><FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
                             <li><CiLogout className='icon' /> {t('Logout')}</li>
                         </div>
                     </div>
