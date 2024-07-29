@@ -9,11 +9,11 @@ $input-focus-border-color: $primary-color;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: $background-color;
+    background-color: var(--body-bg);
 }
 
 .registration-form {
-    background-color: #2e3236;
+    background-color: var(--body-color);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@ $input-focus-border-color: $primary-color;
     input {
     width: 400px;
     height: 50px;
-    background-color:#24292D;
+    background-color:var(--body-color);
     outline: none;
     }
 
@@ -44,7 +44,7 @@ $input-focus-border-color: $primary-color;
             color: black;
             width: 50%;
             height: 100%;
-            background: rgb(0, 183, 255);
+            background: var(--color-principal);
             color: white;
             text-align: center;
             padding: 2% 0 2% 0;
@@ -58,7 +58,7 @@ $input-focus-border-color: $primary-color;
         }
         .icon {
             font-size: 10rem; // Adjust size as needed
-            color: #007bff; // Adjust color as needed
+            color: var(--color-principal); // Adjust color as needed
             margin-left: 130px;
         }
         .imgdiv{
@@ -95,7 +95,7 @@ $input-focus-border-color: $primary-color;
         font-size: 16px;
         padding: 10px;
         border-radius: 5px;
-        background-color: $primary-color;
+        background-color: var(--color-principal);
         border: none;
         color: white;
         font-weight: bold;

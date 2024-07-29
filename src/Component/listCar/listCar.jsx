@@ -33,7 +33,7 @@ const ListCar = () => {
             return (
               <div key={i} className="ListBlock">
                 <div className='barNav'>
-                  <h1 className='tlt'>{list.marque}</h1>
+                  <h1 className='tlt'> {list.marque}</h1>
                   <span>...</span>
                 </div>
                 <div className="photoCar">
@@ -42,23 +42,26 @@ const ListCar = () => {
                 <div className="aprop">
                   <div className="icon">
                     <FaUser className='imgIcon' />
-                    <h3>{list.place}</h3>
+                    <h3> {list.place} </h3>
                   </div>
                   <div className="icon">
                     <BsFillSuitcase2Fill className='imgIcon' />
-                    <h3>{list.bagage}</h3>
+                    <h3>{list.bagage} </h3>
                   </div>
                   <div className="icon">
                     <GiCarDoor className='imgIcon' />
-                    <h3>{list.porte}</h3>
+                    <h3>{list.porte} </h3>
                   </div>
                   <div className="icon">
                     <TbManualGearboxFilled className='imgIcon' />
-                    <h3>{list.transmission}</h3>
+                    <h3>{list.transmission} </h3>
                   </div>
                 </div>
-                <h2>{list.prix}/jrs</h2>
-                <NavLink className='btn' to='/detail'>{t('Details')}</NavLink>
+                <h2> {list.prix}/jrs </h2>
+                
+
+                  <NavLink className='btn' to='/Home/detail'>{t('Details')}</NavLink>
+                
               </div>
             )
           })

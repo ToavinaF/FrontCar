@@ -51,7 +51,7 @@ const AllUser = () => {
     return (
         <div className="user-list">
             <header className="header">
-                <h1>{t('allUser.title')}</h1>
+                <h1><span>{t('allUser.title')}</span></h1>
             </header>
             <div className="project-stats">
                 <button className="btn">{t('allUser.allUsers')}</button>

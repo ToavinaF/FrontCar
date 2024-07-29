@@ -1,7 +1,8 @@
 .user-list {
     padding: 20px;
-    background-color: #24292D;
-    color: white;
+    background-color: var(--body-bg);
+    color: var(--blanch);
+    border-radius: 15px;
 }
 
 .header {
@@ -22,7 +23,7 @@
 }
 
 .project-stats .btn {
-    background-color: #ffcb05;
+    background-color: var(--color-principal);
     border: none;
     padding: 10px 20px;
     color: #24292D;
@@ -35,15 +36,15 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    background-color: #24292D;
+    background-color: var(--body-bg);
 }
 .user-cards {
     flex-direction: row;
 }.user-card {
-    background-color: #24292D;
+    background-color: var(--body-color);
     border-radius: 8px;
     box-shadow: 0 0 5px black;
-    color: white;
+    color: var(--blanch);
     margin-bottom: 20px;
     overflow: hidden;
     width: 100%; // Vous pouvez définir une largeur spécifique si nécessaire
@@ -105,7 +106,7 @@
         margin-top: -35px; // Ajuster la marge en fonction de la taille de la carte
 
         &:hover {
-            background-color: rgb(224, 159, 19);
+            background-color: var(--color-principal);
         }
     }
 

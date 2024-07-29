@@ -52,14 +52,14 @@ const Utilisateur = ({ User }) => {
                         <SwiperSlide key={i}>
                             <div className='card'>
                                 <div className='profil'>
-                                    <BsThreeDotsVertical />
+                                    <span> <BsThreeDotsVertical /></span>
                                 </div>
                                 <div className='image'>
-                                    <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${user.photo}`} alt="profil" />
+                                    <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name}  />
                                 </div>
                                 <div className='detail'>
                                     <div className='nom'>
-                                        <h1>{user.name}{user.firstname}</h1>
+                                        <h1><span> {user.name}{user.firstname} </span></h1>
                                     </div>
                                     <div className='profession'>
                                         <p>{user.Job}</p>

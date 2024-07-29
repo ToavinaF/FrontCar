@@ -15,6 +15,7 @@ import Historique from '../Historique/Historique'
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
 import Dashboard from '../Page/Dashboard/Dashboard'
+import Theme from '../Page/Themes/Theme'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const accesstoken = localStorage.getItem('accessToken');
@@ -23,19 +24,22 @@ const Home = () => {
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
-                    <SideBar setActivePage={setActivePage} />
-                    <Header activepage={activePage} />
+                    <SideBar setActivePage={setActivePage}  />
+                    <Header  activepage={activePage} />
+                    <Theme/>
                 </div>
                 <div className="content">
                     <Routes>
+                        <Route path='/' element={<Dashboard/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
-                        <Route path='/dashboard' element={<Dashboard/>}/>
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
+                        <Route path='/Historique' element={<Historique/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
+                        <Route path='/Historique' element={<Historique/>}/>
                         <Route path="/AjoutUser" element={<AddUser/>}/>
                     </Routes>
 
