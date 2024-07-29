@@ -15,7 +15,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
-// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -48,6 +49,8 @@ const DeatilCar = () => {
     fetchCar();
     fetchGal();
   },[id])
+
+  const { t } = useTranslation();
 
   return (
     <div className='contDetail'>
@@ -83,28 +86,28 @@ const DeatilCar = () => {
         <div className="IconType">
           <div className="icon">
             <FaUser className='iconImg' />
-            <h1>Nombre de place</h1>
+            <h1>{t('Nombre de place')}</h1>
           </div>
           <h1>{CarDetail.place}</h1>
         </div>
         <div className="IconType">
           <div className="icon">
             <BsFillSuitcase2Fill className='iconImg' />
-            <h1>Nombre de bagage</h1>
+            <h1>{t('Nombre de bagage')}</h1>
           </div>
           <h1>{CarDetail.bagage}</h1>
         </div>
         <div className="IconType">
           <div className="icon">
             <GiCarDoor className='iconImg' />
-            <h1>Nombre de porte</h1>
+            <h1>{t('Nombre de porte')}</h1>
           </div>
           <h1>{CarDetail.porte}</h1>
         </div>
         <div className="IconType">
           <div className="icon">
             <TbManualGearboxFilled className='iconImg' />
-            <h1>Boite de vitesse</h1>
+            <h1>{t('Boite de vitesse')}</h1>
           </div>
           <h1>{CarDetail.transmission}</h1>
         </div>

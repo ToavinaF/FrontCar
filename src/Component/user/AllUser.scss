@@ -1,7 +1,8 @@
 .user-list {
     padding: 20px;
-    background-color: #24292D;
-    color: white;
+    background-color: var(--body-bg);
+    color: var(--blanch);
+    border-radius: 15px;
 }
 
 .header {
@@ -22,7 +23,7 @@
 }
 
 .project-stats .btn {
-    background-color: #ffcb05;
+    background-color: var(--color-principal);
     border: none;
     padding: 10px 20px;
     color: #24292D;
@@ -35,85 +36,84 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    background-color: #24292D;
+    background-color: var(--body-bg);
 }
 .user-cards {
     flex-direction: row;
-}
-.user-card {
-    background-color: #24292D;
+}.user-card {
+    background-color: var(--body-color);
     border-radius: 8px;
     box-shadow: 0 0 5px black;
-    width: calc(33.333% - 20px);
-    display: flex;
-    flex-direction: column;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    flex-direction: row;
-}
+    color: var(--blanch);
+    margin-bottom: 20px;
+    overflow: hidden;
+    width: 100%; // Vous pouvez définir une largeur spécifique si nécessaire
+    max-width: 400px; // Ajustez la largeur maximale selon vos besoins
+    height: auto; // Ajustez la hauteur si nécessaire
 
-.user-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    // border-bottom: 1px solid #ccc;
-}
+    .card-header {
+        padding: 15px; // Augmenter le padding pour une meilleure apparence
+        border-bottom: 1px solid #333;
+    }
 
-.user-card-header .user-info {
-    display: flex;
-    flex-direction: column;
-}
-.user-info span{
-    font-size: 1.5rem;
-}
-.user-info p {
-    margin: 10px;
-    color: #828690;
-}
+    .user-info {
+        .card-title {
+            font-size: 1.75rem; // Augmenter la taille de la police du titre
+            margin-bottom: 10px; // Ajuster la marge
+        }
 
-.user-card-header .user-image img {
-    border-radius: 50%;
-    width: 75px;
-    height: 75px;
-    border:  solid 2px white;
-    margin-left: 30px;
-}
+        .card-text {
+            margin: 5px 0;
+            color: #828690;
+        }
+    }
 
-.user-card-body {
-    padding: 10px;
-    color: #828690;
-}
+    .user-image img {
+        width: 100px; // Augmenter la taille de l'image
+        height: 100px;
+        object-fit: cover;
+    }
 
-.user-card-body p {
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    
-}
+    .card-body {
+        padding: 15px; // Augmenter le padding pour le corps
+        color: #828690;
 
-.user-card-body p svg {
-    margin-right: 5px;
-}
-.user-card:hover {
-    box-shadow: 0 0 10px black;
-}
-.edit-profile {
-    position: absolute;
-    background-color: rgba(53, 47, 47, 0.9);
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: -30px;
+        .card-text {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+
+            svg {
+                margin-right: 5px;
+            }
+        }
+    }
 
     &:hover {
-        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 10px black;
     }
-    svg {
-        margin-right: 5px;
+
+    .edit-profile,
+    .delete-profile {
+        position: absolute;
+        background-color: rgba(53, 47, 47, 0.9);
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: -35px; // Ajuster la marge en fonction de la taille de la carte
+
+        &:hover {
+            background-color: var(--color-principal);
+        }
+    }
+
+    .delete-profile {
+        margin-top: -70px; // Ajuster la marge en fonction de la taille de la carte
+        &:hover {
+            background-color: rgb(214, 36, 36);
+        }
     }
 }

@@ -13,7 +13,9 @@
     .ListBlock {
         width: 28%;
         height: 450px;
-        background: #2f363e;
+        // background: #2f363e;
+        background: var(--body-bg);
+
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -83,10 +85,12 @@
 
         h1 {
             font-size: 1.5rem;
+            color: var(--blanch);
         }
 
         h2 {
             font-size: 1rem;
+            color: var(--blanch);
         }
 
         .photoCar {
@@ -129,20 +133,22 @@
 
                 .imgIcon {
                     font-size: 1.2rem;
-                    color: #ffc107;
+                    color: var(--color-principal);
                 }
 
                 h3 {
-                    color: beige;
+                    // color: beige;
+                    color: var(--blanch);
                     font-size: 1rem;
                     font-weight: normal;
                 }
                 &:hover{
-                    background: #ffc107;
+                    background: var(--color-principal);
                     transition: 0.5s;
                     .imgIcon {
                         font-size: 1.2rem;
-                        color: #1e1d1c;
+                        // color: #1e1d1c;
+                        color: var(--blanch);
                     }
                     h3 {
                         color: rgb(17, 17, 16);
@@ -158,15 +164,17 @@
             width: 45%;
             height: 40px;
             border: solid 1px;
-            border-color: #ffc107;
+            border-color: var(--color-principal);
             border-radius: 10px;
-            background: #2f363e;
-            color: white;
+            // background: #2f363e;
+            background: var(--body-bg);
+
+            color: var(--blanch);
             font-size: 1rem;
             cursor: pointer;
 
             &:hover {
-                background: #ffc107;
+                background: var(--color-principal);
                 transition: 0.2s;
             }
         }

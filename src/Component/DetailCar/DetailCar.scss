@@ -6,12 +6,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    color: var(--blanch);
     // border: solid 2px white;
     .blockLeft{
         width: 50%;
         height: 500px;
         border-radius: 10px;
-        background: #2f363e;
+        background: var(--body-bg);
         overflow: hidden;
         display: flex;
         align-items: center;
@@ -39,7 +40,7 @@
         width: 35%;
         height: 500px;
         border-radius: 10px;
-        background: #2f363e;
+        background: var(--body-bg);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -68,7 +69,7 @@
                 justify-content: center;
                 .iconImg{
                     font-size: 1.5rem;
-                    color: #ffc107;
+                    color: var(--color-principal);
                 }
                 h1{
                     font-size: 1.3rem;
@@ -82,10 +83,10 @@
         .btn{
             width: 80%;
             height: 50px;
-            background: #ffc107;
+            background: var(--color-principal);
             border: none;
             border-radius: 10px;
-            color: white;
+            color: var(--blanch);
             font-size: 1.2rem;
             .ico{
                 font-size: 1.2rem;

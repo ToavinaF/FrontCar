@@ -98,7 +98,7 @@ const Addcar = () => {
               )}
             </div>
             <div className="caracter">
-              <label htmlFor="marque">{t('Marque du vehicule')}</label>
+              <label htmlFor="marque"> {t('Marque du vehicule')}</label>
               <input type="text" placeholder={t('Marque du vehicule')} className='input' name='marque' onChange={handleChange} />
             </div>
             <div className="caracter">

@@ -9,8 +9,8 @@
         .content-profil {
             margin: 4% 0 0 0;
             padding: 1% 1% 1% 1%;
-            background: #2f363e;
-            box-shadow: 0 0 5px black;
+            background: var(--body-bg);
+            box-shadow: 0 0 5px var(--blanch);
             border-radius: 10px;
 
             .imagePdc {
@@ -56,12 +56,12 @@
                         }
 
                         h3 {
-                            color: #828690;
+                            color: var(--text-color);
                             margin: 0 0 5% 0;
                         }
 
                         p {
-                            color: #828690;
+                            color: var(--text-color);
                         }
                     }
                 }
@@ -76,9 +76,9 @@
                     p {
                         padding:0 10% 10% 10%;
                         border-radius: 10px;
-                        background: rgba(255, 195, 139, 0.1);
+                        background: var(--profile);
                         font-size:2rem;
-                        border: 1px solid rgba(255, 195, 139, 0.1);
+                        border: 1px solid var(--profile);
                         cursor: pointer;
                     }
 

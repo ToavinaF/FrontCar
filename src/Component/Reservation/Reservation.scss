@@ -6,13 +6,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-
+    color: var(--blanch);
     // border: solid 2px white;
     .contentReserv {
         width: 85%;
         height: 90%;
         border-radius: 10px;
-        background: #2f363e;
+        background: var(--body-bg);
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -76,7 +76,7 @@
                         height: 40%;
                         border-radius: 10px;
                         margin-top: 3%;
-                        background: #24292d;
+                        background: var(--body-color);
                         color: #60696d;
                         font-size: 1rem;
                         padding-left: 4%;
@@ -112,7 +112,7 @@
                 .btn{
                     width: 70%;
                     height: 50px;
-                    background: #ffc107;
+                    background: var(--color-principal);
                     border: none;
                     border-radius: 10px;
                     color: white;
