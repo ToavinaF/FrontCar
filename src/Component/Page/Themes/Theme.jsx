@@ -23,7 +23,7 @@ const color = [
     { id: 9, img: Theme9, couleur: 'hsl(12, 3%, 66%)', },
 ];
 const getStorageCouleur = () => {
-    let couleur = 'var(--principal-color)';
+    let couleur = 'var(--color-principal)';
     if (localStorage.getItem('couleur')) {
         couleur = localStorage.getItem('couleur')
     }

@@ -15,9 +15,12 @@ import Historique from '../Historique/Historique'
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
 import Dashboard from '../Page/Dashboard/Dashboard'
+import ModifCar from '../ModifCar/ModifCar'
 import Theme from '../Page/Themes/Theme'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
+    const accesstoken = localStorage.getItem('accessToken');
+    console.log(accesstoken)
     return (
         <div>
             <div className='content-fluid'>
@@ -28,6 +31,18 @@ const Home = () => {
                 </div>
                 <div className="content">
                     <Routes>
+                        <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path="/listcar" element={<ListCar />} />
+                        <Route path='/addcar' element={<Addcar />} />
+                        <Route path='/Profile' element={<Profil />} />
+                        <Route path='/listUser' element={<AllUser />} />
+                        <Route path="/AjoutUser" element={<AddUser />} />
+                        <Route path="/Historique" element={<Historique />} />
+
+                        <Route path="/detail/:id" element={<DeatilCar/>} />
+                        <Route path="/reservation/:id" element={<Reservation/>} />
+                        <Route path="/modifCar/:id" element={<ModifCar/>} />
+                      
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
                         <Route path='/addcar' element={<Addcar/>}/>
@@ -35,6 +50,7 @@ const Home = () => {
                         <Route path="/reservation" element={<Reservation/>} />
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
+                        <Route path='/Historique' element={<Historique/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
                         <Route path='/Historique' element={<Historique/>}/>
                         <Route path="/AjoutUser" element={<AddUser/>}/>

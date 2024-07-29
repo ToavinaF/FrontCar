@@ -40,13 +40,13 @@
                     z-index: 0;
                     th {
                         padding: 2% 0 2% 0;
-                        border-bottom: 1px solid white;
+                        border-bottom: 1px solid var(--blanch);
                     }
 
                     td {
                         padding: 3% 0 0% 0;
                         color: #828690;
-                        border-bottom: 1px solid white;
+                        border-bottom: 1px solid var(--blanch);
                         text-align: center;
                         .id-col{
                             color: var(--heading-color);
@@ -95,7 +95,7 @@
 
                                 a {
                                     text-decoration: none;
-                                    color: white;
+                                    color: var(--blanch);
                                     cursor: pointer;
                                     &:hover{
                                         font-weight: bold;
