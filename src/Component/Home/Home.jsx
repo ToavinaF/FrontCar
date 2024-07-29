@@ -28,16 +28,17 @@ const Home = () => {
                 </div>
                 <div className="content">
                     <Routes>
+                        <Route path='/' element={<Dashboard/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
-                        <Route path='/*' element={<Dashboard/>}/>
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
                         <Route path='/Historique' element={<Historique/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
-                        <Route path="/AddUser" element={<AddUser/>}/>
+                        <Route path='/Historique' element={<Historique/>}/>
+                        <Route path="/AjoutUser" element={<AddUser/>}/>
                     </Routes>
 
 

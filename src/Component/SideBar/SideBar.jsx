@@ -36,7 +36,7 @@ const SideBar = ({ setActivePage }) => {
             <div className="navlink">
                 <ul>
 
-                    <NavLink to='/Home/dashboard' className='li-dash' onClick={() => setActivePage('Dashboard')}>
+                    <NavLink to='/Home' className='li-dash' onClick={() => setActivePage('Dashboard')}>
                         <MdDashboard className='icon-dash' />
                         <p>{t('dashboard')}</p>
                         
@@ -65,20 +65,18 @@ const SideBar = ({ setActivePage }) => {
                             </p>
                         </div>
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
-                            <li className='nav_link'><NavLink to={'/Home/listUser'}  className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</NavLink></li>
-                            <li className='nav_link'><NavLink to={'/Home/AddUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/Home/listUser'} className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/Home/AjoutUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
                         </div>
                     </div>
-
                     <div className='li-dash'>
-                        <div>
+                        <div className='btn-lang'>
                             {languages.map(({ code, name, country_code }) => (
                                 <div key={country_code}>
                                     <button
                                         onClick={() => handleLanguageChange(code)}
                                         disabled={code === currentLanguageCode}
                                     >
-                                        {name}
                                         <span
                                             className={`flag-icon flag-icon-${country_code}`}
                                             style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
@@ -88,6 +86,7 @@ const SideBar = ({ setActivePage }) => {
                             ))}
                         </div>
                     </div>
+
                 </ul>
             </div>
         </div>

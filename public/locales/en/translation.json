@@ -69,5 +69,6 @@
   "Automatique": "Automatic",
   "jours": "/day",
   "Reservation": "Reservation",
-  "Recentez": "Recent Reservation Queue"
+  "Recentez": "New Reservation",
+  "hi" : "Hi, Welcome back!"
 }

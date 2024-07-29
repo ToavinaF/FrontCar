@@ -135,6 +135,22 @@
                         }
                     }
                 }
+
+                .btn-lang{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10%;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    button{
+                        border-radius: 25px;
+                        object-fit: cover;
+                        .flag-icon{
+                            width: 45px;
+                            border-radius: 25px;
+                        }
+                    }
+                }
             }
         }
     }

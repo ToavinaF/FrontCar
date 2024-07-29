@@ -70,5 +70,6 @@
   "Automatique": "Automatique",
   "jours": "/jours",
   "Reservation": "Reservation",
-  "Recentez": "Recent Reservation Queue"
+  "Recentez": "Recent Reservation",
+  "hi": "Bonjour, bon retour !"
 }
