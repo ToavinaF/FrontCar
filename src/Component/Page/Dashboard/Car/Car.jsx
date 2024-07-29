@@ -13,7 +13,7 @@ import { MdLinearScale } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
-const Car = ({Vehicule}) => {
+const Car = ({ Vehicule }) => {
   const { t } = useTranslation();
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
@@ -56,7 +56,7 @@ const Car = ({Vehicule}) => {
                       <p>{veh.matricule}</p>
                       <p><IoMdSettings /></p>
                       <p><FaStopwatch /></p>
-                      <p>{veh.prix}/jour</p>
+                      <p>{veh.prix}{t('/jours')}</p>
                     </div>
                   </div>
                 </div>
@@ -64,6 +64,7 @@ const Car = ({Vehicule}) => {
             </SwiperSlide>
           ))
         }
+
 
         <div className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>

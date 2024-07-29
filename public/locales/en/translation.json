@@ -21,6 +21,13 @@
   "Fri": "Fri",
   "Statistiques de client par semaine": "Customer statistics per week",
   "Statiques de reservation par semaine": "Reservation statistics per week",
+  "PATIENT": "PATIENT",
+  "MARQUE": "BRAND",
+  "MATRICULE": "LICENCE PLATE",
+  "DD": "FIRST DATE",
+  "DF": "LAST DATE",
+  "STATU": "STATU",
+  "PRICE": "PRICE",
   "Marque": "Brand",
   "Matricule": "License Plate",
   "Prix/jour": "Price/day",
@@ -56,5 +63,11 @@
     "editProfile": "Edit Profile",
     "job": "Job",
     "role": "Role"
-  }
+  },
+  "Nombre de bagage": "Number of language",
+  "Boite de vitesse": "Gearbox",
+  "Automatique": "Automatic",
+  "jours": "/day",
+  "Reservation": "Reservation",
+  "Recentez": "Recent Reservation Queue"
 }

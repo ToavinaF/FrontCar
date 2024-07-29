@@ -4,6 +4,9 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import './App.scss';
 import Home from './Component/Home/Home';
+import Login from './Component/Login/Login';
+import { Route, Routes } from 'react-router-dom';
+
 
 const languages = [
   { code: 'fr', name: 'Français', country_code: 'fr' },
@@ -21,7 +24,10 @@ function App() {
 
   return (
     <div className='App'>
-      <Home />
+        <Routes>
+        <Route path="/*" element={<Login/>} />
+        <Route path="/Home/*" element={<Home/>} />
+        </Routes>
     </div>
   );
 }

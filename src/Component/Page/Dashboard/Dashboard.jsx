@@ -39,12 +39,12 @@ const Dashboard = () => {
             </div>
             <div className='statics'>
                 <div className='stats'>
-                    <h3 className='stats__titre'>{t('Statistiques de client par semaine')}</h3>
+                    <h3 className='stats__titre'><span> {t('Statistiques de client par semaine')} </span> </h3>
                     <CarChart/>
                 </div>
                 <div className='statiq'>
                     <div className='stats'>
-                        <h3 className='stats__titre'>{t('Statiques de reservation par semaine')}</h3>
+                        <h3 className='stats__titre'><span>{t('Statiques de reservation par semaine')}</span> </h3>
                         <Chart />
                     </div>
                 </div>

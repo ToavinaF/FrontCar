@@ -24,12 +24,12 @@ const Chart = () => {
 
           </linearGradient>
         </defs>
-        <XAxis dataKey="name" stroke="#ddd" />
+        <XAxis dataKey="name" stroke="var(--blanch)" />
         <CartesianGrid strokeDasharray="0" stroke='#b7ffe913' />
         <Tooltip wrapperClassName='tooltip__style' cursor={false} />
 
 
-        <Area type="monotone" dataKey="prevWeek" stroke="#ffc107" fillOpacity={1} fill="url(#colorPv)" />
+        <Area type="monotone" dataKey="prevWeek" stroke="var(--color-principal)" fillOpacity={1} fill="url(#colorPv)" />
       </AreaChart>
     </ResponsiveContainer>
   )

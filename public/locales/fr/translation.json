@@ -22,6 +22,13 @@
   "Statistiques de client par semaine": "Statistiques de client par semaine",
   "Statiques de reservation par semaine": "Statiques de reservation par semaine",
   "Marque": "Marque",
+  "PATIENT":"PATIENT",
+  "MARQUE": "MARQUE",
+  "MATRICULE": "MATRICULE",
+  "DD": "DATE DEBUT",
+  "DF": "DATE FIN",
+  "STATU": "STATU",
+  "PRICE": "PRIX",
   "Matricule": "Matricule",
   "Prix/jour": "Prix/jour",
   "salut": "Salut! bienvenu à nouveau",
@@ -56,5 +63,12 @@
     "editProfile": "Modifier le profil",
     "job": "Emploi",
     "role": "Rôle"
-  }
+  },
+
+  "Nombre de bagage": "Nombre de bagage",
+  "Boite de vitesse": "Boite de vitesse",
+  "Automatique": "Automatique",
+  "jours": "/jours",
+  "Reservation": "Reservation",
+  "Recentez": "Recent Reservation Queue"
 }

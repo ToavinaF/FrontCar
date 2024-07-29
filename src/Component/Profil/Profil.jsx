@@ -8,7 +8,7 @@ const Profil = () => {
     return (
         <div className='Profil'>
             <div className="headprofil">
-                <h1>{t('salut')} </h1>
+                <h1><span>{t('salut')} </span></h1>
 
                 <div className="content-profil">
                     <div className="imagePdc">
@@ -19,7 +19,7 @@ const Profil = () => {
                         <div className="image-text">
                             <img src={Image} alt="" />
                             <div className="cont-span">
-                                <h2>Mitchell C.Shay</h2>
+                                <h2><span> Mitchell C.Shay</span></h2>
                                 <p>Concepteur UX / UI</p>
                             </div>
                             <div className="cont-span">
@@ -28,7 +28,7 @@ const Profil = () => {
                             </div>
                         </div>
                         <div className="three-point">
-                            <p>...</p>
+                            <p><span>...</span></p>
                         </div>
                     </div>
                 </div>
