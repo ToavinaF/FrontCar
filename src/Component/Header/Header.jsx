@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 const Header = ({ activepage, setActivePage }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
+    const {Navigate} = useNavigate();
 
     // Récupération des données depuis le localStorage
     const image = localStorage.getItem('photo');
@@ -24,13 +25,13 @@ const Header = ({ activepage, setActivePage }) => {
     const handleLogout = async () => {
     
         try {
-            const response = await axios.post('http://127.0.0.1:8000/logout', {}, {
+            const response = await axios.post('http://127.0.0.1:8000/api/logout',{
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
     
-            if (response.status === 401) { // Vérifiez que le code de statut est 204 pour 'noContent'
+            if (response.status === 400) { // Vérifiez que le code de statut est 204 pour 'noContent'
                 // Supprimez les informations d'authentification du localStorage
                 localStorage.removeItem('accessToken'); // Assurez-vous que le nom est correct
                 localStorage.removeItem('userName');
@@ -79,7 +80,7 @@ const Header = ({ activepage, setActivePage }) => {
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
                             <li><NavLink to={'/Home/Profile'} onClick={() => setActivePage('Profile')}><FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
-                            <li><CiLogout className='icon' /> {t('Logout')}</li>
+                            <li onClick={()=>handleLogout()}><CiLogout className='icon'/> {t('Logout')}</li>
                         </div>
                     </div>
                 </div>
