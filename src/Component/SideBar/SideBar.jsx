@@ -66,7 +66,7 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
                             <li className='nav_link'><NavLink to={'/Home/listUser'}  className='nav_item' onClick={() => setActivePage('All Users')}>{t('all_users')}</NavLink></li>
-                            <li className='nav_link'><NavLink to={'/Home/AjoutUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
+                            <li className='nav_link'><NavLink to={'/Home/AddUser'} href="#" className='nav_item' onClick={() => setActivePage('Add User')}>{t('add_user')}</NavLink></li>
                         </div>
                     </div>
 

@@ -32,11 +32,12 @@ const Home = () => {
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
-                        <Route path='/dashboard' element={<Dashboard/>}/>
+                        <Route path='/*' element={<Dashboard/>}/>
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
+                        <Route path='/Historique' element={<Historique/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
-                        <Route path="/*" element={<AddUser/>}/>
+                        <Route path="/AddUser" element={<AddUser/>}/>
                     </Routes>
 
 

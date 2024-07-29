@@ -12,7 +12,7 @@ import Theme8 from '../../../assets/sary/jaune.png';
 import Theme9 from '../../../assets/sary/grisclaire.png';
 import './Theme.scss'
 const color = [
-    { id: 1, img: Theme1, couleur: 'hsl(59, 96%, 45%)', },
+    { id: 1, img: Theme1, couleur: '#ffc107', },
     { id: 2, img: Theme2, couleur: 'hsl(0, 94%, 38%)', },
     { id: 3, img: Theme3, couleur: 'hsl(0, 37%, 13%)', },
     { id: 4, img: Theme4, couleur: '#17a2b8', },
@@ -23,7 +23,7 @@ const color = [
     { id: 9, img: Theme9, couleur: 'hsl(12, 3%, 66%)', },
 ];
 const getStorageCouleur = () => {
-    let couleur = 'var(--principal-color)';
+    let couleur = 'var(--color-principal)';
     if (localStorage.getItem('couleur')) {
         couleur = localStorage.getItem('couleur')
     }
