@@ -55,7 +55,7 @@ const Utilisateur = ({ User }) => {
                                     <span> <BsThreeDotsVertical /></span>
                                 </div>
                                 <div className='image'>
-                                    <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${user.photo}`} alt="profil" />
+                                    <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name}  />
                                 </div>
                                 <div className='detail'>
                                     <div className='nom'>

@@ -50,7 +50,7 @@ const DeatilCar = () => {
           <h1>{t('Automatique')}</h1>
         </div>
         <h1>30.000{t('Ar/jrs')}</h1>
-        <NavLink className='btn' to='/reservation'><FaCalendarAlt className='ico' />{t('Reservation')}</NavLink>
+        <NavLink className='btn' to='/Home/reservation'><FaCalendarAlt className='ico' />{t('Reservation')}</NavLink>
       </div>
     </div>
   )
