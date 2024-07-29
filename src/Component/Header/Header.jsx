@@ -17,35 +17,39 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const firstname = localStorage.getItem('userFirstname'); // Assurez-vous que ce nom est correct
     const role = localStorage.getItem('Role');
+    const navigate = useNavigate();
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
     };
     const handleLogout = async () => {
+        
+        // try {
+        //     const response = await axios.post('http://127.0.0.1:8000/api/logout', {}, {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        //         },
+        //         withCredentials: true // Important pour gérer les credentials
+        //     });
     
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/logout', {}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    
-            if (response.status === 401) { // Vérifiez que le code de statut est 204 pour 'noContent'
-                // Supprimez les informations d'authentification du localStorage
-                localStorage.removeItem('accessToken'); // Assurez-vous que le nom est correct
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userFirstname');
-                localStorage.removeItem('email');
-                localStorage.removeItem('Role');
-                localStorage.removeItem('Job');
-                localStorage.removeItem('contact');
-    
-                // Redirigez l'utilisateur vers la page de connexion ou autre
-                Navigate('');
-            }
-        } catch (error) {
-            console.error('Erreur lors de la déconnexion:', error.response ? error.response.data : error.message);
-        }
+        //     if (response.status === 200 || response.status === 204) {
+                
+        //     }
+        // } catch (error) {
+        //     console.error('Erreur lors de la déconnexion:', error);
+        // }
+        // Supprimer les informations d'authentification du localStorage
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userFirstname');
+        localStorage.removeItem('email');
+        localStorage.removeItem('Role');
+        localStorage.removeItem('Job');
+        localStorage.removeItem('contact');
+
+        // Rediriger l'utilisateur vers la page de connexion ou autre
+        navigate('/login');
     };
     
 
@@ -79,7 +83,7 @@ const Header = ({ activepage, setActivePage }) => {
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
                             <li><NavLink to={'/Home/Profile'} onClick={() => setActivePage('Profile')}><FaRegUser className='icon' /> {t('Profile')}</NavLink></li>
-                            <li><CiLogout className='icon' /> {t('Logout')}</li>
+                            <li><CiLogout className='icon' onClick={handleLogout} /> {t('Logout')}</li>
                         </div>
                     </div>
                 </div>
