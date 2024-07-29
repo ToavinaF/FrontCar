@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { ResponsiveContainer, XAxis, BarChart, Bar, Tooltip } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const CarChart = () => {
   const { t, i18n } = useTranslation();
   const [statistique, setStatistique] = useState([]);
 
   useEffect(() => {
-    const newStatistique = [
-      { name: t('Sat'), Stats: 6000 },
-      { name: t('Sun'), Stats: 5000 },
-      { name: t('Mon'), Stats: 7000 },
-      { name: t('Tue'), Stats: 5780 },
-      { name: t('Wed'), Stats: 4890 },
-      { name: t('Thu'), Stats: 6390 },
-      { name: t('Fri'), Stats: 5490 }
-    ];
-    setStatistique(newStatistique);
-  }, [t, i18n.language]); // Met à jour les données lorsque la langue change
+    const fetchStatistique = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/reservationschart');
+        const data = response.data.map(item => ({
+          name: item.date,
+          Stats: item.count
+        }));
+        setStatistique(data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+      }
+    };fetchStatistique();
+  }, [t, i18n.language]);
 
   return (
     <ResponsiveContainer width='100%'>

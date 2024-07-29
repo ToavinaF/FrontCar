@@ -54,7 +54,7 @@ function Reservation() {
         console.log(data);
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/Reservation/' + id, data);
-            navigate('/Historique');
+            navigate('/Home/Historique');
         } catch (error) {
             console.error(error);
 
