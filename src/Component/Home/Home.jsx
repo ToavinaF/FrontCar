@@ -19,6 +19,8 @@ import ModifCar from '../ModifCar/ModifCar'
 import Theme from '../Page/Themes/Theme'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
+    const accesstoken = localStorage.getItem('accessToken');
+    console.log(accesstoken)
     return (
         <div>
             <div className='content-fluid'>

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import './App.scss';
 import Home from './Component/Home/Home';
 import Login from './Component/Login/Login';
-import { Route, Routes } from 'react-router-dom';
-
+import ProtectedRoute from './Component/ProtectedRoute';
+import { TokenProvider } from './TokenContext';
 
 const languages = [
   { code: 'fr', name: 'Français', country_code: 'fr' },
@@ -16,18 +16,33 @@ const languages = [
 function App() {
   const currentLanguageCode = Cookies.get('i18next') || 'en';
   const { t } = useTranslation();
+  const [isToken, setIsToken] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.dir = currentLanguageCode === 'ar' ? 'rtl' : 'ltr';
     document.title = t('app_title');
-  }, [t]);
+  }, [currentLanguageCode, t]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      setIsToken(true);
+    } else {
+      setIsToken(false);
+      navigate('/login');
+    }
+  }, [navigate]);
 
   return (
     <div className='App'>
+      <TokenProvider value={[isToken, setIsToken]}>
         <Routes>
-        <Route path="/*" element={<Login/>} />
-        <Route path="/Home/*" element={<Home/>} />
+          <Route path="/home/*" element={<ProtectedRoute ><Home /></ProtectedRoute>} />
+          <Route path="/login" element={<Login />} />
+          {/* Ajoutez d'autres routes ici */}
         </Routes>
+      </TokenProvider>
     </div>
   );
 }
