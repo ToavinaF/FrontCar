@@ -47,7 +47,7 @@ const Car = ({ Vehicule }) => {
                   <h5><span><FaChartArea /></span></h5>
                 </div>
                 <div className='recommend__car-img'>
-                  <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${veh.photo}`} alt={t('Marque')} />
+                  <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${veh.photo}`} className="carimage" alt={t('Marque')} />
                 </div>
                 <div className='recommend__car-bottom'>
                   <h4>{veh.marque}</h4>
