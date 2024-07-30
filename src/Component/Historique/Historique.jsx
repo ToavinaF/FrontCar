@@ -3,6 +3,7 @@ import './Historique.scss';
 import { BsThreeDots } from "react-icons/bs";
 import axios from 'axios';
 import {useTranslation} from 'react-i18next';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
 const Historique = () => {
     const [isActive, setisActive] = useState(null);
@@ -15,7 +16,7 @@ const Historique = () => {
             setisActive(index);
         }
     };
-
+    const Navigate = useNavigate();
     const [Histo, setHisto] = useState([]);
 
     useEffect(() => {
@@ -41,6 +42,9 @@ const Historique = () => {
             });
     };
 
+    const handlemod = (id)=>{
+        Navigate('/Home/modifres/'+id)
+    }
     return (
         <div className='Historique'>
             <div className="title-histo">
@@ -81,7 +85,7 @@ const Historique = () => {
                                             <div className='menu'>
                                                 <ul>
                                                     <li><a onClick={() => suppr(histo.id_reservations)}>Supprimer</a></li>
-                                                    <li><a>Modifier</a></li>
+                                                    <li><a onClick={()=>handlemod(histo.id_reservations)}>Modifier</a></li>
                                                 </ul>
                                             </div>
                                         )}
