@@ -15,11 +15,16 @@ const CarChart = () => {
           name: item.date,
           Stats: item.count
         }));
+
+        // Trier les données par date (du plus ancien au plus récent)
+        data.sort((a, b) => new Date(a.name) - new Date(b.name));
+
         setStatistique(data);
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
       }
-    };fetchStatistique();
+    };
+    fetchStatistique();
   }, [t, i18n.language]);
 
   return (
