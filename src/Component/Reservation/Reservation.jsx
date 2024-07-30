@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import './Reservation.scss'
-import Sary from '../../assets/saert.jpeg'
-import { FaCalendarCheck } from 'react-icons/fa'
-import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import './Reservation.scss';
+import { FaCalendarCheck } from 'react-icons/fa';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Reservation() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [CarCheck, setCarCheck] = useState([]);
+    const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
     const [ReservAdd, setReservAdd] = useState({
         id_client: '',
@@ -16,25 +15,38 @@ function Reservation() {
         DateFin: '',
         Price: ''
     });
+    const [errorMessage, setErrorMessage] = useState('');
+    const [errors, setErrors] = useState({});
+    const [reservedDates, setReservedDates] = useState([]);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const fetchCarCheck = async () => {
         try {
-            const checkList = await axios.get('http://127.0.0.1:8000/api/detail/' + id);
+            const checkList = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
             setCarCheck(checkList.data.detailCar);
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+
     const fetchUser = async () => {
         try {
             const user = await axios.get('http://127.0.0.1:8000/api/users');
             setListUser(user.data);
-            console.log(user.data);
-
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+
+    const fetchReservedDates = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/ReservedDates/${id}`);
+            setReservedDates(response.data.map(date => ({ start: new Date(date.DateDebut), end: new Date(date.DateFin) })));
+        } catch (error) {
+            console.error("Erreur lors de la récupération des dates réservées:", error.response ? error.response.data : error.message);
+            setErrorMessage(`Erreur lors de la récupération des dates réservées. Détails: ${error.response ? error.response.data.message : error.message}`);
+        }
+    };
 
     const handleChange = (e) => {
         setReservAdd({
@@ -45,74 +57,127 @@ function Reservation() {
 
     const handleModif = async (e) => {
         e.preventDefault();
-        const data = new FormData();
-        data.append('id_client', ReservAdd.id_client);
-        data.append('DateDebut', ReservAdd.DateDebut);
-        data.append('DateFin', ReservAdd.DateFin);
-        data.append('Price', CarCheck.prix);
-
-        console.log(data);
+        const dateDebut = new Date(ReservAdd.DateDebut);
+        const dateFin = new Date(ReservAdd.DateFin);
+        
+        if (dateDebut < new Date()) { // Vérification côté client
+            setErrorMessage("La date de début doit être aujourd'hui ou une date future.");
+            return;
+        }
+        
+        if (dateDebut >= dateFin) {
+            setErrorMessage("La date de début doit être antérieure à la date de fin.");
+            return;
+        }
+        
+        if (isDateReserved(dateDebut) || isDateReserved(dateFin)) {
+            setErrorMessage("Une ou plusieurs dates choisies sont déjà réservées.");
+            return;
+        }
+    
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/Reservation/' + id, data);
-            navigate('/Home/Historique');
+            const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
+                id_client: ReservAdd.id_client,
+                DateDebut: ReservAdd.DateDebut,
+                DateFin: ReservAdd.DateFin,
+                Price: CarCheck.prix,
+            });
+    
+            if (response.data.success) {
+                setSuccessMessage('Réservation réussie !'); 
+                setTimeout(() => {
+                    navigate('/Home/Historique'); 
+                }, 2000);
+            } else {
+                setErrorMessage(response.data.error || 'La voiture est déjà prise pour cette date.');
+            }
         } catch (error) {
-            console.error(error);
-            setError
+            if (error.response) {
+                if (error.response.data.errors) {
+                    setErrors(error.response.data.errors);
+                } else if (error.response.data.error) {
+                    setErrorMessage(error.response.data.error);
+                } else {
+                    setErrorMessage('Votre réservation est bien enregistrée.');
+                    navigate('/Home/Historique');
+                }
+            } else {
+                setErrorMessage('Une erreur est survenue.');
+            }
         }
     };
+    
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
-    }, [id])
+        fetchReservedDates();
+    }, [id]);
+
+    const isDateReserved = (date) => {
+        return reservedDates.some(reservedDate => 
+            date >= reservedDate.start && date <= reservedDate.end
+        );
+    };
+
     return (
         <div className='ReservBlock'>
-            <form onSubmit={handleModif} methode='post' className="contentReserv">
+            <form onSubmit={handleModif} className="contentReserv">
                 <div className="NavTop">
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
-
                     <span>{CarCheck.prix}/jrs</span>
                 </div>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {successMessage && <div className="success-message">{successMessage}</div>} 
                 <div className="NavBottom">
                     <div className='NavLeft'>
                         <div className="inputCarat">
-                            <label htmlFor="">Debut du location</label>
-                            <input type="date" placeholder='' className='input' name='DateDebut' onChange={handleChange} />
+                            <label htmlFor="DateDebut">Début de la location</label>
+                            <input
+                                type="date"
+                                className={`input ${isDateReserved(new Date(ReservAdd.DateDebut)) ? 'reserved-date' : ''}`}
+                                name='DateDebut'
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.DateDebut && <div className="error">{errors.DateDebut}</div>}
                         </div>
-
                         <div className="inputCarat">
-                            <label htmlFor="">Fin du location</label>
-                            <input type="date" placeholder='' className='input' name='DateFin' onChange={handleChange} />
+                            <label htmlFor="DateFin">Fin de la location</label>
+                            <input
+                                type="date"
+                                className={`input ${isDateReserved(new Date(ReservAdd.DateFin)) ? 'reserved-date' : ''}`}
+                                name='DateFin'
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.DateFin && <div className="error">{errors.DateFin}</div>}
                         </div>
                         <div className="inputCarat">
-                            <label htmlFor="">Le client</label>
-                            <select className='input' name='id_client' onChange={handleChange}>
-                                {
-                                    ListUser.map((user, i) => {
-                                        return (
-                                            <option key={i} value={user.id}>{user.name} {user.firstname}</option>
-                                        )
-
-                                    })
-
-                                }
-
-
-
+                            <label htmlFor="id_client">Le client</label>
+                            <select
+                                className='input'
+                                name='id_client'
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Sélectionner un client</option>
+                                {ListUser.map((user, i) => (
+                                    <option key={i} value={user.id}>{user.name} {user.firstname}</option>
+                                ))}
                             </select>
+                            {errors.id_client && <div className="error">{errors.id_client}</div>}
                         </div>
                     </div>
                     <div className='NavRight'>
                         <div className="imgCar">
-                            <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${CarCheck.photo}`} alt="" />
+                            <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
                         </div>
-                        {/* <h1>{CarCheck.marque}</h1> */}
                         <button type='submit' className='btn'>Valider</button>
                     </div>
-
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
-export default Reservation
+export default Reservation;
