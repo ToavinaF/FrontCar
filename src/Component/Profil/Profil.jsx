@@ -7,9 +7,10 @@ const Profil = () => {
 
     const image = localStorage.getItem('photo');
     const name = localStorage.getItem('userName');
-    const firstname = localStorage.getItem('userFirstname'); // Assurez-vous que ce nom est correct
+    const firstname = localStorage.getItem('firstname'); // Assurez-vous que ce nom est correct
     const email = localStorage.getItem('email');
     const job = localStorage.getItem('Job');
+    const role = localStorage.getItem('role');
 
     // console.log(image);
     return (
@@ -24,14 +25,14 @@ const Profil = () => {
 
                     <div className="prof-cont">
                         <div className="image-text">
-                            <img src={`http://127.0.0.1:8000/storage/image/${image}`} alt="" />
+                            <img src={`http://127.0.0.1:8000/storage/photos/${image}`} alt="" />
                             <div className="cont-span">
                                 <h2><span> {name} {firstname}</span></h2>
                                 <p>{job}</p>
                             </div>
                             <div className="cont-span">
                                 <h3>{email}</h3>
-                                <p>E-mail</p>
+                                <p>{role}</p>
                             </div>
                         </div>
                         <div className="three-point">

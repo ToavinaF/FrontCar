@@ -59,7 +59,8 @@ const Utilisateur = ({ User }) => {
                                 </div>
                                 <div className='detail'>
                                     <div className='nom'>
-                                        <h1><span> {user.name}{user.firstname} </span></h1>
+                                        <h1><span> {user.name}</span></h1>
+                                        <h2><span>{user.firstname}</span> </h2>
                                     </div>
                                     <div className='profession'>
                                         <p>{user.Job}</p>

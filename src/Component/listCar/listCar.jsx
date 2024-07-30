@@ -48,7 +48,7 @@ const ListCar = () => {
     setViewCar(newList);
   }
   const handleEdit = async (id) => {
-    navigate('/modifCar/'+id);
+    navigate('/Home/modifCar/'+id);
   }
 
   return (
