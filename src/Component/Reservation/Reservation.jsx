@@ -9,7 +9,7 @@ function Reservation() {
     const { id } = useParams();
     const loggedInUserId = localStorage.getItem('id');
     const [CarCheck, setCarCheck] = useState([]);
-    const [CarCheck, setCarCheck] = useState({});
+    // const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
     const [ReservAdd, setReservAdd] = useState({
         id_client: '',
