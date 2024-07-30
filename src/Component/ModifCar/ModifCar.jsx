@@ -116,6 +116,7 @@ const ModifCar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
+      localStorage.setItem('message', response.data.message);
       navigate('/Home/listcar')
       console.log(response.data);
     } catch (error) {

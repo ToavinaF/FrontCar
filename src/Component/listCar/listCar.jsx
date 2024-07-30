@@ -7,10 +7,12 @@ import { TbManualGearboxFilled } from "react-icons/tb";
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import axios from 'axios';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const ListCar = () => {
+  const location = useLocation();
+  const [message, setMessage] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [ViewCar, setViewCar] = useState([]);
@@ -19,6 +21,18 @@ const ListCar = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+  
+    const storedMessage = localStorage.getItem('message');
+    if (storedMessage) {
+        setMessage(storedMessage);
+    
+        localStorage.removeItem('message');
+    }
+}, []);
+    const handleClick = () => {
+        setMessage(null);
+    };
 
   const fetchData = async () => {
     try {
@@ -51,9 +65,26 @@ const ListCar = () => {
     navigate('/Home/modifCar/'+id);
   }
 
+
+  // messgae erreur
+  const [count, setCount] = useState(3);
+  useEffect(()=>{
+    if (count <= 0) return; 
+    localStorage.removeItem('message');
+    const intervalId = setInterval(()=>{
+      setCount(prevCount => prevCount - 1);
+    },1000);
+
+    return () => clearInterval(intervalId);
+  },[count])
   return (
     <>
       <div className="contenaire">
+      {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
+             <p onClick={handleClick} >{message}</p>
+           
+        </div>
+}
         {
           ViewCar.map((list, i) => {
             return (

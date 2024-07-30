@@ -50,7 +50,7 @@ const Header = ({ activepage, setActivePage }) => {
         localStorage.removeItem('contact');
 
         // Rediriger l'utilisateur vers la page de connexion ou autre
-        navigate('/login');
+        navigate('/');
     };
     // const [count, setCount] = useState(5);
     // useEffect(() => {
