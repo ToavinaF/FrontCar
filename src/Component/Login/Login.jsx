@@ -16,7 +16,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/login', {
+            const response = await axios.post('http://localhost:8000/api/login', {
                 email,
                 password,
             }, {
@@ -36,6 +36,7 @@ const Login = () => {
                 localStorage.setItem('contact', response.data.contact); // Stockez les autres données utilisateur
                 localStorage.setItem('Job', response.data.Job);
                 localStorage.setItem('photo', response.data.photo);
+                localStorage.setItem('firstname', response.data.userFirstname);
 
                 // Rediriger vers la page d'accueil ou autre page protégée
                 navigate('/home');
