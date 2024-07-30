@@ -37,6 +37,8 @@ const Login = () => {
                 localStorage.setItem('Job', response.data.Job);
                 localStorage.setItem('photo', response.data.photo);
                 localStorage.setItem('firstname', response.data.userFirstname);
+                localStorage.setItem('userId', response.data.userId);
+
 
                 // Rediriger vers la page d'accueil ou autre page protégée
                 navigate('/home');
