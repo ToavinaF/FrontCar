@@ -60,6 +60,7 @@ const ListCar = () => {
       )
     })
     setViewCar(newList);
+    
   }
   const handleEdit = async (id) => {
     navigate('/Home/modifCar/'+id);
