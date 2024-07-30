@@ -16,7 +16,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/login', {
+            const response = await axios.post('http://localhost:8000/api/login', {
                 email,
                 password,
             }, {
@@ -31,8 +31,8 @@ const Login = () => {
                 localStorage.setItem('accessToken', response.data.access_token);
                 console.log('Access_Token:', response.data.access_token);
                 localStorage.setItem('userName', response.data.userName); // Stockez le nom de l'utilisateur
-                localStorage.setItem('role', response.data.role); // Stockez le rôle de l'utilisateur
-                localStorage.setItem('email', response.data.email); // Stockez l'email de l'utilisateur
+                localStorage.setItem('role', response.data.Role); // Stockez le rôle de l'utilisateur
+                localStorage.setItem('email', response.data.userEmail); // Stockez l'email de l'utilisateur
                 localStorage.setItem('contact', response.data.contact); // Stockez les autres données utilisateur
                 localStorage.setItem('Job', response.data.Job);
                 localStorage.setItem('photo', response.data.photo);
