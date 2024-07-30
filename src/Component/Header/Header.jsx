@@ -86,7 +86,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                    <img src={'http://127.0.0.1:8000/storage/photos/'+image || 'default-profile.png'} alt="Profile" /> {/* Utilisez une image par défaut si aucune image n'est disponible */}
+                    <img src={'http://127.0.0.1:8000/storage/'+image || 'default-profile.png'} alt="Profile" /> {/* Utilisez une image par défaut si aucune image n'est disponible */}
                     <div className="cont_prof" onClick={() => handleClick(0)}>
                         <h1>{name}</h1>
                         <p>{role}</p>
