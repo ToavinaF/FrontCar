@@ -40,6 +40,8 @@
 }
 .user-cards {
     flex-direction: row;
+    align-items: center;
+    
 }.user-card {
     background-color: var(--body-color);
     border-radius: 8px;
