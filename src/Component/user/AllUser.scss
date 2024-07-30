@@ -39,8 +39,10 @@
     background-color: var(--body-bg);
 }
 .user-cards {
+    display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     
 }.user-card {
     background-color: var(--body-color);
