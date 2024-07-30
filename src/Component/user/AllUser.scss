@@ -106,11 +106,12 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        transition: background-color 0.3s;
-        margin-top: -33px; // Ajuster la marge en fonction de la taille de la carte
+        transition: background-color 0.3s, transform 0.3s; 
+                margin-top: -33px; // Ajuster la marge en fonction de la taille de la carte
 
         &:hover {
             background-color: var(--color-principal);
+            transform: scale(1.05);
         }
     }
 
