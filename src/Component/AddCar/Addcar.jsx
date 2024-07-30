@@ -69,8 +69,10 @@ const Addcar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      navigate('/Home/listcar')
-      console.log(response.data);
+      localStorage.setItem('message', response.data.message);
+      navigate('/Home/listcar');
+
+      
     } catch (error) {
       console.error(error);
     }

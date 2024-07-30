@@ -57,7 +57,7 @@ function Reservation() {
             navigate('/Home/Historique');
         } catch (error) {
             console.error(error);
-
+            setError
         }
     };
     useEffect(() => {

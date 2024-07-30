@@ -30,7 +30,7 @@ function App() {
       setIsToken(true);
     } else {
       setIsToken(false);
-      navigate('/login');
+      navigate('');
     }
   }, [navigate]);
 
@@ -39,7 +39,7 @@ function App() {
       <TokenProvider value={[isToken, setIsToken]}>
         <Routes>
           <Route path="/home/*" element={<ProtectedRoute ><Home /></ProtectedRoute>} />
-          <Route path="/login" element={<Login />} />
+          <Route path="" element={<Login />} />
           {/* Ajoutez d'autres routes ici */}
         </Routes>
       </TokenProvider>
