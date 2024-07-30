@@ -39,7 +39,11 @@
     background-color: var(--body-bg);
 }
 .user-cards {
+    display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
 }.user-card {
     background-color: var(--body-color);
     border-radius: 8px;
@@ -102,16 +106,17 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        transition: background-color 0.3s;
-        margin-top: -35px; // Ajuster la marge en fonction de la taille de la carte
+        transition: background-color 0.3s, transform 0.3s; 
+                margin-top: -33px; // Ajuster la marge en fonction de la taille de la carte
 
         &:hover {
             background-color: var(--color-principal);
+            transform: scale(1.05);
         }
     }
 
     .delete-profile {
-        margin-top: -70px; // Ajuster la marge en fonction de la taille de la carte
+        margin-top: -67px; // Ajuster la marge en fonction de la taille de la carte
         &:hover {
             background-color: rgb(214, 36, 36);
         }

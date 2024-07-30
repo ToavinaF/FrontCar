@@ -7,6 +7,8 @@ import axios from 'axios';
 function Reservation() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const loggedInUserId = localStorage.getItem('id');
+    const [CarCheck, setCarCheck] = useState([]);
     const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
     const [ReservAdd, setReservAdd] = useState({
@@ -32,6 +34,9 @@ function Reservation() {
     const fetchUser = async () => {
         try {
             const user = await axios.get('http://127.0.0.1:8000/api/users');
+            const filteredUsers = user.data.filter(user => user.id !== parseInt(loggedInUserId));
+            setListUser(filteredUsers);
+
             setListUser(user.data);
         } catch (error) {
             console.error(error);

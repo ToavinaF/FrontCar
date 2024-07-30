@@ -52,14 +52,15 @@ const ListCar = () => {
   };
 
   const handDelete = async (id) => {
-    console.log(id);
-    await axios.delete('http://127.0.0.1:8000/api/DeleteCar/' + id);
+
+    const valide = await axios.delete('http://127.0.0.1:8000/api/DeleteCar/' + id);
     const newList = ViewCar.filter((item)=>{
       return(
         item.id !== id
       )
     })
     setViewCar(newList);
+    localStorage.setItem('message', valide.data.message);
   }
   const handleEdit = async (id) => {
     navigate('/Home/modifCar/'+id);
