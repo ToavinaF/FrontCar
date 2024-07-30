@@ -25,7 +25,7 @@ const Profil = () => {
 
                     <div className="prof-cont">
                         <div className="image-text">
-                            <img src={`http://127.0.0.1:8000/storage/photos/${image}`} alt="" />
+                            <img src={`http://127.0.0.1:8000/storage/${image}`} alt="" />
                             <div className="cont-span">
                                 <h2><span> {name} {firstname}</span></h2>
                                 <p>{job}</p>
