@@ -39,7 +39,7 @@ function App() {
       <TokenProvider value={[isToken, setIsToken]}>
         <Routes>
           <Route path="/home/*" element={<ProtectedRoute ><Home /></ProtectedRoute>} />
-          <Route path="/" element={<Login />} />
+          <Route path="" element={<Login />} />
           {/* Ajoutez d'autres routes ici */}
         </Routes>
       </TokenProvider>

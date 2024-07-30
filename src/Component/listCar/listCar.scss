@@ -9,7 +9,30 @@
     // border: solid 2px white;
     flex-wrap: wrap;
     gap: 3%;
-
+    .Error{
+        position: absolute;
+        top: 0%;
+        left : 40%;
+        width: auto;
+        height: 70px;
+        // border: solid 2px white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 5px 0 5px;
+        border-radius: 10px;
+        background-color: #ffc107e6;
+        z-index: 1000;
+        transform: translatey(20%);
+        transition: 1s;
+        p{
+            font-size: 1.2rem;
+        }
+        &.active{
+            display: none;
+            transition: 1s;
+        }
+    }
     .ListBlock {
         width: 28%;
         height: 450px;
