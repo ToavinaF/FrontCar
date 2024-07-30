@@ -35,8 +35,11 @@ const Login = () => {
                 localStorage.setItem('email', response.data.userEmail); // Stockez l'email de l'utilisateur
                 localStorage.setItem('contact', response.data.contact); // Stockez les autres données utilisateur
                 localStorage.setItem('Job', response.data.Job);
+                localStorage.setItem('id', response.data.userId);
                 localStorage.setItem('photo', response.data.photo);
                 localStorage.setItem('firstname', response.data.userFirstname);
+                localStorage.setItem('userId', response.data.userId);
+
 
                 // Rediriger vers la page d'accueil ou autre page protégée
                 navigate('/home');

@@ -40,6 +40,8 @@
 }
 .user-cards {
     flex-direction: row;
+    align-items: center;
+    
 }.user-card {
     background-color: var(--body-color);
     border-radius: 8px;
@@ -103,7 +105,7 @@
         align-items: center;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-top: -35px; // Ajuster la marge en fonction de la taille de la carte
+        margin-top: -33px; // Ajuster la marge en fonction de la taille de la carte
 
         &:hover {
             background-color: var(--color-principal);
@@ -111,7 +113,7 @@
     }
 
     .delete-profile {
-        margin-top: -70px; // Ajuster la marge en fonction de la taille de la carte
+        margin-top: -67px; // Ajuster la marge en fonction de la taille de la carte
         &:hover {
             background-color: rgb(214, 36, 36);
         }
