@@ -99,6 +99,7 @@
 
     .recommend__car {
         border-radius: 25px;
+        
 
         &__wrapper {
             display: grid;
@@ -133,6 +134,7 @@
             object-fit: cover;
             width: 35rem;
             padding: 20px;
+            border-radius: 35px;
         }
 
         &-top h5 {
@@ -143,8 +145,8 @@
             margin-bottom: 10px;
 
             span {
-                color: var(--first-color);
-                color: var(--heading-color);
+                
+                color: var(--blanch);
                 @include njrfont(2rem, 100);
                 i {
                    font-size: 1.2rem;
@@ -172,6 +174,7 @@
 
             p:nth-child(1) {
                 display: flex;
+                color: var(--blanch);
             }
         }
 

@@ -8,6 +8,21 @@
     justify-content: space-evenly;
     color: var(--blanch);
     // border: solid 2px white;
+    .error-message{
+        background-color: red;
+        width: 40%;
+        border-radius: 25px;
+        text-align: center;
+        margin-top: 3px;
+        height: 40px;
+        position: relative;
+        left: 10px;
+    }
+    
+    .reserved-date {
+        background-color: rgba(255, 0, 0, 0.156) !important;
+        color: white; // Change la couleur du texte si nécessaire
+    }
     .contentReserv {
         width: 85%;
         height: 500px;
@@ -235,13 +250,4 @@
         }
     }
 }
-.error-message{
-    background-color: red;
-    width: 40%;
-    border-radius: 25px;
-    text-align: center;
-    margin-top: 3px;
-    height: 40px;
-    position: relative;
-    left: 10px;
-}
+
