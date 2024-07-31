@@ -12,7 +12,8 @@ const languages = [
     { code: 'fr', name: 'Français', country_code: 'fr' },
     { code: 'en', name: 'English', country_code: 'gb' }
 ];
-
+const role = localStorage.getItem('role');
+console.log(role);
 const SideBar = ({ setActivePage }) => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [role, setRole] = useState('');
