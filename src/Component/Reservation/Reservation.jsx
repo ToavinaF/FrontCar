@@ -9,6 +9,7 @@ function Reservation() {
     const { id } = useParams();
     const loggedInUserId = localStorage.getItem('id');
     const [CarCheck, setCarCheck] = useState([]);
+    // const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
     const [ReservAdd, setReservAdd] = useState({
         id_client: '',
@@ -20,7 +21,6 @@ function Reservation() {
     const [errors, setErrors] = useState({});
     const [reservedDates, setReservedDates] = useState([]);
     const [successMessage, setSuccessMessage] = useState('');
-    const [CheckHisto, setCheckHisto] = useState([]);
 
     const fetchCarCheck = async () => {
         try {
@@ -36,6 +36,8 @@ function Reservation() {
             const user = await axios.get('http://127.0.0.1:8000/api/users');
             const filteredUsers = user.data.filter(user => user.id !== parseInt(loggedInUserId));
             setListUser(filteredUsers);
+
+            setListUser(user.data);
         } catch (error) {
             console.error(error);
         }
@@ -44,10 +46,7 @@ function Reservation() {
     const fetchReservedDates = async () => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/ReservedDates/${id}`);
-            setReservedDates(response.data.map(date => ({
-                start: new Date(date.DateDebut),
-                end: new Date(date.DateFin)
-            })));
+            setReservedDates(response.data.map(date => ({ start: new Date(date.DateDebut), end: new Date(date.DateFin) })));
         } catch (error) {
             console.error("Erreur lors de la récupération des dates réservées:", error.response ? error.response.data : error.message);
             setErrorMessage(`Erreur lors de la récupération des dates réservées. Détails: ${error.response ? error.response.data.message : error.message}`);
@@ -55,21 +54,10 @@ function Reservation() {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
         setReservAdd({
             ...ReservAdd,
-            [name]: value
+            [e.target.name]: e.target.value
         });
-
-        
-        if (name === 'DateDebut' || name === 'DateFin') {
-            const selectedDate = new Date(value);
-            if (isDateDisabled(selectedDate)) {
-                setErrorMessage("Cette date est déjà réservée.");
-            } else {
-                setErrorMessage('');
-            }
-        }
     };
 
     const handleModif = async (e) => {
@@ -77,7 +65,7 @@ function Reservation() {
         const dateDebut = new Date(ReservAdd.DateDebut);
         const dateFin = new Date(ReservAdd.DateFin);
         
-        if (dateDebut < new Date()) {
+        if (dateDebut < new Date()) { // Vérification côté client
             setErrorMessage("La date de début doit être aujourd'hui ou une date future.");
             return;
         }
@@ -123,29 +111,17 @@ function Reservation() {
             }
         }
     };
-
+    
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
         fetchReservedDates();
-        fetchCarResrved();
     }, [id]);
 
     const isDateReserved = (date) => {
         return reservedDates.some(reservedDate => 
             date >= reservedDate.start && date <= reservedDate.end
         );
-    };
-
-    const isDateDisabled = (date) => {
-        return reservedDates.some(reservedDate => 
-            date >= reservedDate.start && date <= reservedDate.end
-        );
-    };
-
-    const fetchCarResrved = async () => {
-        const response = await axios.get("http://127.0.0.1:8000/api/reservVehicul/" + id);
-        setCheckHisto(response.data);
     };
 
     return (
@@ -155,7 +131,6 @@ function Reservation() {
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
                     <span>{CarCheck.prix}/jrs</span>
                 </div>
-                
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 {successMessage && <div className="success-message">{successMessage}</div>} 
                 <div className="NavBottom">
@@ -168,7 +143,6 @@ function Reservation() {
                                 name='DateDebut'
                                 onChange={handleChange}
                                 required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
                             {errors.DateDebut && <div className="error">{errors.DateDebut}</div>}
                         </div>
@@ -180,7 +154,6 @@ function Reservation() {
                                 name='DateFin'
                                 onChange={handleChange}
                                 required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
                             {errors.DateFin && <div className="error">{errors.DateFin}</div>}
                         </div>
@@ -208,40 +181,6 @@ function Reservation() {
                     </div>
                 </div>
             </form>
-
-            {CheckHisto.length > 0 && (
-                <div className="histo">
-                    <div className="table-content">
-                        <h1><span> Récent </span></h1>
-                        <div className="table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th><span> #</span></th>
-                                        <th><span>NOM</span></th>
-                                        <th><span>PRENON</span></th>
-                                        <th><span>Date de début</span></th>
-                                        <th><span>Date fin</span></th>
-                                        <th><span>Statut</span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {CheckHisto.map((check, i) => (
-                                        <tr key={i}>
-                                            <td></td>
-                                            <td>{check.name}</td>
-                                            <td>{check.firstname}</td>
-                                            <td>{check.DateDebut}</td>
-                                            <td>{check.DateFin}</td>
-                                            <td><span className='regle'>Réservé</span></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
