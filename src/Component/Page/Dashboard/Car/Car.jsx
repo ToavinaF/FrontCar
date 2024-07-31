@@ -50,13 +50,13 @@ const Car = ({ Vehicule }) => {
                   <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${veh.photo}`} className="carimage" alt={t('Marque')} />
                 </div>
                 <div className='recommend__car-bottom'>
-                  <h4>{veh.marque}</h4>
+                  <h4><span>{veh.marque}</span></h4>
                   <div className='recommend__car-other'>
                     <div className='recommend__car-icons'>
-                      <p>{veh.matricule}</p>
-                      <p><IoMdSettings /></p>
-                      <p><FaStopwatch /></p>
-                      <p>{veh.prix}{t('/jours')}</p>
+                      <p><span>{veh.matricule}</span></p>
+                      <p><span><IoMdSettings /></span></p>
+                      <p><span> <FaStopwatch /> </span></p>
+                      <p><span>{veh.prix}{t('/jours')}</span></p>
                     </div>
                   </div>
                 </div>

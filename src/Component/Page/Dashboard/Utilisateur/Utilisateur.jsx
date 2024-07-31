@@ -19,7 +19,7 @@ const Utilisateur = ({ User }) => {
     const progressContent = useRef(null);
     const onAutoplayTimeLeft = (s, time, progress) => {
         progressCircle.current.style.setProperty('--progress', 1 - progress);
-        progressContent.current.textContent = `${Math.ceil(time / 100)}s`;
+        progressContent.current.textContent = `${Math.ceil(time / 80)}s`;
     };
     return (
         <div className='utilisateur'>
