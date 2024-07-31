@@ -110,6 +110,7 @@ const Addcar = () => {
             <div className="caracter">
               <label htmlFor="transmission">{t('Type de transmission')}</label>
               <select name="transmission" className='input' onChange={handleChange}>
+              <option></option>
                 <option value="Automatique">Automatique</option>
                 <option value="Manuelle">Manuelle</option>
               </select>
@@ -123,6 +124,7 @@ const Addcar = () => {
             <div className="caracter">
               <label htmlFor="bagage">{t('Nombre de bagage')}</label>
               <select name="bagage" className='input' onChange={handleChange}>
+              <option></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -131,7 +133,8 @@ const Addcar = () => {
             </div>
             <div className="caracter">
               <label htmlFor="place">{t('Nombre de place')}</label>
-              <select name="place" className='input' onChange={handleChange}>
+              <select name="place" className='input' placeholder='nombre de place' onChange={handleChange}>
+              <option></option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -142,6 +145,7 @@ const Addcar = () => {
             <div className="caracter">
               <label htmlFor="porte">{t('Nombre de porte')}</label>
               <select name="porte" className='input' onChange={handleChange}>
+              <option></option>
                 <option value="3">3</option>
                 <option value="5">5</option>
               </select>

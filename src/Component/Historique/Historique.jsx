@@ -81,7 +81,7 @@ const Historique = () => {
                                             <div className='menu'>
                                                 <ul>
                                                     <li><a onClick={() => suppr(histo.id_reservations)}>Supprimer</a></li>
-                                                    <li><a>Modifier</a></li>
+                                                
                                                 </ul>
                                             </div>
                                         )}

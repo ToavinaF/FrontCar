@@ -82,11 +82,11 @@ const ListCar = () => {
     <>
       <div className="contenaire">
       {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
-             <p onClick={handleClick} >{message}</p>
-           
+             <p onClick={handleClick} >{message}</p>   
         </div>
-}
-        {
+      }
+
+      {
           ViewCar.map((list, i) => {
             return (
               <div key={i} className="ListBlock">

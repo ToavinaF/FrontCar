@@ -21,6 +21,7 @@ function Reservation() {
     const [errors, setErrors] = useState({});
     const [reservedDates, setReservedDates] = useState([]);
     const [successMessage, setSuccessMessage] = useState('');
+    const [CheckHisto, setCheckHisto] = useState([]);
 
     const fetchCarCheck = async () => {
         try {
@@ -116,12 +117,19 @@ function Reservation() {
         fetchCarCheck();
         fetchUser();
         fetchReservedDates();
+        fetchCarResrved();
     }, [id]);
 
     const isDateReserved = (date) => {
         return reservedDates.some(reservedDate => 
             date >= reservedDate.start && date <= reservedDate.end
         );
+    };
+
+    const fetchCarResrved = async () => {
+        const response = await axios.get("http://127.0.0.1:8000/api/reservVehicul/" + id);
+        setCheckHisto(response.data);
+        console.log(response.data);
     };
 
     return (
@@ -181,7 +189,48 @@ function Reservation() {
                     </div>
                 </div>
             </form>
+
+           {CheckHisto > [0] &&
+
+            <div className="histo">
+            <div className="table-content">
+            <h1><span> Recent </span></h1>
+                <div className="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><span> #</span></th>
+                                <th><span>NOM</span></th>
+                                <th><span>PRENON</span></th>
+                                <th><span>Date de debut</span></th>
+                                <th><span> Date fin</span></th>
+                                <th><span> Statut</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {CheckHisto.map((check, i)=> (
+                                <tr key={i}>
+                                <td></td>
+                                <td>{check.name}</td>
+                                <td>{check.firstname}</td>
+                                <td>{check.DateDebut}</td>
+                                <td>{check.DateFin}</td>
+                                <td><span className='regle'>Reserve</span></td>
+
+                            </tr>
+                            ))}
+                               
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+           }                         
+            
         </div>
+
+        
     );
 }
 
