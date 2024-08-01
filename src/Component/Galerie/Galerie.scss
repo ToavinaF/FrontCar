@@ -1,18 +1,16 @@
 .contenaireGal {
-    position: relative;
     width: 100%;
     height: auto;
-    margin-left: 0%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    // border: solid 2px white;
     flex-wrap: wrap;
     gap: 3%;
     padding: 20px 5px 20px 5px;
     background: var(--body-bg);
     border-radius: 10px;
+    position: relative;
 
     h1 {
         color: black;
@@ -25,16 +23,14 @@
     }
 
     .BlockGal {
-        width: 95%;
+        width: 100%;
         height: auto;
-        // border: solid 2px white;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
         gap: 2%;
-
         padding: 20px 5px 20px 5px;
 
         .BlockImg {
@@ -58,93 +54,56 @@
             }
         }
     }
-
-
 }
 
-// .md-content{
-//     position: absolute;
-//     top: 5%;
-//     left: 5%;
-//     width: 50%;
-// }
 
 
-.image-modal {
+.custom-overlay {
+    width: 95%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1000;
+}
+
+.modal-content {
+    width: calc(100% - 200px);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin:0 0 0 250px;
+    background: transparent;
+}
+
+.content-Modal {
+    position: relative;
+    text-align: center;
+}
+
+.close-button {
     position: absolute;
-    top: 55%;
-    left: 56%;
-    transform: translate(-50%, -50%);
-    background: rgba(56, 56, 56, 0.384);
-    border-radius: 10px;
-
-    .modal-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 1330px;
-        height: 650px;
-        background: #00000000;
-
-        .content-Modal {
-            //   border: solid 2px red;
-            width: 65%;
-            height: 90%;
-            border-radius: 10px;
-            overflow: hidden;
-
-        }
-    }
-
-    .close-button {
-        position: absolute;
-        top: 30px;
-        right: 80px;
-        background: white;
-        border: none;
-        font-size: 20px;
-        width: 30px;
-        height: 30px;
-        border-radius: 100%;
-        cursor: pointer;
-        font-size: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-
-    }
-
-    .prev-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 95%;
-        cursor: pointer;
-    }
-    .next-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 1%;
-        cursor: pointer;
-    }
-
-    .modal-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    margin:0 0 0 20%;
 }
 
-.image-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
+.modal-image {
+    width: 900px;
+    height: 500px;
+}
+
+.prev-button,
+.next-button {
+    font-size: 2.5rem;
+    cursor: pointer;
+    margin: auto;
+    color: wheat;
 }
