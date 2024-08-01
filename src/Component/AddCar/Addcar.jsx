@@ -156,7 +156,7 @@ const Addcar = () => {
             </div>
             <button type='submit' className='btn'>{t('Enregistre')}</button>
           </div>
-          {ShowUpload && (
+          {/* {ShowUpload && ( */}
             <div className="image-upload">
               <FaXmark className='x' onClick={() => setShowUpload(false)} />
               <div {...getRootProps({ className: 'dropzone' })}>
@@ -177,7 +177,7 @@ const Addcar = () => {
                 </div>
               )}
             </div>
-          )}
+          {/* )} */}
         </form>
       </div>
     </>

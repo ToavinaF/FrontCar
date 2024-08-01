@@ -141,7 +141,7 @@ const ModifCar = () => {
 }
   return (
     <>
-      <div className="block">
+      <div className="blockModif">
         <form onSubmit={handleSubmit} className='form'>
           <div className="parti-left">
             <div className="image" onClick={handleImageClick}>
