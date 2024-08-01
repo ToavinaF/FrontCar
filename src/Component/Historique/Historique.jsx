@@ -5,7 +5,7 @@ import axios from 'axios';
 import {useTranslation} from 'react-i18next';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
-const Historique = () => {
+const Historique = ({searchTerm}) => {
     const [isActive, setisActive] = useState(null);
     const { t } = useTranslation();
 
@@ -41,6 +41,14 @@ const Historique = () => {
                 console.error('Erreur lors de la suppression:', error);
             });
     };
+    const filteredHistorique = Histo.filter(histo =>{
+        return histo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                histo.marque.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                histo.matricule.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                histo.DateDebut.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                histo.DateFin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                histo.PriceTotal.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     const handlemod = (id)=>{
         Navigate('/Home/modifres/'+id)
@@ -69,7 +77,7 @@ const Historique = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {Histo.map((histo, index) => (
+                            {filteredHistorique.map((histo, index) => (
                                 <tr key={index}>
                                     <td><strong className='id-col'>{histo.id_reservations}</strong></td>
                                     <td>{histo.name}</td>
