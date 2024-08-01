@@ -9,14 +9,19 @@
     color: var(--blanch);
     // border: solid 2px white;
     .error-message{
+        padding:5px 0 0 0;
         background-color: red;
         width: 40%;
-        border-radius: 25px;
+        border-radius: 10px;
         text-align: center;
         margin-top: 3px;
         height: 40px;
         position: relative;
         left: 10px;
+
+        &.active{
+            display: none;
+        }
     }
     
     .reserved-date {

@@ -14,9 +14,11 @@ import Historique from '../Historique/Historique'
 
 import { Route, Routes } from 'react-router-dom'
 import Reservation from '../Reservation/Reservation'
+import ModifRes from '../Reservation/ModifRes'
 import Dashboard from '../Page/Dashboard/Dashboard'
 import ModifCar from '../ModifCar/ModifCar'
 import Theme from '../Page/Themes/Theme'
+import Galerie from '../Galerie/Galerie'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +44,10 @@ const Home = () => {
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
                         <Route path="/reservation/:id" element={<Reservation/>} />
+                        <Route path='/modifres/:id' element={<ModifRes/>}/>
                         <Route path="/modifCar/:id" element={<ModifCar/>} />
+                        <Route path="/galerie/:id" element={<Galerie/>} />
+
                       
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path="/listcar" element={<ListCar/>} />

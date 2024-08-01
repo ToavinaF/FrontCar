@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
 import { MdDashboard } from 'react-icons/md';
-import { FaChevronDown, FaCar, FaUser } from 'react-icons/fa';
+import { FaChevronDown, FaCar, FaUser, FaUsers, FaCarAlt } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { RiPlayListAddFill } from "react-icons/ri";
+import { FaBars } from "react-icons/fa6";
+import { FaHistory } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 
 const languages = [
     { code: 'fr', name: 'Français', country_code: 'fr' },
@@ -43,7 +47,7 @@ const SideBar = ({ setActivePage }) => {
             <div className="logo">
                 <IoCarSport className='icon_logo' />
             </div>
-
+            
             <div className="navlink">
                 <ul>
                     <NavLink to='/Home' className='li-dash' onClick={() => setActivePage('Dashboard')}>
@@ -61,17 +65,17 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
                                 <NavLink className='nav_item' to='/Home/listcar' onClick={() => setActivePage('All Car')}>
-                                    {t('all_car')}
+                                    <FaCarAlt className='icon_list' /> {t('all_car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
                                 <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Add Car')}>
-                                    {t('add_car')}
+                                    <RiPlayListAddFill className='icon_list' /> {t('add_car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
                                 <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Historiques')}>
-                                    {t('Historique')}
+                                    <FaHistory  className='icon_list'/> {t('Historique')}
                                 </NavLink>
                             </li>
                         </div>
@@ -87,13 +91,13 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
                             <li className='nav_link'>
                                 <NavLink to='/Home/listUser' className='nav_item' onClick={() => setActivePage('All Users')}>
-                                    {t('all_users')}
+                                    <FaUsers className='icon_list'/> {t('all_users')}
                                 </NavLink>
                             </li>
                             {role === 'superAdmin' && ( // Correction ici
                                 <li className='nav_link'>
                                     <NavLink to='/Home/AjoutUser' className='nav_item' onClick={() => setActivePage('Add User')}>
-                                        {t('add_user')}
+                                        <FaUserPlus className='icon_list'/> {t('add_user')}
                                     </NavLink>
                                 </li>
                             )}

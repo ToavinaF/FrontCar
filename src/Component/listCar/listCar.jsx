@@ -4,7 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from "react-icons/bs";
 import { GiCarDoor } from "react-icons/gi";
 import { TbManualGearboxFilled } from "react-icons/tb";
-import { MdDeleteForever, MdUpdate } from "react-icons/md";
+import { MdDeleteForever, MdOutlineInsertPhoto, MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -22,17 +22,17 @@ const ListCar = ({searchTerm}) => {
     fetchData();
   }, []);
   useEffect(() => {
-  
+
     const storedMessage = localStorage.getItem('message');
     if (storedMessage) {
-        setMessage(storedMessage);
-    
-        localStorage.removeItem('message');
+      setMessage(storedMessage);
+
+      localStorage.removeItem('message');
     }
-}, []);
-    const handleClick = () => {
-        setMessage(null);
-    };
+  }, []);
+  const handleClick = () => {
+    setMessage(null);
+  };
 
   const fetchData = async () => {
     try {
@@ -57,8 +57,8 @@ const ListCar = ({searchTerm}) => {
   const handDelete = async (id) => {
 
     const valide = await axios.delete('http://127.0.0.1:8000/api/DeleteCar/' + id);
-    const newList = ViewCar.filter((item)=>{
-      return(
+    const newList = ViewCar.filter((item) => {
+      return (
         item.id !== id
       )
     })
@@ -66,41 +66,51 @@ const ListCar = ({searchTerm}) => {
     localStorage.setItem('message', valide.data.message);
   }
   const handleEdit = async (id) => {
-    navigate('/Home/modifCar/'+id);
+    navigate('/Home/modifCar/' + id);
   }
 
 
   // messgae erreur
   const [count, setCount] = useState(3);
-  useEffect(()=>{
-    if (count <= 0) return; 
+  useEffect(() => {
+    if (count <= 0) return;
     localStorage.removeItem('message');
-    const intervalId = setInterval(()=>{
+    const intervalId = setInterval(() => {
       setCount(prevCount => prevCount - 1);
-    },1000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
-  },[count])
+  }, [count])
+
+//redirection galerie
+const handGalerie = async (id) => {
+  navigate('/Home/galerie/' + id);
+}
+
+
   return (
     <>
       <div className="contenaire">
-      {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
-             <p onClick={handleClick} >{message}</p>   
+        {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
+          <p onClick={handleClick} >{message}</p>
         </div>
-      }
+        }
 
       {
           filteredCars.map((list, i) => {
+        {
+          ViewCar.map((list, i) => {
             return (
               <div key={i} className="ListBlock">
                 <div className='barNav'>
                   <h1 className='tlt'>{list.marque}</h1>
-                  <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar'/></span>
+                  <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
                   {
                     ShowMenu === i && (
                       <div className="menu">
-                        <button onClick={() => handleEdit(list.id)}><MdUpdate className='del'/>Modifier</button>
-                        <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del'/>Supprimer</button>
+                        <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
+                        <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
+                        <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
                       </div>
                     )
                   }
