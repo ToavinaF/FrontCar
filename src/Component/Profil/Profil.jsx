@@ -1,4 +1,4 @@
-import React from 'react'
+
 import './Profil.scss'
 import Image from '../../assets/46.jpg'
 import { useTranslation } from 'react-i18next';
