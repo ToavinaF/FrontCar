@@ -1,97 +1,128 @@
-.contDetail{
+.contDetail {
     width: 110%;
-    height:620px;
+    height: 750px;
     margin-left: -5%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     color: var(--blanch);
-    // border: solid 2px white;
-    .blockLeft{
-        width: 50%;
-        height: 500px;
-        border-radius: 10px;
-        background: var(--body-bg);
-        overflow: hidden;
+  
+    .blockLeft {
+      width: 50%;
+      height: 500px;
+      border-radius: 10px;
+      background: var(--body-bg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column; // Changed to column
+      align-items: center;
+      justify-content: center;
+      position: relative;
+  
+      .swiper-container, .swiper {
+        width: 100%;
+        height: 80%; // Adjust height if necessary
+      }
+  
+      .swiper-slide {
         display: flex;
         align-items: center;
         justify-content: center;
-        .boucle{
+  
+        .boucle {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+  
+          img {
             width: 100%;
-            height: 429px;
-            // border: solid 2px white;
-            // background-color: #ffc107;
+            height: auto;
             object-fit: cover;
-            margin: 0% 0 0 0;
-            img{
-                width: 100%;
-            }
+          }
         }
-        
-        .swiper-container{
-            width: 100%;
-            height: 100%;
-            border: solid 2px rgb(137, 15, 15);
-
-        }
-    }
-    .blockRight{
-        width: 35%;
-        height: 500px;
-        border-radius: 10px;
-        background: var(--body-bg);
+      }
+  
+      .smallImages {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-
-        .IconType{
-            width: 95%;
-            height: 40px;
-            // border: solid 2px white;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding-left: 2px;
-            padding-right: 10px;
-            h1{
-                font-size: 1.3rem;
-                font-weight: normal;
-            }
-            .icon{
-                width: auto;
-                height: 100%;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                .iconImg{
-                    font-size: 1.5rem;
-                    color: var(--color-principal);
-                }
-                h1{
-                    font-size: 1.3rem;
-                    font-weight: normal;
-                    margin-left: 5px;
-                }
-
-            }
-            
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        padding: 5px;
+        background: var(--body-bg); // Optional background
+        position: absolute;
+        bottom: 0;
+        left: 0;
+  
+        .thumbnailImage {
+          width: 60px; // Adjust size as needed
+          height: auto;
+          cursor: pointer;
+          border-radius: 5px; // Optional
         }
-        .btn{
-            width: 80%;
-            height: 50px;
-            background: var(--color-principal);
-            border: none;
-            border-radius: 10px;
-            color: var(--blanch);
-            font-size: 1.2rem;
-            .ico{
-                font-size: 1.2rem;
-                margin-right: 5px;
-            }
-        }
+      }
     }
-}
+  
+    .blockRight {
+      width: 35%;
+      height: 500px;
+      border-radius: 10px;
+      background: var(--body-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+  
+      .IconType {
+        width: 95%;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 2px;
+        padding-right: 10px;
+  
+        h1 {
+          font-size: 1.3rem;
+          font-weight: normal;
+        }
+  
+        .icon {
+          width: auto;
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+  
+          .iconImg {
+            font-size: 1.5rem;
+            color: var(--color-principal);
+          }
+  
+          h1 {
+            font-size: 1.3rem;
+            font-weight: normal;
+            margin-left: 5px;
+          }
+        }
+      }
+  
+      .btn {
+        width: 80%;
+        height: 50px;
+        background: var(--color-principal);
+        border: none;
+        border-radius: 10px;
+        color: var(--blanch);
+        font-size: 1.2rem;
+  
+        .ico {
+          font-size: 1.2rem;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  
