@@ -9,7 +9,7 @@ import { MdDelete } from 'react-icons/md';
 const AllUser = () => {
     const { t } = useTranslation();
     const [allUserData, setAllUserData] = useState([]);
-    const [hoveredUserId, setHoveredUserId] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(null);
     const navigate = useNavigate();
     const loggedInUserId = localStorage.getItem('id');
 
@@ -20,35 +20,27 @@ const AllUser = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/users');
-             // Retrieve the logged-in user ID from localStorage
-            // Filter out the logged-in user from the list
             const filteredUsers = response.data.filter(user => user.id !== parseInt(loggedInUserId));
             setAllUserData(filteredUsers);
-    
         } catch (error) {
             console.log('Vérifiez le code');
         }
     };
 
-    const handleMouseEnter = (id) => {
-        setHoveredUserId(id);
-    };
-
-    const handleMouseLeave = () => {
-        setHoveredUserId(null);
+    const handleCardClick = (id) => {
+        setSelectedUserId(id === selectedUserId ? null : id);
     };
 
     const handleDeleteClick = async (id) => {
         try {
             await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`);
-            // Remove the deleted user from the list
             setAllUserData(allUserData.filter(user => user.id !== id));
         } catch (error) {
             console.log('Erreur lors de la suppression de l\'utilisateur', error);
         }
     };
 
-    const handleEditClick = async (id) => {
+    const handleEditClick = (id) => {
         navigate('/Home/editUser/' + id);
     };
 
@@ -65,21 +57,25 @@ const AllUser = () => {
                     <div
                         key={user.id}
                         className="user-card"
-                        onMouseEnter={() => handleMouseEnter(user.id)}
-                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleCardClick(user.id)}
                     >
-                        {hoveredUserId === user.id && (
+                        {selectedUserId === user.id && (
                             <div className="user-actions">
                                 <div
                                     className="edit-profile"
-                                    onClick={() => handleEditClick(user.id)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleEditClick(user.id);
+                                    }}
                                 >
                                     <FaEdit /> {t('allUser.editProfile')}
                                 </div>
-
                                 <div
                                     className="delete-profile"
-                                    onClick={() => handleDeleteClick(user.id)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeleteClick(user.id);
+                                    }}
                                 >
                                     <MdDelete /> {t('allUser.deleteProfile')}
                                 </div>

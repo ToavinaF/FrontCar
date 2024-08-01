@@ -1,6 +1,6 @@
 .contDetail {
     width: 110%;
-    height: 750px;
+    height: 800px;
     margin-left: -5%;
     display: flex;
     flex-direction: row;
@@ -19,6 +19,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      padding-bottom: 50px;
   
       .swiper-container, .swiper {
         width: 100%;
@@ -53,6 +54,7 @@
         position: absolute;
         bottom: 0;
         left: 0;
+        padding-bottom: -20px;
   
         .thumbnailImage {
           width: 60px; // Adjust size as needed
