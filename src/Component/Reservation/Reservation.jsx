@@ -61,7 +61,7 @@ function Reservation() {
             [name]: value
         });
 
-        
+
         if (name === 'DateDebut' || name === 'DateFin') {
             const selectedDate = new Date(value);
             if (isDateDisabled(selectedDate)) {
@@ -76,22 +76,22 @@ function Reservation() {
         e.preventDefault();
         const dateDebut = new Date(ReservAdd.DateDebut);
         const dateFin = new Date(ReservAdd.DateFin);
-        
+
         if (dateDebut < new Date()) {
             setErrorMessage("La date de début doit être aujourd'hui ou une date future.");
             return;
         }
-        
+
         if (dateDebut >= dateFin) {
             setErrorMessage("La date de début doit être antérieure à la date de fin.");
             return;
         }
-        
+
         if (isDateReserved(dateDebut) || isDateReserved(dateFin)) {
             setErrorMessage("Une ou plusieurs dates choisies sont déjà réservées.");
             return;
         }
-    
+
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
                 id_client: ReservAdd.id_client,
@@ -99,11 +99,11 @@ function Reservation() {
                 DateFin: ReservAdd.DateFin,
                 Price: CarCheck.prix,
             });
-    
+
             if (response.data.success) {
-                setSuccessMessage('Réservation réussie !'); 
+                setSuccessMessage('Réservation réussie !');
                 setTimeout(() => {
-                    navigate('/Home/Historique'); 
+                    navigate('/Home/Historique');
                 }, 2000);
             } else {
                 setErrorMessage(response.data.error || 'La voiture est déjà prise pour cette date.');
@@ -132,13 +132,13 @@ function Reservation() {
     }, [id]);
 
     const isDateReserved = (date) => {
-        return reservedDates.some(reservedDate => 
+        return reservedDates.some(reservedDate =>
             date >= reservedDate.start && date <= reservedDate.end
         );
     };
 
     const isDateDisabled = (date) => {
-        return reservedDates.some(reservedDate => 
+        return reservedDates.some(reservedDate =>
             date >= reservedDate.start && date <= reservedDate.end
         );
     };
@@ -148,6 +148,17 @@ function Reservation() {
         setCheckHisto(response.data);
     };
 
+    const [count, setCount] = useState(3);
+    useEffect(() => {
+        if (count <= 0) return;
+        localStorage.removeItem('message');
+        const intervalId = setInterval(() => {
+            setCount(prevCount => prevCount - 1);
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [count])
+
     return (
         <div className='ReservBlock'>
             <form onSubmit={handleModif} className="contentReserv">
@@ -155,9 +166,9 @@ function Reservation() {
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
                     <span>{CarCheck.prix}/jrs</span>
                 </div>
-                
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
-                {successMessage && <div className="success-message">{successMessage}</div>} 
+
+                {errorMessage && <div className="error-message ">{errorMessage}</div>}
+                {successMessage && <div className="success-message ">{successMessage}</div>}
                 <div className="NavBottom">
                     <div className='NavLeft'>
                         <div className="inputCarat">

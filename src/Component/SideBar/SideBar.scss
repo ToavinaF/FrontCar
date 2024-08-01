@@ -13,6 +13,7 @@
     top: 0;
 
 
+
     .logo {
         width: 100%;
         text-align: center;
@@ -31,6 +32,8 @@
     }
 
     .navlink {
+        overflow: scroll;
+        scrollbar-width: none;
         width: 180px;
         height: auto;
         margin: 0% 0 0 0;
@@ -38,8 +41,7 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-
-      
+        overflow-y: 'auto';
         ul {
             top: 20%;
             width: 170px;
@@ -119,8 +121,9 @@
                         list-style-type: none;
                         width: 100%;
                         height: 40px;
-                        padding: 10% 0 5% 0;
-                
+                        padding: 10% 0 5% 10%;
+                        text-align: left;
+                        overflow: hidden;
 
                         .nav_item {
                             text-decoration: none;
@@ -128,6 +131,11 @@
                             font-weight: normal;
                             padding: 20% 0 5% 0;
                             transition: .5s;
+
+                            .icon_list {
+                                font-size: 1.3rem;
+                                margin: 0 5% 0 2%;
+                            }
 
                             &:hover {
                                 color: white;
@@ -137,16 +145,18 @@
                     }
                 }
 
-                .btn-lang{
+                .btn-lang {
                     display: flex;
                     flex-direction: row;
                     gap: 10%;
                     cursor: pointer;
                     font-size: 1rem;
-                    button{
+
+                    button {
                         border-radius: 25px;
                         object-fit: cover;
-                        .flag-icon{
+
+                        .flag-icon {
                             width: 45px;
                             border-radius: 25px;
                         }
