@@ -124,127 +124,119 @@ const ModifCar = () => {
     }
   };
 
-   //suppression galerie
-   const handDelete = async (id) =>{
+  //suppression galerie
+  const handDelete = async (id) => {
     try {
-        console.log(id);
-        await axios.delete('http://127.0.0.1:8000/api/PhotoDelete/'+id);
-    const newGalerie = currentGalerie.filter((item)=>{
-        return(
-            item.id !== id
+      console.log(id);
+      await axios.delete('http://127.0.0.1:8000/api/PhotoDelete/' + id);
+      const newGalerie = currentGalerie.filter((item) => {
+        return (
+          item.id !== id
         )
-    })
-    setCurrentGalerie(newGalerie);
+      })
+      setCurrentGalerie(newGalerie);
     } catch (error) {
-        console.log('ts mande');
+      console.log('ts mande');
     }
-}
+  }
   return (
     <>
-      <div className="block">
+      <div className="block_modif">
         <form onSubmit={handleSubmit} className='form'>
-          <div className="parti-left">
-            <div className="image" onClick={handleImageClick}>
-              {selectedImage.length > 0 ? (
-                <div>
-                  <img src={URL.createObjectURL(selectedImage[0])} alt="Selected" />
-                  <div className='put'></div>
+          <div className="image-upload">
+            <div {...getRootProps({ className: 'dropzone' })}>
+              <input {...getInputProps()} />
+              {
+                <div className="barImg">
+                    {
+                      currentGalerie.length > 0 && (
+                        currentGalerie.map((imageName, index) => (
+                          <div key={index} className="partImg" onClick={(e) => e.stopPropagation()}>
+                            <div className="image-container">
+                              <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${imageName.image}`} alt={`Current ${index}`} />
+                              <div className="cach"><CiTrash className='check' onClick={() => handDelete(imageName.id)} /></div>
+                            </div>
+                          </div>
+                        ))
+                      )
+                    }
+                    {
+                    selectedImage.length > 0 && (
+                      selectedImage.map((file, index) => (
+                        <div key={index} className="partImg" onClick={(e) => e.stopPropagation()}>
+                          <div className="image-container">
+                            <img src={URL.createObjectURL(file)} alt={`Selected ${index}`} />
+                            <div className="cach"><CiTrash className='check' onClick={() => handleRemoveImage(index)} /></div>
+                          </div>
+                        </div>
+                      ))
+                    )
+                  }
                 </div>
-              ) : currentImage ? (
-                <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${currentImage}`} alt="Current" />
-              ) : (
-                <IoCameraOutline className='cam' />
-              )}
-            </div>
+              }
 
-            <div className="caracter">
-              <label htmlFor="marque">{t('Marque du vehicule')}</label>
-              <input type="text" placeholder={t('Marque du vehicule')} className='input' name='marque' value={formData.marque} onChange={handleChange} />
-            </div>
-            <div className="caracter">
-              <label htmlFor="matricule">{t('Matricule du vehicule')}</label>
-              <input type="text" placeholder={t('Matricule du vehicule')} className='input' name='matricule' value={formData.matricule} onChange={handleChange} />
-            </div>
-            <div className="caracter">
-              <label htmlFor="transmission">{t('Type de transmission')}</label>
-              <select name="transmission" className='input' value={formData.transmission} onChange={handleChange}>
-                <option value="Automatique">Automatique</option>
-                <option value="Manuelle">Manuelle</option>
-              </select>
+
+              <p>{t('Glissez-déposez une image ici, ou cliquez pour sélectionner une image')}</p>
+              <IoAddCircleSharp className='plus' />
             </div>
           </div>
-          <div className="parti-right">
-            <div className="caracter">
-              <label htmlFor="prix">{t('prix du vehicule')}</label>
-              <input type="text" placeholder={t('prix du vehicule')} className='input' name='prix' value={formData.prix} onChange={handleChange} />
-            </div>
-            <div className="caracter">
-              <label htmlFor="bagage">{t('Nombre de bagage')}</label>
-              <select name="bagage" className='input' value={formData.bagage} onChange={handleChange}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-            <div className="caracter">
-              <label htmlFor="place">{t('Nombre de place')}</label>
-              <select name="place" className='input' value={formData.place} onChange={handleChange}>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
 
-              </select>
-            </div>
-            <div className="caracter">
-              <label htmlFor="porte">{t('Nombre de porte')}</label>
-              <select name="porte" className='input' value={formData.porte} onChange={handleChange}>
-                <option value="3">3</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-            <div className="apro">
-              <label htmlFor="description">{t('Apropos du vehicule')}</label>
-              <textarea id="description" className='desc' name='description' value={formData.description} onChange={handleChange}></textarea>
-            </div>
-            <button type='submit' className='btn'>{t('Enregistre')}</button>
-          </div>
-          {ShowUpload && (
-            <div className="image-upload">
-              <FaXmark className='x' onClick={() => setShowUpload(false)} />
-              <div {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
-                <p>{t('Glissez-déposez une image ici, ou cliquez pour sélectionner une image')}</p>
-                <IoAddCircleSharp className='plus' />
+          <div className="content_form">
+            <div className="parti-left">
+              <div className="caracter">
+                <label htmlFor="marque">{t('Marque du vehicule')}</label>
+                <input type="text" placeholder={t('Marque du vehicule')} className='input' name='marque' value={formData.marque} onChange={handleChange} />
               </div>
-              {selectedImage.length > 0 && (
-                <div className="barImg">
-                  {selectedImage.map((file, index) => (
-                    <div key={index} className="partImg">
-                      <div className="image-container">
-                        <img src={URL.createObjectURL(file)} alt={`Selected ${index}`} />
-                        <div className="cach"><CiTrash className='check' onClick={() => handleRemoveImage(index)} /></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {currentGalerie.length > 0 && (
-                <div className="barImg">
-                  {currentGalerie.map((imageName, index) => (
-                    <div key={index} className="partImg">
-                      <div className="image-container">
-                        <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${imageName.image}`} alt={`Current ${index}`} />
-                        <div className="cach"><CiTrash className='check' onClick={()=>handDelete(imageName.id)} /></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="caracter">
+                <label htmlFor="matricule">{t('Matricule du vehicule')}</label>
+                <input type="text" placeholder={t('Matricule du vehicule')} className='input' name='matricule' value={formData.matricule} onChange={handleChange} />
+              </div>
+              <div className="caracter">
+                <label htmlFor="transmission">{t('Type de transmission')}</label>
+                <select name="transmission" className='input' value={formData.transmission} onChange={handleChange}>
+                  <option value="Automatique">Automatique</option>
+                  <option value="Manuelle">Manuelle</option>
+                </select>
+              </div>
             </div>
-          )}
+            <div className="parti-right">
+              <div className="caracter">
+                <label htmlFor="prix">{t('prix du vehicule')}</label>
+                <input type="text" placeholder={t('prix du vehicule')} className='input' name='prix' value={formData.prix} onChange={handleChange} />
+              </div>
+              <div className="caracter">
+                <label htmlFor="bagage">{t('Nombre de bagage')}</label>
+                <select name="bagage" className='input' value={formData.bagage} onChange={handleChange}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+              <div className="caracter">
+                <label htmlFor="place">{t('Nombre de place')}</label>
+                <select name="place" className='input' value={formData.place} onChange={handleChange}>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+
+                </select>
+              </div>
+              <div className="caracter">
+                <label htmlFor="porte">{t('Nombre de porte')}</label>
+                <select name="porte" className='input' value={formData.porte} onChange={handleChange}>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div className="desc_car">
+                <label htmlFor="description">{t('Apropos du vehicule')}</label>
+                <textarea id="description" className='desc' name='description' value={formData.description} onChange={handleChange}></textarea>
+              </div>
+              <button type='submit' className='btn'>{t('Enregistre')}</button>
+            </div>
+          </div>
         </form>
       </div>
     </>
