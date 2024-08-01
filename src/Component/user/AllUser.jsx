@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdDelete } from 'react-icons/md';
 
-const AllUser = () => {
+const AllUser = ({searchTerm}) => {
     const { t } = useTranslation();
     const [allUserData, setAllUserData] = useState([]);
     const [hoveredUserId, setHoveredUserId] = useState(null);
@@ -29,6 +29,11 @@ const AllUser = () => {
             console.log('Vérifiez le code');
         }
     };
+    const filteredUsers = allUserData.filter(user => {
+        return user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     const handleMouseEnter = (id) => {
         setHoveredUserId(id);
@@ -61,7 +66,7 @@ const AllUser = () => {
                 <button className="btn">{t('allUser.allUsers')}</button>
             </div>
             <div className="user-cards">
-                {allUserData.map((user) => (
+                {filteredUsers.map((user) => (
                     <div
                         key={user.id}
                         className="user-card"

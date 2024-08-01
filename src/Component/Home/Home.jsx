@@ -19,6 +19,7 @@ import ModifCar from '../ModifCar/ModifCar'
 import Theme from '../Page/Themes/Theme'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
+    const [searchTerm, setSearchTerm] = useState("");
     const accesstoken = localStorage.getItem('accessToken');
     console.log(accesstoken)
     return (
@@ -26,18 +27,18 @@ const Home = () => {
             <div className='content-fluid'>
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} />
+                    <Header  activepage={activePage} setSearchTerm={setSearchTerm}/>
                     <Theme/>
                 </div>
                 <div className="content">
                     <Routes>
                         <Route path='/dashboard' element={<Dashboard />} />
-                        <Route path="/listcar" element={<ListCar />} />
+                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
                         <Route path='/addcar' element={<Addcar />} />
                         <Route path='/Profile' element={<Profil />} />
-                        <Route path='/listUser' element={<AllUser />} />
+                        <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
-                        <Route path="/Historique" element={<Historique />} />
+                        
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
                         <Route path="/reservation/:id" element={<Reservation/>} />
@@ -50,9 +51,9 @@ const Home = () => {
                         <Route path="/reservation" element={<Reservation/>} />
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
-                        <Route path='/Historique' element={<Historique/>}/>
+                        <Route path='/Historique' element={<Historique searchTerm={searchTerm}/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
-                        <Route path='/Historique' element={<Historique/>}/>
+                        
                         <Route path="/AjoutUser" element={<AddUser/>}/>
                     </Routes>
 

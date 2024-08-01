@@ -10,7 +10,7 @@ import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const ListCar = () => {
+const ListCar = ({searchTerm}) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -43,6 +43,9 @@ const ListCar = () => {
       console.log("verifier le code");
     }
   };
+  const filteredCars = ViewCar.filter(car => {
+    return car.marque.toLowerCase().includes(searchTerm.toLowerCase());
+  })
   const handleMenu = (index) => {
     if (ShowMenu === index) {
       setShowMenu(null);
@@ -87,7 +90,7 @@ const ListCar = () => {
       }
 
       {
-          ViewCar.map((list, i) => {
+          filteredCars.map((list, i) => {
             return (
               <div key={i} className="ListBlock">
                 <div className='barNav'>
