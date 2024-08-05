@@ -5,6 +5,7 @@ import axios from 'axios';
 import {useTranslation} from 'react-i18next';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
+
 const Historique = ({searchTerm}) => {
     const [isActive, setisActive] = useState(null);
     const { t } = useTranslation();
@@ -16,6 +17,7 @@ const Historique = ({searchTerm}) => {
             setisActive(index);
         }
     };
+    
     const Navigate = useNavigate();
     const [Histo, setHisto] = useState([]);
 
@@ -53,6 +55,9 @@ const Historique = ({searchTerm}) => {
     const handlemod = (id)=>{
         Navigate('/Home/modifres/'+id)
     }
+    const handleFacture = async (id) => {
+        Navigate('/Home/facture');
+      }
     return (
         <div className='Historique'>
             <div className="title-histo">
@@ -94,6 +99,8 @@ const Historique = ({searchTerm}) => {
                                                 <ul>
                                                     <li><a onClick={() => suppr(histo.id_reservations)}>Supprimer</a></li>
                                                     <li><a onClick={()=>handlemod(histo.id_reservations)}>Modifier</a></li>
+                                                    <li><a onClick={()=>handleFacture(histo.id_reservations)}>Facture</a></li>
+
                                                 </ul>
                                             </div>
                                         )}
