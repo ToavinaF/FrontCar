@@ -1,13 +1,10 @@
 .contenaireGal {
-    position: relative;
     width: 100%;
     height: auto;
-    margin-left: 0%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    // border: solid 2px white;
     flex-wrap: wrap;
     gap: 10%;
     padding: 20px 5px 20px 5px;
@@ -227,74 +224,44 @@
     transform: translate(-50%, -50%);
     background: rgba(56, 56, 56, 0.384);
     border-radius: 10px;
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 1000px;
+    height: 550px;
+    background: #00000000;
 
-    .modal-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 1000px;
-        height: 550px;
-        background: #00000000;
-
-        .content-Modal {
-            //   border: solid 2px red;
-            width: 65%;
-            height: 90%;
-            border-radius: 10px;
-            overflow: hidden;
-
-        }
+    .content-Modal {
+        position: relative;
+        text-align: center;
     }
 
     .close-button {
         position: absolute;
-        top: 30px;
-        right: 80px;
-        background: white;
+        top: 10px;
+        right: 10px;
+        background: transparent;
         border: none;
-        font-size: 20px;
-        width: 30px;
-        height: 30px;
-        border-radius: 100%;
-        cursor: pointer;
         font-size: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        cursor: pointer;
+        color: white;
         font-weight: bold;
-
-    }
-
-    .prev-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 95%;
-        cursor: pointer;
-    }
-    .next-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 1%;
-        cursor: pointer;
+        margin: 0 0 0 20%;
     }
 
     .modal-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        width: 900px;
+        height: 500px;
     }
-}
 
-.image-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
+    .prev-button,
+    .next-button {
+        font-size: 2.5rem;
+        cursor: pointer;
+        margin: auto;
+        color: wheat;
+    }
 }

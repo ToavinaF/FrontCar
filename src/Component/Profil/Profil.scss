@@ -28,9 +28,10 @@
                 height: auto;
                 display: flex;
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: space-between;
                 align-items: center;
-                padding: 2% 0 2% 0;
+                padding: 2% 2% 2% 10%;
+                position: relative;
 
                 .image-text {
                     width: 100%;
@@ -45,7 +46,7 @@
                         width: 120px;
                         height: 120Px;
                         border-radius: 100%;
-                        margin: -8% 0 0 -25%;
+                        margin: -10% 0 0 -25%;
                     }
 
 
@@ -74,14 +75,42 @@
                     text-align: center;
 
                     p {
-                        padding:0 10% 10% 10%;
-                        border-radius: 10px;
-                        background: var(--profile);
-                        font-size:2rem;
-                        border: 1px solid var(--profile);
-                        cursor: pointer;
+                        .about{
+                            padding:2% 10px 2% 10px;
+                            border-radius: 10px;
+                            background: var(--profile);
+                            font-size:3rem;
+                            border: 1px solid var(--profile);
+                            cursor: pointer;
+                            transition: .3s;
+                            &.active{
+                                color: #ffc107;
+                                background: white;
+                            }
+                        }
+                        
                     }
 
+                }
+
+                .menu_prof{
+                    position: absolute;
+                    right: 11%;
+                    top: 16%;
+                    padding:1.5% 2% 0 2%;
+                    background-color: burlywood;
+                    text-align: center;
+                    border-radius: 10px;
+
+                    ul{
+                        li,a{
+                            text-decoration: none;
+                            list-style-type: none;
+                            color: white;
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
         }
