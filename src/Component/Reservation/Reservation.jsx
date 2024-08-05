@@ -10,7 +10,7 @@ function Reservation() {
     const loggedInUserId = localStorage.getItem('id');
     const [CarCheck, setCarCheck] = useState([]);
     const [ListUser, setListUser] = useState([]);
-    const [ReservAdd, setReservAdd] = useState({
+    const [AjoutReservation, setAjoutReservation] = useState({
         id_client: '',
         DateDebut: '',
         DateFin: '',
@@ -56,11 +56,10 @@ function Reservation() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setReservAdd({
-            ...ReservAdd,
+        setAjoutReservation({
+            ...AjoutReservation,
             [name]: value
         });
-
 
         if (name === 'DateDebut' || name === 'DateFin') {
             const selectedDate = new Date(value);
@@ -74,8 +73,8 @@ function Reservation() {
 
     const handleModif = async (e) => {
         e.preventDefault();
-        const dateDebut = new Date(ReservAdd.DateDebut);
-        const dateFin = new Date(ReservAdd.DateFin);
+        const dateDebut = new Date(AjoutReservation.DateDebut);
+        const dateFin = new Date(AjoutReservation.DateFin);
 
         if (dateDebut < new Date()) {
             setErrorMessage("La date de début doit être aujourd'hui ou une date future.");
@@ -92,12 +91,18 @@ function Reservation() {
             return;
         }
 
+        // Calculer le prix total
+        const prixParJour = CarCheck.prix;
+        const diffTemp = dateFin - dateDebut;
+        const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
+        const totalPrice = nbjour * prixParJour;
+
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
-                id_client: ReservAdd.id_client,
-                DateDebut: ReservAdd.DateDebut,
-                DateFin: ReservAdd.DateFin,
-                Price: CarCheck.prix,
+                id_client: AjoutReservation.id_client,
+                DateDebut: AjoutReservation.DateDebut,
+                DateFin: AjoutReservation.DateFin,
+                Price: totalPrice, // Envoi du prix total calculé
             });
 
             if (response.data.success) {
@@ -115,13 +120,17 @@ function Reservation() {
                 } else if (error.response.data.error) {
                     setErrorMessage(error.response.data.error);
                 } else {
-                    setErrorMessage('Votre réservation est bien enregistrée.');
-                    navigate('/Home/Historique');
+                    setSuccessMessage('Votre réservation est bien enregistrée.');
+                    // navigate('/Home/reservation/:id');
                 }
             } else {
                 setErrorMessage('Une erreur est survenue.');
             }
         }
+    };
+    const fetchCarResrved = async () => {
+        const response = await axios.get("http://127.0.0.1:8000/api/reservVehicul/" + id);
+        setCheckHisto(response.data);
     };
 
     useEffect(() => {
@@ -143,10 +152,7 @@ function Reservation() {
         );
     };
 
-    const fetchCarResrved = async () => {
-        const response = await axios.get("http://127.0.0.1:8000/api/reservVehicul/" + id);
-        setCheckHisto(response.data);
-    };
+   
 
     const [count, setCount] = useState(3);
     useEffect(() => {
@@ -175,7 +181,7 @@ function Reservation() {
                             <label htmlFor="DateDebut">Début de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(ReservAdd.DateDebut)) ? 'reserved-date' : ''}`}
+                                className={`input ${isDateReserved(new Date(AjoutReservation.DateDebut)) ? 'reserved-date' : ''}`}
                                 name='DateDebut'
                                 onChange={handleChange}
                                 required
@@ -187,7 +193,7 @@ function Reservation() {
                             <label htmlFor="DateFin">Fin de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(ReservAdd.DateFin)) ? 'reserved-date' : ''}`}
+                                className={`input ${isDateReserved(new Date(AjoutReservation.DateFin)) ? 'reserved-date' : ''}`}
                                 name='DateFin'
                                 onChange={handleChange}
                                 required
@@ -233,7 +239,9 @@ function Reservation() {
                                         <th><span>PRENON</span></th>
                                         <th><span>Date de début</span></th>
                                         <th><span>Date fin</span></th>
+                                        <th><span>Prix</span></th>
                                         <th><span>Statut</span></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,6 +252,8 @@ function Reservation() {
                                             <td>{check.firstname}</td>
                                             <td>{check.DateDebut}</td>
                                             <td>{check.DateFin}</td>
+                                            <td>{check.PriceTotal}</td>
+
                                             <td><span className='regle'>Réservé</span></td>
                                         </tr>
                                     ))}
