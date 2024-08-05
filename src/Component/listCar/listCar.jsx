@@ -116,7 +116,7 @@ const ListCar = ({ searchTerm }) => {
                       }
                     </div>
                     <div className="photoCar">
-                      <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${list.photo}`} alt="" />
+                      <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${list.photo}`} alt="" />
                     </div>
                     <div className="aprop">
                       <div className="icon">

@@ -1,300 +1,330 @@
 .contenaireGal {
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-left: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  // border: solid 2px white;
+  flex-wrap: wrap;
+  gap: 10%;
+  padding: 20px 5px 20px 5px;
+  // background: var(--body-bg);
+  border-radius: 10px;
+
+  h1 {
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  h2 {
+    color: #6c6f6f;
+  }
+
+  // dropzone
+  .form {
     width: 100%;
-    height: auto;
-    margin-left: 0%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    // border: solid 2px white;
-    flex-wrap: wrap;
-    gap: 10%;
-    padding: 20px 5px 20px 5px;
-    // background: var(--body-bg);
-    border-radius: 10px;
-  
-    h1 {
-      color: black;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-  
-    h2 {
-      color: #6c6f6f;
-    }
-  
-    // dropzone
-    .form {
-      width: 100%;
-      
-      .btn {
-        width: 80px;
-        height: 80px;
-        border-radius: 100%;
-        position: absolute;
-        top: 9%;
-        left: 47%;
-        background: #ffc107;
-        
+
+    .btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 100%;
+      position: absolute;
+      margin: -8% 0 0% 46%;
+      background: #ffc107;
+
+      .down {
+        font-size: 2rem;
+      }
+
+      &:hover {
+        background: #1c1c1c;
+        transition: 0.2s;
+
         .down {
           font-size: 2rem;
-        }
-        
-        &:hover {
-          background: #1c1c1c;
-          transition: 0.2s;
-          
-          .down {
-            font-size: 2rem;
-            color: #ffc107;
-          }
+          color: #ffc107;
         }
       }
-  
-      .image-upload {
-        width: 100%;
-        height: auto;
-        transition: 1s;
-        background-color: #5c6064;
-        padding: 20px 20px 20px 20px;
-        border-radius: 4px;
-        margin-bottom: 40px;
-  
-        .dropzone {
-          border: 2px dashed #515050;
-          height: 200px;
-          border-radius: 5px;
-          text-align: center;
+    }
+
+    .image-upload {
+      width: 100%;
+      height: auto;
+      transition: 1s;
+      background-color: #5c6064;
+      padding: 20px 20px 20px 20px;
+      border-radius: 4px;
+      margin-bottom: 40px;
+
+      .dropzone {
+        border: 2px dashed #515050;
+        height: 200px;
+        border-radius: 5px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-color: #b0b0b0;
+        position: relative;
+
+        p {
+          margin: -5% 0 0 0;
+          color: #60696d4e;
+        }
+
+        .plus {
+          margin: 2% 0 0 0;
+          position: absolute;
+          font-size: 3rem;
+          color: #60696d4e;
+        }
+
+        .barImg {
+          width: 100%;
+          height: 120px;
+          // border: solid 2px white;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          flex-direction: row;
+          justify-content: flex-start;
           align-items: center;
-          cursor: pointer;
-          background-color: #b0b0b0;
-          position: relative;
-  
-          p {
-            margin: -5% 0 0 0;
-            color: #60696d4e;
-          }
-  
-          .plus {
-            margin: 2% 0 0 0;
-            position: absolute;
-            font-size: 3rem;
-            color: #60696d4e;
-          }
-  
-          .barImg {
-            width: 100%;
-            height: 120px;
-            // border: solid 2px white;
+          overflow: none;
+
+          .partImg {
+            width: 12%;
+            height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
             align-items: center;
-            overflow: none;
-  
-            .partImg {
-              width: 12%;
-              height: 180px;
-              border-radius: 10px;
-              overflow: hidden;
+            justify-content: center;
+            margin: -2% 0 0 1%;
+
+            .image-container {
+              width: 100%;
+              height: 100%;
               display: flex;
               align-items: center;
               justify-content: center;
-              margin: -2% 0 0 1%;
-  
-              .image-container {
+              position: relative;
+
+              img {
+                width: 120%;
+                height: 100%;
+              }
+
+              .cach {
                 width: 100%;
                 height: 100%;
+                background: #24292da5;
+                position: absolute;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                position: relative;
-  
-                img {
-                  width: 120%;
-                  height: 100%;
-                }
-  
-                .cach {
-                  width: 100%;
-                  height: 100%;
-                  background: #24292da5;
+
+                .check {
+                  font-size: 3rem;
+                  color: #a7a8a9;
                   position: absolute;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  
-                  .check {
-                    font-size: 3rem;
-                    color: #a7a8a9;
-                    position: absolute;
-                    z-index: 2;
-                  }
+                  z-index: 2;
                 }
               }
             }
           }
-        }
-      }
-    }
-  
-    // endDropzone
-    .BlockGal {
-      width: 95%;
-      height: auto;
-      // border: solid 2px white;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 2%;
-      padding: 20px 5px 20px 5px;
-  
-      .BlockImg {
-        position: relative;
-        width: 25%;
-        height: 250px;
-        // border: solid 2px white;
-        margin-top: 1%;
-        overflow: hidden;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px;
-        cursor: pointer;
-  
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-  
-        // Ajout des boutons d'action au survol
-        .image-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          opacity: 0;
-          transition: opacity 0.3s;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-  
-          .overlay-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-  
-            .overlay-button {
-              background: #ffc107;
-              border: none;
-              padding: 10px 20px;
-              border-radius: 5px;
-              cursor: pointer;
-              color: white;
-              font-weight: bold;
-  
-              &:hover {
-                background: #ff8c00;
-              }
-            }
-          }
-        }
-  
-        &:hover .image-overlay {
-          opacity: 1;
         }
       }
     }
   }
-  
 
+  // endDropzone
+  .BlockGal {
+    width: 100%;
+    height: auto;
+    // border: solid 2px white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2%;
+    padding: 20px 5px 20px 5px;
 
-.image-modal {
-    position: absolute;
-    top: 55%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    background: rgba(56, 56, 56, 0.384);
-    border-radius: 10px;
+    .BlockImg {
+      position: relative;
+      width: 32%;
+      height: 300px;
+      // border: solid 2px white;
+      margin-top: 1%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1;
 
-    .modal-content {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      // Ajout des boutons d'action au survol
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 1000px;
-        height: 550px;
-        background: #00000000;
 
-        .content-Modal {
-            //   border: solid 2px red;
-            width: 65%;
-            height: 90%;
-            border-radius: 10px;
-            overflow: hidden;
 
+        .overlay-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          position: absolute;
+          z-index: 2;
+          // border: solid 2px white; 
+
+          .btn-Over {
+            background: #ffc107b1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+
+            &:hover {
+              background: #ffc107;
+              transition: 0.3s;
+            }
+          }
         }
-    }
+      }
 
-    .close-button {
-        position: absolute;
-        top: 30px;
-        right: 80px;
-        background: white;
-        border: none;
-        font-size: 20px;
-        width: 30px;
-        height: 30px;
-        border-radius: 100%;
-        cursor: pointer;
-        font-size: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-
+      &:hover .image-overlay {
+        opacity: 1;
+      }
     }
+  }
+}
 
-    .prev-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 95%;
-        cursor: pointer;
-    }
-    .next-button{
-        font-size: 2.5rem;
-        color: rgba(101, 100, 100, 0.856);
-        position: absolute;
-        top: 50%;
-        right: 1%;
-        cursor: pointer;
-    }
 
-    .modal-image {
-        width: 100%;
-        height: 100%;
+
+.image-mol {
+  // width: 70%;
+  // height: 400px;
+  // overflow: hidden;
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 800px;
+    background: #0000009c;
+    margin-top: 0%;
+    z-index: 3;
+    position: absolute;
+
+    .content-Modal {
+      //   border: solid 2px red;
+      width: 65%;
+      height: 73%;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      img{
+        width: 90%;
+        height: 90%;
         object-fit: cover;
+      }
+
     }
+  }
+
+  .close-button {
+    position: absolute;
+    top: 12%;
+    right: 2%;
+    background:rgba(240, 240, 240, 0.856);
+    border: none;
+    font-size: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+
+  }
+
+  .delet {
+    position: absolute;
+    color: rgba(240, 240, 240, 0.856);
+    cursor: pointer;
+    top: 12%;
+    left: 93%;
+    font-size: 2rem;
+    display: flex;
+    z-index: 2;
+    &:hover{
+      color: rgba(255, 0, 0, 0.484);
+      transition: 0.2s;
+    }
+  }
+
+  .prev-button {
+    font-size: 2.5rem;
+    color: rgba(240, 240, 240, 0.856);
+    position: absolute;
+    top: 50%;
+    right: 95%;
+    cursor: pointer;
+  }
+
+  .next-button {
+    font-size: 2.5rem;
+    color: rgba(240, 240, 240, 0.856);
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    cursor: pointer;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-.image-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
-}
+// .image-modal-overlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background: rgba(0, 0, 0, 0.75);
+// }

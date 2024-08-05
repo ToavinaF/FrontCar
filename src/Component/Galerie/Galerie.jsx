@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import { CiTrash } from 'react-icons/ci';
 import { FaDownload } from "react-icons/fa";
+import { MdDeleteForever } from 'react-icons/md';
 
 const Galerie = () => {
   const { t } = useTranslation();
@@ -19,11 +20,22 @@ const Galerie = () => {
   const [ImageIndex, setImageIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState([]);
   const [uploadMessage, setUploadMessage] = useState('');
+  const [ViewCar, setViewCar] = useState([]);
+  const [profil, setProfil] = useState({
+    nomPdp: '',
+  });
 
   useEffect(() => {
     fetchImg();
+    fetchCar();
+
   }, [id]);
 
+  // affichage detaille car
+  const fetchCar = async () => {
+    const detail = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+    setViewCar(detail.data.detailCar);
+  }
   const handleDrop = (acceptedFiles) => {
     setSelectedImage(prevImages => [
       ...prevImages,
@@ -53,8 +65,12 @@ const Galerie = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
+      // affiche les image a l'instant
+
+      const newImages = response.data.galerie;//recupere les image dans le DB
+      setGalerie(prevGalerie => [...prevGalerie, ...newImages]);//metre a jour le galerie avec les nouvel image
       setUploadMessage(response.data.message || 'Images uploaded successfully');
-      // navigate('/Home/listcar');
+      setSelectedImage([]);
     } catch (error) {
       console.error(error);
       setUploadMessage('Error uploading images');
@@ -86,7 +102,39 @@ const Galerie = () => {
   const prevImage = () => {
     setImageIndex((ImageIndex + Galerie.length - 1) % Galerie.length);
   };
+  // suppresion d'un image
+  const handDelete = async (id) => {
+    const valid = await axios.delete('http://127.0.0.1:8000/api/PhotoDelete/' + id);
+    const newGalerie = Galerie.filter((item) => {
+      return (
+        item.id !== id
+      )
+    })
+    setGalerie(newGalerie);
+    setOpen(false);
 
+  }
+
+  //modification pdp
+  const handleSetProfile = async (image) => {
+    // e.preventDefault();
+    const data = new FormData();
+    data.append('nomPdp', image)
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/photoPdp/" + id, data, {
+        headers: {
+          'methode': 'post'
+        }
+      })
+      navigate('/Home/listcar')
+    } catch (error) {
+      console.error(error);
+    }
+
+    // console.log(data);
+
+
+  }
   return (
     <div className='contenaireGal'>
       {/* Drop zone */}
@@ -110,22 +158,22 @@ const Galerie = () => {
             <IoAddCircleSharp className='plus' />
           </div>
         </div>
-        <button type='submit' className='btn'><FaDownload className='down'/></button>
+        <button type='submit' className='btn'><FaDownload className='down' /></button>
         {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
       </form>
-      
+
       {/* end dropzone */}
-      <h1>Marque du véhicule</h1>
-      <h2>Description</h2>
+      <h1>{ViewCar.marque}</h1>
+      <h2>{ViewCar.description}</h2>
       <div className="BlockGal">
         {
           Galerie.map((image, i) => (
             <div className="BlockImg" key={i} onClick={() => OpenModal(i)}>
-              <div className='image-overlay'>
               <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${image.image}`} alt={`Galerie image ${i}`} />
-                <div className="overlay buttons">
-                  <button className="overlay-button" /*onClick={() => handleDelete(image.id)}*/>Supprimer</button>
-                  <button className="overlay-button" /*onClick={() => handleSetProfile(image.image)}*/>Mettre comme photo de profil</button>
+
+              <div className='image-overlay'>
+                <div className="overlay-buttons" onClick={(e) => e.stopPropagation()}>
+                  <button className="btn-Over" onClick={() => handleSetProfile(image.image)}>Mettre comme photo de profil</button>
                 </div>
 
               </div>
@@ -133,19 +181,21 @@ const Galerie = () => {
           ))
         }
       </div>
-      
+
       {/* Fenetre image */}
       <Modal
         isOpen={Open}
         onRequestClose={CloseModal}
-        contentLabel="Image Modal"
-        className="image-modal"
-        overlayClassName="image-modal-overlay"
+        // contentLabel="Image Modal"
+        className="image-mol"
+      // overlayClassName="image-modal-overlay"
       >
         <div className="modal-content">
           <div className="content-Modal">
             <button onClick={CloseModal} className="close-button">X</button>
             <GrCaretPrevious className='prev-button' onClick={prevImage} />
+            <MdDeleteForever className='delet' onClick={() => handDelete(Galerie[ImageIndex]?.id)} />
+
             <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${Galerie[ImageIndex]?.image}`} alt={`Galerie image ${ImageIndex}`} className="modal-image" />
             <GrCaretNext className='next-button' onClick={nextImage} />
           </div>
