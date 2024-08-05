@@ -9,8 +9,7 @@ function Reservation() {
     const { id } = useParams();
 
     const [Rese, setRes] = useState([]);
-    console.log(Rese);
-    const [ReservAdd, setReservAdd] = useState({
+    const [Data, SetData] = useState({
         id_client: '',
         id_voiture: '',
         DateDebut: '',
@@ -18,42 +17,34 @@ function Reservation() {
         PriceTotal: ''
     });
 
+    const handleChange = (e) => {
+        SetData({
+            ...Data,
+            [e.target.name]: e.target.value
+        });
+    };
+
     const fetchRes = async () => {
         try {
             const reserv = await axios.get('http://127.0.0.1:8000/api/showres/' + id);
+            const reservation = reserv.data.reservation[0];
             setRes(reserv.data.reservation);
-            setReservAdd({
-                id_client: reserv.data.reservation.id_client,
-                id_voiture: reserv.data.reservation.id_voiture,
-                DateDebut: reserv.data.reservation.DateDebut,
-                DateFin: reserv.data.reservation.DateFin,
-                Price: reserv.data.reservation.PriceTotal,
+            SetData({
+                id_client: reservation.id_client,
+                id_voiture: reservation.id_voiture,
+                DateDebut: reservation.DateDebut,
+                DateFin: reservation.DateFin,
+                PriceTotal: reservation.PriceTotal
             });
         } catch (error) {
             console.error("Erreur lors de la récupération des données:", error);
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setReservAdd(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
     const handleModif = async (e) => {
         e.preventDefault();
-        const data = {
-            id_client: ReservAdd.id_client,
-            id_voiture: ReservAdd.id_voiture,
-            DateDebut: ReservAdd.DateDebut,
-            DateFin: ReservAdd.DateFin,
-            PriceTotal: ReservAdd.PriceTotal // Correction ici pour correspondre à votre backend
-        };
-
         try {
-            await axios.post('http://127.0.0.1:8000/api/ModifReser/' + id, data);
+            await axios.post('http://127.0.0.1:8000/api/ModifReser/' + id, Data);
             navigate('/Home/Historique');
         } catch (error) {
             console.error("Erreur lors de la modification de la réservation:", error);
@@ -65,11 +56,10 @@ function Reservation() {
     }, [id]);
 
     return (
-
         <div className='ReservBlock'>
             {
                 Rese.map((reserv) => (
-                    <form onSubmit={handleModif} className="contentReserv">
+                    <form onSubmit={handleModif} className="contentReserv" key={reserv.id}>
                         <div className="NavTop">
                             <h1>Modification du réservation <FaCalendarCheck className='Calendar' /></h1>
                             <span>{reserv.prix}/jrs</span>
@@ -78,18 +68,21 @@ function Reservation() {
                             <div className='NavLeft'>
                                 <div className="inputCarat">
                                     <label htmlFor="">Début de la location</label>
-                                    <input type="date" className='input'  name='DateDebut' onChange={handleChange} />
+                                    <input type="date" className='input' name='DateDebut' value={Data.DateDebut} onChange={handleChange} />
                                 </div>
                                 <div className="inputCarat">
                                     <label htmlFor="">Fin de la location</label>
-                                    <input type="date" className='input'  name='DateFin' onChange={handleChange} />
+                                    <input type="date" className='input' name='DateFin' value={Data.DateFin} onChange={handleChange} />
                                 </div>
                                 <div className="inputCarat">
                                     <label htmlFor="">Le client</label>
-                                    <select className='input' name='id_client'  onChange={handleChange}>
-                                        <option value={reserv.id}>{reserv.name} {reserv.firstname}</option>
+                                    <select className='input' name='id_client' value={Data.id_client} onChange={handleChange}>
+                                        <option value="2">Rakoto</option>
+                                        <option value={reserv.id_client}>{reserv.name} {reserv.firstname}</option>
                                     </select>
                                 </div>
+                                <input type="hidden" name='id_voiture' value={Data.id_voiture} />
+                                <input type="hidden" name='PriceTotal' value={Data.PriceTotal} />
                             </div>
                             <div className='NavRight'>
                                 <div className="imgCar">
@@ -102,8 +95,6 @@ function Reservation() {
                 ))
             }
         </div>
-
-
     );
 }
 
