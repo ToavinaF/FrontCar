@@ -102,7 +102,7 @@ function Reservation() {
                 id_client: AjoutReservation.id_client,
                 DateDebut: AjoutReservation.DateDebut,
                 DateFin: AjoutReservation.DateFin,
-                Price: totalPrice, // Envoi du prix total calculé
+                Price: totalPrice,
             });
 
             if (response.data.success) {

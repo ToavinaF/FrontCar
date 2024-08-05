@@ -61,7 +61,7 @@ const Home = () => {
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
                         
                         <Route path="/AjoutUser" element={<AddUser/>}/>
-                        <Route path='/Facture' element={<Facture/>}/>
+                        <Route path='/facture/:id' element={<Facture/>}/>
                     </Routes>
 
 
