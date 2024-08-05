@@ -10,7 +10,7 @@ import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const ListCar = ({searchTerm}) => {
+const ListCar = ({ searchTerm }) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -82,10 +82,10 @@ const ListCar = ({searchTerm}) => {
     return () => clearInterval(intervalId);
   }, [count])
 
-//redirection galerie
-const handGalerie = async (id) => {
-  navigate('/Home/galerie/' + id);
-}
+  //redirection galerie
+  const handGalerie = async (id) => {
+    navigate('/Home/galerie/' + id);
+  }
 
 
   return (
@@ -96,51 +96,52 @@ const handGalerie = async (id) => {
         </div>
         }
 
-      {
-       
-        filteredCars.map((list, i) => {
-            return (
-              <div key={i} className="ListBlock">
-                <div className='barNav'>
-                  <h1 className='tlt'>{list.marque}</h1>
-                  <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
-                  {
-                    ShowMenu === i && (
-                      <div className="menu">
-                        <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
-                        <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
-                        <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
+        {
+          filteredCars.map((list, i) => {
+            
+
+                return (
+                  <div key={i} className="ListBlock">
+                    <div className='barNav'>
+                      <h1 className='tlt'>{list.marque}</h1>
+                      <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
+                      {
+                        ShowMenu === i && (
+                          <div className="menu">
+                            <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
+                            <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
+                            <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
+                          </div>
+                        )
+                      }
+                    </div>
+                    <div className="photoCar">
+                      <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${list.photo}`} alt="" />
+                    </div>
+                    <div className="aprop">
+                      <div className="icon">
+                        <FaUser className='imgIcon' />
+                        <h3> {list.place} </h3>
                       </div>
-                    )
-                  }
-                </div>
-                <div className="photoCar">
-                  <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${list.photo}`} alt="" />
-                </div>
-                <div className="aprop">
-                  <div className="icon">
-                    <FaUser className='imgIcon' />
-                    <h3> {list.place} </h3>
+                      <div className="icon">
+                        <BsFillSuitcase2Fill className='imgIcon' />
+                        <h3>{list.bagage} </h3>
+                      </div>
+                      <div className="icon">
+                        <GiCarDoor className='imgIcon' />
+                        <h3>{list.porte} </h3>
+                      </div>
+                      <div className="icon">
+                        <TbManualGearboxFilled className='imgIcon' />
+                        <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
+                      </div>
+                    </div>
+                    <h2>{list.prix}/jrs</h2>
+                    <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
                   </div>
-                  <div className="icon">
-                    <BsFillSuitcase2Fill className='imgIcon' />
-                    <h3>{list.bagage} </h3>
-                  </div>
-                  <div className="icon">
-                    <GiCarDoor className='imgIcon' />
-                    <h3>{list.porte} </h3>
-                  </div>
-                  <div className="icon">
-                    <TbManualGearboxFilled className='imgIcon' />
-                    <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
-                  </div>
-                </div>
-                <h2>{list.prix}/jrs</h2>
-                <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
-              </div>
-            )
-          })
-        }
+                )
+              })
+            }
       </div>
     </>
   );
