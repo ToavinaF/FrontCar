@@ -6,66 +6,225 @@
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    gap: 3%;
+    gap: 10%;
     padding: 20px 5px 20px 5px;
-    background: var(--body-bg);
+    // background: var(--body-bg);
     border-radius: 10px;
-    position: relative;
-
+  
     h1 {
-        color: black;
-        font-size: 2.5rem;
-        font-weight: bold;
+      color: black;
+      font-size: 2.5rem;
+      font-weight: bold;
     }
-
+  
     h2 {
-        color: #6c6f6f;
+      color: #6c6f6f;
     }
-
-    .BlockGal {
+  
+    // dropzone
+    .form {
+      width: 100%;
+      
+      .btn {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        position: absolute;
+        top: 9%;
+        left: 47%;
+        background: #ffc107;
+        
+        .down {
+          font-size: 2rem;
+        }
+        
+        &:hover {
+          background: #1c1c1c;
+          transition: 0.2s;
+          
+          .down {
+            font-size: 2rem;
+            color: #ffc107;
+          }
+        }
+      }
+  
+      .image-upload {
         width: 100%;
         height: auto;
+        transition: 1s;
+        background-color: #5c6064;
+        padding: 20px 20px 20px 20px;
+        border-radius: 4px;
+        margin-bottom: 40px;
+  
+        .dropzone {
+          border: 2px dashed #515050;
+          height: 200px;
+          border-radius: 5px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          background-color: #b0b0b0;
+          position: relative;
+  
+          p {
+            margin: -5% 0 0 0;
+            color: #60696d4e;
+          }
+  
+          .plus {
+            margin: 2% 0 0 0;
+            position: absolute;
+            font-size: 3rem;
+            color: #60696d4e;
+          }
+  
+          .barImg {
+            width: 100%;
+            height: 120px;
+            // border: solid 2px white;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: none;
+  
+            .partImg {
+              width: 12%;
+              height: 180px;
+              border-radius: 10px;
+              overflow: hidden;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: -2% 0 0 1%;
+  
+              .image-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+  
+                img {
+                  width: 120%;
+                  height: 100%;
+                }
+  
+                .cach {
+                  width: 100%;
+                  height: 100%;
+                  background: #24292da5;
+                  position: absolute;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  
+                  .check {
+                    font-size: 3rem;
+                    color: #a7a8a9;
+                    position: absolute;
+                    z-index: 2;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    // endDropzone
+    .BlockGal {
+      width: 95%;
+      height: auto;
+      // border: solid 2px white;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2%;
+      padding: 20px 5px 20px 5px;
+  
+      .BlockImg {
+        position: relative;
+        width: 25%;
+        height: 250px;
+        // border: solid 2px white;
+        margin-top: 1%;
+        overflow: hidden;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 2%;
-        padding: 20px 5px 20px 5px;
-
-        .BlockImg {
-            width: 25%;
-            height: 250px;
-            // border: solid 2px white;
-            margin-top: 1%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            cursor: pointer;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-
-            }
+        border-radius: 5px;
+        cursor: pointer;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
+  
+        // Ajout des boutons d'action au survol
+        .image-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          opacity: 0;
+          transition: opacity 0.3s;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+  
+          .overlay-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+  
+            .overlay-button {
+              background: #ffc107;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 5px;
+              cursor: pointer;
+              color: white;
+              font-weight: bold;
+  
+              &:hover {
+                background: #ff8c00;
+              }
+            }
+          }
+        }
+  
+        &:hover .image-overlay {
+          opacity: 1;
+        }
+      }
     }
+  }
+  
+
+
+.image-modal {
+    position: absolute;
+    top: 55%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    background: rgba(56, 56, 56, 0.384);
+    border-radius: 10px;
 }
-
-
-
-.custom-overlay {
-    width: 95%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 1000;
-}
-
 .modal-content {
     display: flex;
     flex-direction: column;

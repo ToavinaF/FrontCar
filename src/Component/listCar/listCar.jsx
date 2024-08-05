@@ -98,8 +98,8 @@ const ListCar = ({ searchTerm }) => {
 
         {
           filteredCars.map((list, i) => {
-            {
-              ViewCar.map((list, i) => {
+            
+
                 return (
                   <div key={i} className="ListBlock">
                     <div className='barNav'>
