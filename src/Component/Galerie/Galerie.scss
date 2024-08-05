@@ -265,11 +265,11 @@
     position: absolute;
     top: 12%;
     right: 2%;
-    background:rgba(240, 240, 240, 0.856);
+    // background:rgba(240, 240, 240, 0.856);
+    color: antiquewhite;
     border: none;
-    font-size: 20px;
     width: 28px;
-    height: 28px;
+    height: 35px;
     border-radius: 100%;
     cursor: pointer;
     font-size: 1.5rem;
@@ -284,9 +284,9 @@
     position: absolute;
     color: rgba(240, 240, 240, 0.856);
     cursor: pointer;
-    top: 12%;
+    top: 12.4%;
     left: 93%;
-    font-size: 2rem;
+    font-size: 1.9rem;
     display: flex;
     z-index: 2;
     &:hover{

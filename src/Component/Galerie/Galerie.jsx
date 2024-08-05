@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import { CiTrash } from 'react-icons/ci';
 import { FaDownload } from "react-icons/fa";
-import { MdDeleteForever } from 'react-icons/md';
+import { MdDeleteForever, MdOutlineExitToApp } from 'react-icons/md';
 
 const Galerie = () => {
   const { t } = useTranslation();
@@ -192,7 +192,8 @@ const Galerie = () => {
       >
         <div className="modal-content">
           <div className="content-Modal">
-            <button onClick={CloseModal} className="close-button">X</button>
+            {/* <button>X</button> */}
+            <MdOutlineExitToApp  onClick={CloseModal} className="close-button"/>
             <GrCaretPrevious className='prev-button' onClick={prevImage} />
             <MdDeleteForever className='delet' onClick={() => handDelete(Galerie[ImageIndex]?.id)} />
 
