@@ -1,0 +1,172 @@
+.facture{
+    background-color: var(--body-bg);
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 2px solid var(--color-principal);
+    color: var(--blanch);
+    margin-bottom: 100px;
+    .subheader{
+        background-color: var(--color-principal);
+        border-radius: 20px;
+        height: 5vh;
+    }
+    .header{
+        
+        height: 40%;
+        .left{
+            margin: 0 10% 0 10%;
+            .titre{
+                color: var(--blanch);
+                h1{
+                    border-bottom: 2px solid var(--color-principal);
+                    margin-bottom: 50px;
+                    font-size: 70px;
+                    font-weight: 700;
+                    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                }
+            }
+        }
+        .right{
+            margin: 0 10% 0 10%;
+            .logo{
+                border-radius: 50%;
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 30px;
+                color: var(--color-principal);
+                img{
+                    margin: 0 10% 0 1%;
+                    
+                }
+
+            }
+            .vehicule__info{
+                .facture__numero{
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+    li{
+        list-style: none;
+    }
+    .contents{
+        &__one{
+            display: flex;
+            width: 100%;
+            margin:5% 0% 5% 0%;
+            justify-content: space-around;
+            border-bottom: 2px solid var(--color-principal);
+            li{
+                display: flex;
+                justify-content: space-between;
+                margin: 0 0% 0 0%;
+                h3{
+                    color: var(--color-principal);   
+                }
+                p{
+                    position: relative;
+                    left: 5%;
+                    top: 0;
+                }
+            }
+        }
+        &__two{
+            margin: 0 5% 0 5%;
+            text-align: center;
+            h1{
+                color: var(--color-principal);
+                border-bottom: 2px solid var(--color-principal);
+            }
+            table{
+                border: solid;
+                width: 100%;
+                border-radius: 50px;
+                thead{
+                    border: 2px solid wheat;
+                    font-size: 20px;
+                    font-weight: 400;
+                    background: var(--color-principal);
+                    th{
+                        border: 2px solid var(--color-principal);
+                    }
+                }
+                tbody{
+                    td{
+                        border: 2px solid var(--color-principal);
+                    }
+                }
+                tfoot{
+                    border-top: 2px solid var(--color-principal);
+                    border-left: 2px solid var(--color-principal);
+                }
+            }
+        }
+        &__free{
+            border-top: 2px solid var(--color-principal);
+            text-align: center;
+            justify-content: space-around;
+            margin: 5% 0 5% 0;
+            h1{
+                color: var(--color-principal);
+            }
+            form{
+                justify-content: space-between;
+                display: flex;
+                margin: 0 15% 0 15%;
+                .input{
+                    border-radius: 25px;
+                    font-size: 100px;
+                    width: 70px;
+                    &.active{
+                        background-color: var(--color-principal);
+                    }
+                }
+            }
+        }
+        
+    }
+    .qr__code{
+        img {
+            display: block;
+            width: 480px;
+            height: 480px;
+            margin: 2rem auto;
+          }
+          .app {
+            padding: 2rem;
+          }
+          h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+          }
+          input {
+            appearance: none;
+            outline: none;
+            border: none;
+            background: #EEE;
+            width: 100%;
+            max-width: 320px;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-right: 1rem;
+          }
+          button, a {
+            appearance: none;
+            outline: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #2bcb4b;
+            font-size: 1.5rem;
+            text-decoration: none;
+          }
+    }
+}
