@@ -97,6 +97,7 @@ function Reservation() {
         const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
         const totalPrice = nbjour * prixParJour;
 
+        console.log(totalPrice);
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
                 id_client: AjoutReservation.id_client,
