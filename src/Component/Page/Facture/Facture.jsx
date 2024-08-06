@@ -4,6 +4,7 @@ import './Facture.scss';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import QRCode from 'qrcode.react';
+import { IoCarSport } from 'react-icons/io5';
 
 const Facture = () => {
     const { id } = useParams();
@@ -47,6 +48,8 @@ const Facture = () => {
 
     const qrData = `
         Email: ${fact.email}
+        Contact: ${fact.contact}
+
         Nom: ${fact.name}
         Date de réservation: ${formatDate(fact.created_at)}
         Date de début: ${formatDate(fact.DateDebut)}
@@ -78,7 +81,9 @@ const Facture = () => {
                 </div>
                 <div className='right'>
                     <div className='logo'>
-                        <img className='logo' src={Logo} alt="Logo" />
+                        {/* <img className='logo' src={Logo} alt="Logo" /> */}
+                        <IoCarSport className='icon_logo' />
+
                         <h1>Location Cars</h1>
                     </div>
                     <div className='vehicule__info'>
@@ -111,7 +116,7 @@ const Facture = () => {
                         <ul>
                             <li>
                                 <h3>Numéro de téléphone</h3>
-                                <p>Numéro de téléphone du prêteur</p>
+                                <p>{fact.contact}</p>
                             </li>
                             <li>
                                 <h3>Email</h3>

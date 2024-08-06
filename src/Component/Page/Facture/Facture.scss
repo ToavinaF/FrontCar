@@ -31,17 +31,22 @@
             margin: 0 10% 0 10%;
             .logo{
                 border-radius: 50%;
-                width: 70px;
-                height: 70px;
+                width: 100%;
+                
                 object-fit: cover;
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 30px;
                 color: var(--color-principal);
-                img{
-                    margin: 0 10% 0 1%;
-                    
+                .icon_logo {
+                    background: #181e22c7;
+                    color: white;
+                    font-size: 4rem;
+                    border-radius: 20px;
+                    padding: 10px 10px 10px 10px;
+                    border-bottom-right-radius: 10%;
                 }
+            
 
             }
             .vehicule__info{
