@@ -136,7 +136,7 @@ const ListCar = ({ searchTerm }) => {
                         <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
                       </div>
                     </div>
-                    <h2>{list.prix}/jrs</h2>
+                    <h2>{list.prix}Ar/jrs</h2>
                     <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
                   </div>
                 )

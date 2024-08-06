@@ -92,11 +92,10 @@ function Reservation() {
         }
 
         // Calculer le prix total
-        const prixParJour = CarCheck.prix;
-        const diffTemp = dateFin - dateDebut;
+        const prixParJour = parseFloat(CarCheck.prix.trim());
+        const diffTemp = new Date(dateFin) - new Date(dateDebut);
         const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
         const totalPrice = nbjour * prixParJour;
-
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
                 id_client: AjoutReservation.id_client,
@@ -170,7 +169,7 @@ function Reservation() {
             <form onSubmit={handleModif} className="contentReserv">
                 <div className="NavTop">
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
-                    <span>{CarCheck.prix}/jrs</span>
+                    <span>{CarCheck.prix}Ar/jrs</span>
                 </div>
 
                 {errorMessage && <div className="error-message ">{errorMessage}</div>}
