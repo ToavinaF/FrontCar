@@ -8,14 +8,16 @@
         justify-content: center;
         background: var(--body-bg);
         border-radius: 10px;
-        padding:2% 2% 2% 2%;
+        padding: 2% 2% 2% 2%;
+
         .image-upload {
             width: 100%;
-            height:auto;
+            height: auto;
             transition: 1s;
             background-color: #5c6064;
             padding: 20px 20px 20px 20px;
             border-radius: 4px;
+
             .dropzone {
                 border: 2px dashed #515050;
                 height: 200px;
@@ -28,29 +30,30 @@
                 cursor: pointer;
                 background-color: #b0b0b0;
                 position: relative;
-    
+
                 p {
-                    margin:-5% 0 0 0;
+                    margin: -5% 0 0 0;
                     color: #60696d4e;
                 }
-    
+
                 .plus {
-                    margin:2% 0 0 0;
+                    margin: 2% 0 0 0;
                     position: absolute;
                     font-size: 3rem;
                     color: #60696d4e;
                 }
-                .barImg{
+
+                .barImg {
                     width: 100%;
                     height: 120px;
                     // border: solid 2px white;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
-                    align-items:center;
-                    overflow:none;
-                    
-                    .partImg{
+                    align-items: center;
+                    overflow: none;
+
+                    .partImg {
                         width: 12%;
                         height: 180px;
                         border-radius: 10px;
@@ -58,20 +61,22 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin:-2% 0 0 1%;
-                        
-                        .image-container{
+                        margin: -2% 0 0 1%;
+
+                        .image-container {
                             width: 100%;
                             height: 100%;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             position: relative;
-                            img{
+
+                            img {
                                 width: 120%;
                                 height: 100%;
                             }
-                            .cach{
+
+                            .cach {
                                 width: 100%;
                                 height: 100%;
                                 background: #24292da5;
@@ -79,7 +84,8 @@
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                .check{
+
+                                .check {
                                     font-size: 3rem;
                                     color: #a7a8a9;
                                     position: absolute;
@@ -87,14 +93,14 @@
                                 }
                             }
                         }
-                        
+
                     }
                 }
             }
 
         }
 
-        .content_form{
+        .content_form {
             width: 100%;
             height: auto;
             display: flex;
@@ -102,7 +108,7 @@
             align-items: center;
             justify-content: center;
             gap: 2%;
-            margin:5% 0 1% 0;
+            margin: 5% 0 1% 0;
 
             .parti-left {
                 width: 50%;
@@ -111,7 +117,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: space-around;
-    
+
                 .caracter {
                     width: 100%;
                     height: auto;
@@ -120,14 +126,15 @@
                     flex-direction: column;
                     align-items: flex-start;
                     justify-content: center;
-                    padding:0 0 0 5%;
-                    margin:1% 0 1% 0;
+                    padding: 0 0 0 5%;
+                    margin: 1% 0 1% 0;
+
                     label {
                         font-size: 1.2rem;
                         color: var(--label);
-                        margin:1% 0 0 0;
+                        margin: 1% 0 0 0;
                     }
-    
+
                     .input {
                         width: 85%;
                         height: 45px;
@@ -138,12 +145,44 @@
                         font-weight: bold;
                         border: none;
                         outline: none;
-                        padding:0 0 0 4%;
+                        padding: 0 0 0 4%;
                     }
+
+                    .input-error {
+                        width: 85%;
+                        height: 45px;
+                        border-radius: 10px;
+                        background: var(--body-color);
+                        color: var(--text-color);
+                        font-size: 1rem;
+                        font-weight: bold;
+                        outline: none;
+                        padding: 0 0 0 4%;
+                        box-shadow: 0 0 1px 0 red;
+                    }
+
+                    .error-text {
+                        color: red;
+                        font-size: 0.8em;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+
+                        span {
+                            color: red;
+                            font-size: 1.2em;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                            margin-right: 2px;
+                            margin-left: 2px;
+                        }
+                    }
+
                 }
-    
+
             }
-    
+
             .parti-right {
                 width: 50%;
                 height: auto;
@@ -152,23 +191,25 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 align-items: center;
+
                 .caracter {
                     width: 50%;
-                    height: 20%;
+                    height: 10%;
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
                     justify-content: center;
                     padding-left: 2%;
-    
+                    
+
                     label {
                         font-size: 1.2rem;
                         color: var(--label);
-                        margin:2% 0 0 0;
+                        margin: 2% 0 0 0;
                     }
-    
+
                     .input {
-                        margin:2% 0 2% 0;
+                        margin: 2% 0 2% 0;
                         width: 100%;
                         height: 45px;
                         border-radius: 10px;
@@ -180,19 +221,50 @@
                         border: none;
                     }
 
-                    
-    
+                    .input-error {
+                        width: 85%;
+                        height: 45px;
+                        border-radius: 10px;
+                        background: var(--body-color);
+                        color: var(--text-color);
+                        font-size: 1rem;
+                        font-weight: bold;
+                        outline: none;
+                        padding: 0 0 0 4%;
+                        box-shadow: 0 0 1px 0 red;
+                    }
+                    .error-text {
+                        color: red;
+                        font-size: 0.8em;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+
+                        span {
+                            color: red;
+                            font-size: 1.2em;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                            margin-right: 2px;
+                            margin-left: 2px;
+                        }
+                    }
+
+
                 }
 
-                .desc_car{
+                .desc_car {
                     width: 100%;
                     height: auto;
-                    padding:0 2% 0 2%;
-                    label{
+                    padding: 0 2% 0 2%;
+
+                    label {
                         font-size: 1.2rem;
                         color: var(--label);
-                        margin:2% 0 0 0%;
+                        margin: 2% 0 0 0%;
                     }
+
                     .desc {
                         width: 101%;
                         height: 100%;
@@ -201,10 +273,41 @@
                         color: var(--text-color);
                         font-size: 1rem;
                         font-weight: bold;
-                        padding:1% 0 0 4%;
+                        padding: 1% 0 0 4%;
                         border: none;
                     }
+
+                    .input-error {
+                        width: 101%;
+                        height: 100%;
+                        border-radius: 10px;
+                        background: var(--body-color);
+                        color: var(--text-color);
+                        font-size: 1rem;
+                        font-weight: bold;
+                        padding: 1% 0 0 4%;
+                        // border: solid 0.5px red;
+                        box-shadow: 0 0 1px 0 red;
+                    }
+                    .error-text {
+                        color: red;
+                        font-size: 0.8em;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+
+                        span {
+                            color: red;
+                            font-size: 1.2em;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                            margin-right: 2px;
+                            margin-left: 2px;
+                        }
+                    }
                 }
+
                 .btn {
                     width: 100%;
                     height: 45px;
@@ -215,13 +318,14 @@
                     color: white;
                     font-weight: bold;
                     transition: 0.2s;
-                    margin:2% 0% 0 2%;
+                    margin: 2% 0% 0 2%;
+
                     &:hover {
                         background: rgba(153, 146, 5, 0.715);
                         transition: 0.2s;
                     }
                 }
-    
+
             }
         }
     }
