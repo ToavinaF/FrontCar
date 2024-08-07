@@ -9,6 +9,8 @@ import { CgDetailsMore } from "react-icons/cg";
 import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ListCar = ({ searchTerm }) => {
   const location = useLocation();
@@ -57,13 +59,9 @@ const ListCar = ({ searchTerm }) => {
   const handDelete = async (id) => {
 
     const valide = await axios.delete('http://127.0.0.1:8000/api/DeleteCar/' + id);
-    const newList = ViewCar.filter((item) => {
-      return (
-        item.id !== id
-      )
-    })
-    setViewCar(newList);
-    localStorage.setItem('message', valide.data.message);
+    setViewCar(ViewCar.filter(item => item.id !== id));
+    toast.success('Supprimer avec success!')
+    
   }
   const handleEdit = async (id) => {
     navigate('/Home/modifCar/' + id);
