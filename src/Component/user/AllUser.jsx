@@ -76,7 +76,7 @@ const AllUser = ({searchTerm}) => {
                                         handleEditClick(user.id);
                                     }}
                                 >
-                                    <FaEdit /> {t('allUser.editProfile')}
+                                    <FaEdit /> {t('Edit Profile')}
                                 </div>
                                 <div
                                     className="delete-profile"
@@ -85,7 +85,7 @@ const AllUser = ({searchTerm}) => {
                                         handleDeleteClick(user.id);
                                     }}
                                 >
-                                    <MdDelete /> {t('allUser.deleteProfile')}
+                                    <MdDelete /> {t('Delete Profile')}
                                 </div>
                             </div>
                         )}
