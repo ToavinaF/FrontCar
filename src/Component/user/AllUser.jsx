@@ -5,6 +5,7 @@ import { FaPhone, FaEnvelope, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdDelete } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 const AllUser = ({searchTerm}) => {
     const { t } = useTranslation();
@@ -40,7 +41,9 @@ const AllUser = ({searchTerm}) => {
         try {
             await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`);
             setAllUserData(allUserData.filter(user => user.id !== id));
+            toast.success("Delete User success");
         } catch (error) {
+            toast.error("Delete User error");
             console.log('Erreur lors de la suppression de l\'utilisateur', error);
         }
     };
