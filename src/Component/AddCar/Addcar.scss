@@ -99,6 +99,26 @@
             }
 
         }
+        .upload-error{
+            box-shadow: 0 0 4px 0 red;
+        }
+        .error-photo {
+            color: red;
+            font-size: 0.8em;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+
+            span {
+                color: red;
+                font-size: 1.2em;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                margin-right: 2px;
+                margin-left: 2px;
+            }
+        }
 
         .content_form {
             width: 100%;

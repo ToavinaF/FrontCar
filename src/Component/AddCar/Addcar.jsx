@@ -8,6 +8,8 @@ import './Addcar.scss';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Addcar = () => {
   const { t } = useTranslation();
@@ -75,11 +77,12 @@ const Addcar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      localStorage.setItem('message', response.data.message);
+      toast.success(response.data.message);
       navigate('/Home/listcar');
 
 
     } catch (error) {
+      toast.error('Veuillez remplire les champs.');
       console.error(error);
     }
   };
@@ -110,7 +113,7 @@ const Addcar = () => {
       <div className="block">
         <form onSubmit={handleSubmit} className='form'>
           {/* Drop zone */}
-          <div className="image-upload">
+          <div className={`image-upload ${errors.photo ? 'upload-error' : ''}`}>
             <div {...getRootProps({ className: 'dropzone' })}>
               <input {...getInputProps()} />
               {selectedImage.length > 0 && (
@@ -130,6 +133,8 @@ const Addcar = () => {
             </div>
 
           </div>
+          {errors.photo && <p className="error-photo"><span><IoAlertCircleOutline /></span>{errors.photo}</p>}
+
           {/* end dropzone */}
 
           <div className="content_form">
