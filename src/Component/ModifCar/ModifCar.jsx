@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/swiper-bundle.min.css'; // Importer les styles Swiper
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ModifCar = () => {
@@ -87,7 +89,7 @@ const ModifCar = () => {
       setFormData(affiche.data.detailCar);
       setCurrentImage(affiche.data.detailCar.photo || []);
       console.log(affiche.data);
-
+   
     } catch (error) {
       console.log("verifier le code");
     }
@@ -123,7 +125,7 @@ const ModifCar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      localStorage.setItem('message', response.data.message);
+      toast.success('Modifier avec success!')
       navigate('/Home/listcar')
       console.log(response.data);
     } catch (error) {
