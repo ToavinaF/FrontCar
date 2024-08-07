@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { IoCameraOutline } from "react-icons/io5";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { FaXmark } from "react-icons/fa6";
-import { CiCircleCheck, CiTrash } from "react-icons/ci";
-import { useDropzone } from 'react-dropzone';
-import './Addcar.scss';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'; 
+import { IoCameraOutline } from "react-icons/io5"; 
+import { IoAddCircleSharp } from "react-icons/io5"; 
+import { FaXmark } from "react-icons/fa6"; 
+import { CiCircleCheck, CiTrash } from "react-icons/ci"; 
+import { useDropzone } from 'react-dropzone'; 
+import './Addcar.scss'; 
+import axios from 'axios'; 
+import { useTranslation } from 'react-i18next'; 
+import { useNavigate } from 'react-router-dom'; 
 
-const Addcar = () => {
-  const { t } = useTranslation();
+const Addcar = () => { 
+  const { t } = useTranslation(); 
   const navigate = useNavigate();
-  const [ShowUpload, setShowUpload] = useState(false);
-  const [selectedImage, setSelectedImage] = useState([]);
-  const [profile, setProfile] = useState(null);
-  const [formData, setFormData] = useState({
+  const [ShowUpload, setShowUpload] = useState(false); 
+  const [selectedImage, setSelectedImage] = useState([]); 
+  const [profile, setProfile] = useState(null); 
+  const [formData, setFormData] = useState({ 
     marque: '',
     matricule: '',
     description: '',
@@ -51,7 +51,7 @@ const Addcar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('marque', formData.marque);
+    data.append('marque', formData.marque); 
     data.append('matricule', formData.matricule);
     data.append('description', formData.description);
     data.append('prix', formData.prix);
@@ -66,7 +66,7 @@ const Addcar = () => {
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/AddCar", data, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type':'multipart/form-data'
         }
       });
       localStorage.setItem('message', response.data.message);
@@ -80,8 +80,8 @@ const Addcar = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: handleDrop,
-    multiple: true,
-    accept: 'image/*'
+    multiple: true, 
+    accept:'image/*'
   });
 
   return (

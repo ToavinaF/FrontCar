@@ -20,6 +20,7 @@ import ModifCar from '../ModifCar/ModifCar'
 import Theme from '../Page/Themes/Theme'
 import Galerie from '../Galerie/Galerie'
 import Facture from '../Page/Facture/Facture'
+import Recherche from '../Header/Recherche'
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
@@ -51,6 +52,7 @@ const Home = () => {
 
                       
                         <Route path='/' element={<Dashboard/>}/>
+                        <Route path='/search' element={<Recherche/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
@@ -61,7 +63,7 @@ const Home = () => {
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
                         
                         <Route path="/AjoutUser" element={<AddUser/>}/>
-                        <Route path='/Facture' element={<Facture/>}/>
+                        <Route path='/facture/:id' element={<Facture/>}/>
                     </Routes>
 
 

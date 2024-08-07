@@ -10,7 +10,7 @@ import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const ListCar = ({ searchTerm }) => {
+const ListCar = () => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -43,9 +43,6 @@ const ListCar = ({ searchTerm }) => {
       console.log("verifier le code");
     }
   };
-  const filteredCars = ViewCar.filter(car => {
-    return car.marque.toLowerCase().includes(searchTerm.toLowerCase());
-  })
   const handleMenu = (index) => {
     if (ShowMenu === index) {
       setShowMenu(null);
@@ -97,9 +94,7 @@ const ListCar = ({ searchTerm }) => {
         }
 
         {
-          filteredCars.map((list, i) => {
-            
-
+          ViewCar.map((list, i) => {
                 return (
                   <div key={i} className="ListBlock">
                     <div className='barNav'>
@@ -116,7 +111,7 @@ const ListCar = ({ searchTerm }) => {
                       }
                     </div>
                     <div className="photoCar">
-                      <img src={`http://127.0.0.1:8000/storage/ImageVehicule/${list.photo}`} alt="" />
+                      <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${list.photo}`} alt="" />
                     </div>
                     <div className="aprop">
                       <div className="icon">
@@ -136,7 +131,7 @@ const ListCar = ({ searchTerm }) => {
                         <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
                       </div>
                     </div>
-                    <h2>{list.prix}/jrs</h2>
+                    <h2>{list.prix}Ar/jrs</h2>
                     <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
                   </div>
                 )

@@ -56,7 +56,7 @@ const Historique = ({searchTerm}) => {
         Navigate('/Home/modifres/'+id)
     }
     const handleFacture = async (id) => {
-        Navigate('/Home/facture');
+        Navigate('/Home/facture/'+id);
       }
     return (
         <div className='Historique'>
