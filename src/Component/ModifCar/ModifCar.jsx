@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IoCameraOutline } from "react-icons/io5";
+import { IoAlertCircleOutline, IoCameraOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { FaXmark } from "react-icons/fa6";
 import { CiCircleCheck, CiTrash } from "react-icons/ci";
@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/swiper-bundle.min.css'; // Importer les styles Swiper
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ModifCar = () => {
@@ -29,6 +31,7 @@ const ModifCar = () => {
     place: '',
     bagage: ''
   });
+  const [errors, setErrors] = useState({});
 
   const handleImageClick = () => {
     setShowUpload(true);
@@ -86,7 +89,7 @@ const ModifCar = () => {
       setFormData(affiche.data.detailCar);
       setCurrentImage(affiche.data.detailCar.photo || []);
       console.log(affiche.data);
-
+   
     } catch (error) {
       console.log("verifier le code");
     }
@@ -94,6 +97,12 @@ const ModifCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+    }
     const data = new FormData();
     data.append('marque', formData.marque);
     data.append('matricule', formData.matricule);
@@ -116,14 +125,28 @@ const ModifCar = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      localStorage.setItem('message', response.data.message);
+      toast.success('Modifier avec success!')
       navigate('/Home/listcar')
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+  //gestion erreur formulaire
+  const validForm = () => {
+    const errors = {};
+    if (!formData.marque) errors.marque = 'Ce champ est requis !';
+    if (!formData.matricule) errors.matricule = 'Ce champ est requis !';
+    if (!formData.prix) errors.prix = 'Ce champ est requis !';
+    if (!formData.bagage) errors.bagage = 'Ce champ est requis !';
+    if (!formData.place) errors.place = 'Ce champ est requis !';
+    if (!formData.porte) errors.porte = 'Ce champ est requis !';
+    if (!formData.description) errors.description = 'Ce champ est requis !';
+    if (!formData.transmission) errors.transmission = 'Ce champ est requis !';
 
+    return errors;
+  };
+  // ///////
   //suppression galerie
   const handDelete = async (id) => {
     try {
@@ -185,54 +208,62 @@ const ModifCar = () => {
             <div className="parti-left">
               <div className="caracter">
                 <label htmlFor="marque">{t('Marque du vehicule')}</label>
-                <input type="text" placeholder={t('Marque du vehicule')} className='input' name='marque' value={formData.marque} onChange={handleChange} />
+                <input type="text" placeholder={t('Marque du vehicule')} className={`input ${errors.marque ? 'input-error' : ''}`}  name='marque' value={formData.marque} onChange={handleChange} />
+                {errors.marque && <p className="error-text"><span><IoAlertCircleOutline /></span> {errors.marque}</p>}
               </div>
               <div className="caracter">
                 <label htmlFor="matricule">{t('Matricule du vehicule')}</label>
-                <input type="text" placeholder={t('Matricule du vehicule')} className='input' name='matricule' value={formData.matricule} onChange={handleChange} />
+                <input type="text" placeholder={t('Matricule du vehicule')} className={`input ${errors.matricule ? 'input-error' : ''}`} name='matricule' value={formData.matricule} onChange={handleChange} />
+                {errors.matricule && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.matricule}</p>}
               </div>
               <div className="caracter">
                 <label htmlFor="transmission">{t('Type de transmission')}</label>
-                <select name="transmission" className='input' value={formData.transmission} onChange={handleChange}>
+                <select name="transmission" className={`input ${errors.transmission ? 'input-error' : ''}`} value={formData.transmission} onChange={handleChange}>
                   <option value="Automatique">Automatique</option>
                   <option value="Manuelle">Manuelle</option>
                 </select>
+                {errors.transmission && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.transmission}</p>}
+
               </div>
             </div>
             <div className="parti-right">
               <div className="caracter">
                 <label htmlFor="prix">{t('prix du vehicule')}</label>
-                <input type="text" placeholder={t('prix du vehicule')} className='input' name='prix' value={formData.prix} onChange={handleChange} />
+                <input type="text" placeholder={t('prix du vehicule')} className={`input ${errors.prix ? 'input-error' : ''}`} name='prix' value={formData.prix} onChange={handleChange} />
+                {errors.prix && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.prix}</p>}
               </div>
               <div className="caracter">
                 <label htmlFor="bagage">{t('Nombre de bagage')}</label>
-                <select name="bagage" className='input' value={formData.bagage} onChange={handleChange}>
+                <select name="bagage" className={`input ${errors.bagage ? 'input-error' : ''}`} value={formData.bagage} onChange={handleChange}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                 </select>
+                {errors.bagage && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.bagage}</p>}
               </div>
               <div className="caracter">
                 <label htmlFor="place">{t('Nombre de place')}</label>
-                <select name="place" className='input' value={formData.place} onChange={handleChange}>
+                <select name="place" className={`input ${errors.place ? 'input-error' : ''}`} value={formData.place} onChange={handleChange}>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
-
                 </select>
+                {errors.place && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.place}</p>}
               </div>
               <div className="caracter">
                 <label htmlFor="porte">{t('Nombre de porte')}</label>
-                <select name="porte" className='input' value={formData.porte} onChange={handleChange}>
+                <select name="porte" className={`input ${errors.porte ? 'input-error' : ''}`} value={formData.porte} onChange={handleChange}>
                   <option value="3">3</option>
                   <option value="5">5</option>
                 </select>
+                {errors.porte && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.porte}</p>}
               </div>
               <div className="desc_car">
                 <label htmlFor="description">{t('Apropos du vehicule')}</label>
-                <textarea id="description" className='desc' name='description' value={formData.description} onChange={handleChange}></textarea>
+                <textarea id="description" className={`desc ${errors.description ? 'input-error' : ''}`} name='description' value={formData.description} onChange={handleChange}></textarea>
+                {errors.description && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.description}</p>}
               </div>
               <button type='submit' className='btn'>{t('Enregistre')}</button>
             </div>

@@ -7,6 +7,8 @@ import Home from './Component/Home/Home';
 import Login from './Component/Login/Login';
 import ProtectedRoute from './Component/ProtectedRoute';
 import { TokenProvider } from './TokenContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const languages = [
   { code: 'fr', name: 'Français', country_code: 'fr' },
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <div className='App'>
+      <ToastContainer/>
       <TokenProvider value={[isToken, setIsToken]}>
         <Routes>
           <Route path="/home/*" element={<ProtectedRoute ><Home /></ProtectedRoute>} />
