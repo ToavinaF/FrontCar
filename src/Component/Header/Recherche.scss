@@ -1,95 +1,115 @@
 .search-result {
     width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height:auto;
 
-    .result_voiture {
+    .result_voiture{
         width: 100%;
         height: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        .search_voiture {
+        .search_voiture{
             width: 100%;
-            height: auto;
+            height: 200px;
+            background:var(--body-bg) ;
+            border-radius: 10px;
+            margin:2% 0 2% 0;
+            padding:5% 0 5% 0;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
-            gap: 2%;
-            margin:2% 0 3% 0;
-            border-bottom:2px solid black;
-            padding: 2% 2% 4% 2%;
+            text-align: left;
+            gap: 5%;
             .image-vehi{
-                width: 40%;
-                height: auto;
+                width: 20%;
+                height: 200px;
+                padding:2% 0 2% 0;
                 object-fit: cover;
-                img{    
-                    width: 400px;
-                    height: 250px;
-                    object-fit: cover;
-                    filter: drop-shadow(0 0 5px #828690);
-                    border-radius: 10px;
+                img{
+                    width: 300px;
+                    height: 150px;
+                    object-fit: cover;   
                 }
-            }
-
+            }    
+        
             .desc-vehi{
-                width: 100%;
-                height: auto;
-                h1{
-                    color: #ffc107;
-                    font-weight: bold;
-                }
-                .parag{
+                // border:2px solid black;
+                width: 65%;
+                height: 200px;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: left;
+                align-items: center;
+                text-align: left;
+                padding: 2.2% 0 3% 5%;
+                .title{
+                    width: 100%;
+                    height: auto;
                     display: flex;
                     flex-direction: row;
-                    justify-content: space-between;
-                    align-items: left;
-                    padding:2% 0 0% 0;
-                    position: relative;
-                    p{
-                        strong{
-                            font-size: 2rem;
-                            color: #ffc107;
-                        }
-                        span{
-                            position: absolute;
-                            margin:10px 0 0 5px;
-                        }
-                    }
-                    
-                }
-                .descri{
-                    p{
-                        font-size: 1rem;
-                        font-weight: bold;
-                        margin:0 0 4% 0;
-                    }
-                    a{
-                        width: 100px;
-                        height: 45px;
-                        color: white;
-                        font-weight: bold;
-                        text-decoration: none;
-                        background: #ffc107;
-                        padding:2% 2% 2% 2%;
-                        border-radius: 10px;
-                        transition: .2s;
-                        cursor: pointer;
-                        &:hover{
-                            color:#ffc107;
-                            background: black;
-                        }
-                    }
-                }
-            }
+                    justify-content: left;
+                    gap:2%;
 
-        }
+                    h1{
+                        font-size:1.6rem;
+                        font-weight: bold;
+                        text-align: right;
+                    }
+                    p{
+                        font-weight: bold;
+                        margin:6px 0 0 0;
+                    }
+                }    
+                
+                .parag{
+                    width: 100%;
+                    height: auto;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: left;
+                    align-items: center;
+                    gap: 10%;
+
+                    p{
+                        font-size:1.8rem;
+                        color: #ffc107;
+                        font-weight: bold;
+
+                        span{
+                            font-weight: bold;
+                            color: white;
+                            font-size: 1rem;
+                        }
+                    }
+                }
+
+                .descri{
+                    width: 100%;
+                    margin:2% 0 0 0;
+                    .Voir{
+                        width:200px;
+                        height: 35px;
+                        background: #ffc107;
+                        padding:1.5% 5% 1.5% 5%;
+                        border-radius: 5px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: .3s;
+                        &:hover{
+                            background: black;
+                            color: #ffc107; 
+                        }
+                    }
+                }
+                
+
+            }
+        
+        
+           }
     }
 
 }
