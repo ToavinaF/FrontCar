@@ -1,7 +1,7 @@
 $primary-color: #007bff;
 $secondary-color: #6c757d;
 $background-color: #24292D;
-$input-border-color: #ced4da;
+$input-border-color: #f7f7f7;
 $input-focus-border-color: $primary-color;
 
 .container {
@@ -19,12 +19,18 @@ $input-focus-border-color: $primary-color;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+
     input {
-    width: 400px;
-    height: 50px;
-    background-color:var(--body-color);
-    outline: none;
+        width: 400px;
+        height: 50px;
+        background-color: #35393d;
     }
+
+    &.error-border {
+        border-color: red;
+        animation: blink-border 1s ease infinite;
+    }
+
 
     h2 {
         margin-bottom: 20px;
@@ -37,9 +43,23 @@ $input-focus-border-color: $primary-color;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        p{
+
+        .photoProfol{
             margin-left: 165px;
         }
+
+        p {
+            
+                color: #dc3545;
+                font-size: 14px;
+                margin-top: 5px;
+                animation: blink-border 1s ease infinite;
+               
+        }
+        
+
+        
+
         .linkcar {
             color: black;
             width: 50%;
@@ -51,19 +71,23 @@ $input-focus-border-color: $primary-color;
             border-radius: 10px;
             margin: 4% 0 0 0;
         }
+
         .photo-label {
             position: relative;
             display: inline-block;
             cursor: pointer;
         }
+
         .icon {
             font-size: 10rem; // Adjust size as needed
             color: var(--color-principal); // Adjust color as needed
             margin-left: 130px;
         }
-        .imgdiv{
+
+        .imgdiv {
             border-radius: 50px;
         }
+
         .image-preview {
             margin-top: -200px;
             margin-left: 120px;
@@ -73,7 +97,8 @@ $input-focus-border-color: $primary-color;
             width: 170px;
             height: 170px;
         }
-        .form-input{
+
+        .form-input {
             display: none;
         }
 
@@ -83,6 +108,16 @@ $input-focus-border-color: $primary-color;
             padding: 10px;
             font-size: 16px;
             transition: border-color 0.2s;
+            p {
+                color: #dc3545;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            &.error-border {
+                border-color: red;
+                animation: blink-border 1s ease infinite;
+            }
 
             &:focus {
                 border-color: $input-focus-border-color;
@@ -100,10 +135,16 @@ $input-focus-border-color: $primary-color;
         color: white;
         font-weight: bold;
         width: 400px;
-    height: 50px;
+        height: 50px;
 
         &:hover {
             background-color: darken($primary-color, 10%);
         }
+    }
+    
+    @keyframes blink-border {
+        0% { border-color: red; }
+        50% { border-color: transparent; }
+        100% { border-color: red; }
     }
 }

@@ -5,13 +5,15 @@ import axios from "axios";
 import { FaUser, FaEnvelope, FaPhone, FaPlusCircle, FaTimes } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import "./EditUser.scss";
+import { toast } from "react-toastify";
 
 const EditUser = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors }, trigger } = useForm();
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [image, setImage] = useState(null);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -43,6 +45,10 @@ const EditUser = () => {
     });
 
     const modify = async (data) => {
+        setIsSubmitted(true); // Mark form as submitted
+        const isValid = await trigger(); // Trigger validation
+        if (!isValid) return; // Exit if there are validation errors
+
         const formData = new FormData();
         if (acceptedFiles.length > 0) {
             formData.append('photo', acceptedFiles[0]);
@@ -50,7 +56,7 @@ const EditUser = () => {
         formData.append('name', data.name);
         formData.append('firstname', data.firstname);
         formData.append('email', data.email);
-        formData.append('password', data.password || ''); // Ajouter le mot de passe uniquement s'il est fourni
+        formData.append('password', data.password || '');
         formData.append('Job', data.Job);
         formData.append('contact', data.contact);
         formData.append('Role', data.Role);
@@ -60,11 +66,23 @@ const EditUser = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            });
+            }); 
+             toast.success("modif success"  ,{
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
+              });
             console.log('Réponse :', response.data);
+          
             navigate('/Home');
         } catch (error) {
+            toast.error("modif error");
             console.error('Erreur :', error.response ? error.response.data : error.message);
+            
         }
     };
 
@@ -77,24 +95,22 @@ const EditUser = () => {
         <div className="edit-user-form">
             <h2>Edit User</h2>
             <form onSubmit={handleSubmit(modify)}>
-            <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="photo" className="photo-label">
-                      <div {...getRootProps()} className="dropzone">    
-                        <FaPlusCircle className="icon" />
-                      
+                        <div {...getRootProps()} className="dropzone">    
+                            <FaPlusCircle className="icon" />
                             <input {...getInputProps()} />
-                             {image && (
-                            <div className="image-preview-container">
-                                <img src={image} alt="Preview" className="image-preview" />
-                                <FaTimes className="remove-icon" onClick={handleRemoveImage} />
-                            </div>
-                        )}
+                            {image && (
+                                <div className="image-preview-container">
+                                    <img src={image} alt="Preview" className="image-preview" />
+                                    <FaTimes className="remove-icon" onClick={handleRemoveImage} />
+                                </div>
+                            )}
                         </div>
-                       
                     </label>
                 </div>
-               
-               <div className="form-group">
+                
+                <div className="form-group">
                     <label htmlFor="name">
                         <FaUser /> Name:
                     </label>
@@ -102,6 +118,7 @@ const EditUser = () => {
                         id="name"
                         type="text"
                         {...register("name", { required: "Name is required" })}
+                        className={`input-field ${errors.name  ? 'error-border' : ''}`}
                     />
                     {errors.name && <p>{errors.name.message}</p>}
                 </div>
@@ -114,6 +131,7 @@ const EditUser = () => {
                         id="firstname"
                         type="text"
                         {...register("firstname", { required: "First name is required" })}
+                        className={`input-field ${errors.firstname  ? 'error-border' : ''}`}
                     />
                     {errors.firstname && <p>{errors.firstname.message}</p>}
                 </div>
@@ -126,6 +144,7 @@ const EditUser = () => {
                         id="email"
                         type="email"
                         {...register("email", { required: "Email is required" })}
+                        className={`input-field ${errors.email  ? 'error-border' : ''}`}
                     />
                     {errors.email && <p>{errors.email.message}</p>}
                 </div>
@@ -136,6 +155,7 @@ const EditUser = () => {
                         id="Job"
                         type="text"
                         {...register("Job")}
+                        className={`input-field ${errors.Job  ? 'error-border' : ''}`}
                     />
                 </div>
 
@@ -147,10 +167,9 @@ const EditUser = () => {
                         id="contact"
                         type="text"
                         {...register("contact")}
+                        className={`input-field ${errors.contact  ? 'error-border' : ''}`}
                     />
                 </div>
-
-               
 
                 <div className="form-group">
                     <label htmlFor="Role">
@@ -159,7 +178,7 @@ const EditUser = () => {
                     <select
                         id="Role"
                         {...register("Role", { required: "Role is required" })}
-                        className="role-select"
+                        className={`role-select ${errors.Role ? 'error-border' : ''}`}
                     >
                         <option value="SuperAdmin">Super Admin</option>
                         <option value="Admin">Admin</option>
