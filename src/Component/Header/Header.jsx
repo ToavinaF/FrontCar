@@ -108,7 +108,7 @@ const Header = ({ activepage, setActivePage }) => {
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
                             <li>
-                                <NavLink to={'/Home/Profile'} onClick={() => setActivePage('Profile')}>
+                                <NavLink to={'/Home/editUser'} onClick={() => setActivePage('Profile')}>
                                     <FaRegUser className='icon' /> {t('Profile')}
                                 </NavLink>
                             </li>
