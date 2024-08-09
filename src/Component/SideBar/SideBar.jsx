@@ -104,23 +104,7 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                     </div>
 
-                    <div className='li-dash'>
-                        <div className='btn-lang'>
-                            {languages.map(({ code, name, country_code }) => (
-                                <div key={country_code}>
-                                    <button
-                                        onClick={() => handleLanguageChange(code)}
-                                        disabled={code === currentLanguageCode}
-                                    >
-                                        <span
-                                            className={`flag-icon flag-icon-${country_code}`}
-                                            style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
-                                        ></span>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                   
                 </ul>
             </div>
         </div>
