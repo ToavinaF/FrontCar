@@ -20,10 +20,10 @@ function Reservation() {
         firstname: '',
         email: '',
         Adresse: '',
-        contact:'',
-        DateDebut:'',
-        DateFin:'',
-        Price:''
+        contact: '',
+        DateDebut: '',
+        DateFin: '',
+        Price: ''
     });
     const [CheckHisto, setCheckHisto] = useState([]);
   const [errors, setErrors] = useState({});
@@ -95,20 +95,20 @@ function Reservation() {
         const totalPrice = nbjour * prixParJour;
 
         const data = new FormData();
-        data.append('name',AjoutReservation.name);
-        data.append('firstname',AjoutReservation.firstname);
-        data.append('email',AjoutReservation.email);
-        data.append('Adresse',AjoutReservation.Adresse);
-        data.append('contact',AjoutReservation.contact);
-        data.append('DateDebut',AjoutReservation.DateDebut);
-        data.append('DateFin',AjoutReservation.DateFin);
-        data.append('Price',totalPrice);
+        data.append('name', AjoutReservation.name);
+        data.append('firstname', AjoutReservation.firstname);
+        data.append('email', AjoutReservation.email);
+        data.append('Adresse', AjoutReservation.Adresse);
+        data.append('contact', AjoutReservation.contact);
+        data.append('DateDebut', AjoutReservation.DateDebut);
+        data.append('DateFin', AjoutReservation.DateFin);
+        data.append('Price', totalPrice);
 
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                  }
+                }
             });
             if (response.data.messageError) {
                 toast.error(response.data.messageError);
@@ -122,31 +122,44 @@ function Reservation() {
             console.error(error);
         }
     };
-    const fetchCarResrved = async () => {
-        const response = await axios.get("http://127.0.0.1:8000/api/reservVehicul/" + id);
-        setCheckHisto(response.data);
-    };
 
+    // setter d'etat du tableau avec les donneer qui vient de la base de donné
+    const fetchCarResrved = async () => {
+        const response = await axios.get("http://127.0.0.1:8000/api/histotab/" + id);
+        setCheckHisto(response.data.hitotab);
+        console.log(response.data.hitotab);
+        const histo = response.data.hitotab.map((event) => {
+            const dateStart = event.DateDebut;
+            const dateEnd = event.DateFin;
+            const dateStartString = dateStart.replace(/-/g, ',');
+            const dateEndString = dateEnd.replace(/-/g, ',');
+            const start = new Date(dateStartString);
+            const end = new Date(dateEndString);
+            return {
+                title: 'Locations en cours',
+                start: start,
+                end: end,
+            };
+        }
+        );
+        setEvents(histo);
+    };
+    //end setter d'etat
+
+    // useeffect de toutes les fonction
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
         fetchCarResrved();
     }, [id]);
+    //end du useefect
 
 
     // calendrier
     const localizer = momentLocalizer(moment);
-    const [events, setEvents] = useState([
-        {
-          title: 'Reservation en cours',
-          start: new Date(2024, 7, 15, 10, 0), // 15 août 2024, 10:00
-          end: new Date(2024, 7, 20, 12, 0), // 15 août 2024, 12:00
-        },
-    ]);
+    const [events, setEvents] = useState([]);
+    // end calendrier
 
-    const date = ("2024-08-10T12:34:56.789Z");
-    const [year, month, day] = date.split('- .');
-    console.log(year, month, day);
     return (
         <div className='ReservBlock'>
             <form onSubmit={handleModif} className="contentReserv">
