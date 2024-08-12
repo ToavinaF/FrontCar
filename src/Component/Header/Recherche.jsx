@@ -11,8 +11,8 @@ const Recherche = () => {
     const location = useLocation();
     const { results, results1 } = location.state || { results: [], results1: [] };
     const Navigate = useNavigate();
-    const Voirplus = (id)=>{
-        Navigate('/Home/detail/'+id);
+    const Voirplus = (id) => {
+        Navigate('/Home/detail/' + id);
     }
     return (
         <>
@@ -25,17 +25,18 @@ const Recherche = () => {
                                     <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${car.photo}`} alt="" />
                                 </div>
                                 <div className="desc-vehi">
-                                    <h1>Description</h1>
+                                    <div className="title">
+                                        <h1>{car.marque}</h1>
+                                        <p>{car.description}</p>
+                                    </div>
                                     <div className="parag">
-                                        <h2>{car.marque}</h2>
-                                        <p><strong><LuRockingChair /></strong> <span>{car.place}</span></p>
-                                        <p><strong><FaDoorOpen /></strong> <span>{car.porte}</span></p>
-                                        <p><strong><IoBagAdd /></strong> <span>{car.bagage}</span></p>
+                                        <p><strong><LuRockingChair /></strong> <span>{car.place} places</span></p>
+                                        <p><strong><FaDoorOpen /></strong> <span>{car.porte} portes</span></p>
+                                        <p><strong><IoBagAdd /></strong> <span>{car.bagage} bagages</span></p>
                                         <p><strong><GiGearStickPattern /></strong> <span>{car.transmission}</span></p>
                                     </div>
                                     <div className='descri'>
-                                        <p>{car.description}</p>
-                                        <a className='Voir' onClick={()=>Voirplus(car.id)}>Voir plus</a>
+                                        <a className='Voir' onClick={() => Voirplus(car.id)}>Voir plus</a>
                                     </div>
                                 </div>
                             </div>
