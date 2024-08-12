@@ -3,6 +3,8 @@ import './Reservation.scss';
 import { FaCalendarCheck } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -11,10 +13,14 @@ function Reservation() {
     const [CarCheck, setCarCheck] = useState([]);
     const [ListUser, setListUser] = useState([]);
     const [AjoutReservation, setAjoutReservation] = useState({
-        id_client: '',
-        DateDebut: '',
-        DateFin: '',
-        Price: ''
+        name: '',
+        firstname: '',
+        email: '',
+        Adresse: '',
+        contact:'',
+        DateDebut:'',
+        DateFin:'',
+        Price:''
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [errors, setErrors] = useState({});
@@ -76,55 +82,37 @@ function Reservation() {
         const dateDebut = new Date(AjoutReservation.DateDebut);
         const dateFin = new Date(AjoutReservation.DateFin);
 
-        if (dateDebut < new Date()) {
-            setErrorMessage("La date de début doit être aujourd'hui ou une date future.");
-            return;
-        }
 
-        if (dateDebut >= dateFin) {
-            setErrorMessage("La date de début doit être antérieure à la date de fin.");
-            return;
-        }
-
-        if (isDateReserved(dateDebut) || isDateReserved(dateFin)) {
-            setErrorMessage("Une ou plusieurs dates choisies sont déjà réservées.");
-            return;
-        }
 
         // Calculer le prix total
         const prixParJour = parseFloat(CarCheck.prix.trim());
         const diffTemp = new Date(dateFin) - new Date(dateDebut);
         const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
         const totalPrice = nbjour * prixParJour;
-        try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/Reservation/${id}`, {
-                id_client: AjoutReservation.id_client,
-                DateDebut: AjoutReservation.DateDebut,
-                DateFin: AjoutReservation.DateFin,
-                Price: totalPrice,
-            });
 
-            if (response.data.success) {
-                setSuccessMessage('Réservation réussie !');
-                setTimeout(() => {
-                    navigate('/Home/Historique');
-                }, 2000);
-            } else {
-                setErrorMessage(response.data.error || 'La voiture est déjà prise pour cette date.');
-            }
+        const data = new FormData();
+        data.append('name',AjoutReservation.name);
+        data.append('firstname',AjoutReservation.firstname);
+        data.append('email',AjoutReservation.email);
+        data.append('Adresse',AjoutReservation.Adresse);
+        data.append('contact',AjoutReservation.contact);
+        data.append('DateDebut',AjoutReservation.DateDebut);
+        data.append('DateFin',AjoutReservation.DateFin);
+        data.append('Price',totalPrice);
+
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+            });
+        toast.success(response.data.message);
+        toast.error(response.data.messageError);
+        navigate('/Home/Historique');
         } catch (error) {
-            if (error.response) {
-                if (error.response.data.errors) {
-                    setErrors(error.response.data.errors);
-                } else if (error.response.data.error) {
-                    setErrorMessage(error.response.data.error);
-                } else {
-                    setSuccessMessage('Votre réservation est bien enregistrée.');
-                    // navigate('/Home/reservation/:id');
-                }
-            } else {
-                setErrorMessage('Une erreur est survenue.');
-            }
+            toast.error(response.data.message);
+            console.log(response);
+            console.error(error);
         }
     };
     const fetchCarResrved = async () => {
@@ -151,7 +139,7 @@ function Reservation() {
         );
     };
 
-   
+
 
     const [count, setCount] = useState(3);
     useEffect(() => {
@@ -171,9 +159,6 @@ function Reservation() {
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
                     <span>{CarCheck.prix}Ar/jrs</span>
                 </div>
-
-                {errorMessage && <div className="error-message ">{errorMessage}</div>}
-                {successMessage && <div className="success-message ">{successMessage}</div>}
                 <div className="NavBottom">
                     <div className='NavLeft'>
                         <div className="inputCarat">
@@ -201,19 +186,28 @@ function Reservation() {
                             {errors.DateFin && <div className="error">{errors.DateFin}</div>}
                         </div>
                         <div className="inputCarat">
-                            <label htmlFor="id_client">Le client</label>
-                            <select
-                                className='input'
-                                name='id_client'
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Sélectionner un client</option>
-                                {ListUser.map((user, i) => (
-                                    <option key={i} value={user.id}>{user.name} {user.firstname}</option>
-                                ))}
-                            </select>
-                            {errors.id_client && <div className="error">{errors.id_client}</div>}
+                            <label htmlFor="nom">Nom</label>
+                            <input type="text" className='input' name='name' placeholder='Nom' onChange={handleChange} />
+                        </div>
+                        <div className="inputCarat">
+                            <label htmlFor="prenom">Prenom</label>
+                            <input type="text" className='input' name='firstname' onChange={handleChange} />
+                        </div>
+                        <div className="inputCarat">
+                            <label htmlFor="email">E-mail</label>
+                            <input type="text" className='input' name='email' onChange={handleChange} />
+                        </div>
+                        <div className="inputCarat">
+                            <label htmlFor="contact">Contact</label>
+                            <input type="text" className='input' name='contact'  onChange={handleChange} />
+                        </div>
+                        <div className="inputCarat">
+                            <label htmlFor="lieu">Location de depart</label>
+                            <input type="text" className='input' name='lieu' onChange={handleChange} />
+                        </div>
+                        <div className="inputCarat">
+                            <label htmlFor="adresse">Adresse</label>
+                            <input type="text" className='input' name='Adresse' onChange={handleChange} />
                         </div>
                     </div>
                     <div className='NavRight'>
@@ -223,6 +217,8 @@ function Reservation() {
                         <button type='submit' className='btn'>Valider</button>
                     </div>
                 </div>
+
+
             </form>
 
             {CheckHisto.length > 0 && (
