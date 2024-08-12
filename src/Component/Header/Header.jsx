@@ -14,6 +14,7 @@ const Header = ({ activepage, setActivePage }) => {
     const image = localStorage.getItem('photo');
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
+    const id = localStorage.getItem('id');
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -44,11 +45,6 @@ const Header = ({ activepage, setActivePage }) => {
     }, []);
 
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
-    const navigation = useNavigate();
-    const [Result , SetResult] = useState([]);
-    const [Result1, SetResult1] = useState([]);
-    console.log(Result);
-    console.log(Result1);
     useEffect(() => {
         const fetchData = async () => {
             if (Recherche.Keyword.trim() === '') {
@@ -108,8 +104,8 @@ const Header = ({ activepage, setActivePage }) => {
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
                             <li>
-                                <NavLink to={'/Home/editUser'} onClick={() => setActivePage('Profile')}>
-                                    <FaRegUser className='icon' /> {t('Profile')}
+                                <NavLink to={'/Home/editUser/'+id}>
+                                    <FaRegUser className='icon'/> {t('Profile')}
                                 </NavLink>
                             </li>
                             <li onClick={handleLogout}>

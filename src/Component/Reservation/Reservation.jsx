@@ -5,6 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -152,6 +155,19 @@ function Reservation() {
         return () => clearInterval(intervalId);
     }, [count])
 
+    // calendrier
+    const localizer = momentLocalizer(moment);
+    const [events, setEvents] = useState([
+        {
+          title: 'Reservation en cours',
+          start: new Date(2024, 7, 15, 10, 0), // 15 août 2024, 10:00
+          end: new Date(2024, 7, 20, 12, 0), // 15 août 2024, 12:00
+        },
+    ]);
+
+    const date = ("2024-08-10T12:34:56.789Z");
+    const [year, month, day] = date.split('- .');
+    console.log(year, month, day);
     return (
         <div className='ReservBlock'>
             <form onSubmit={handleModif} className="contentReserv">
@@ -223,39 +239,13 @@ function Reservation() {
 
             {CheckHisto.length > 0 && (
                 <div className="histo">
-                    <div className="table-content">
-                        <h1><span> Récent </span></h1>
-                        <div className="table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th><span> #</span></th>
-                                        <th><span>NOM</span></th>
-                                        <th><span>PRENON</span></th>
-                                        <th><span>Date de début</span></th>
-                                        <th><span>Date fin</span></th>
-                                        <th><span>Prix</span></th>
-                                        <th><span>Statut</span></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {CheckHisto.map((check, i) => (
-                                        <tr key={i}>
-                                            <td></td>
-                                            <td>{check.name}</td>
-                                            <td>{check.firstname}</td>
-                                            <td>{check.DateDebut}</td>
-                                            <td>{check.DateFin}</td>
-                                            <td>{check.PriceTotal}</td>
-
-                                            <td><span className='regle'>Réservé</span></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        startAccessor="start"
+                        endAccessor="end"
+                        style={{ height: 400 }}
+                    />
                 </div>
             )}
         </div>
