@@ -106,9 +106,12 @@ function Reservation() {
                     'Content-Type': 'multipart/form-data'
                   }
             });
-        toast.success(response.data.message);
-        toast.error(response.data.messageError);
-        navigate('/Home/Historique');
+            if (response.data.messageError) {
+                toast.error(response.data.messageError);
+            } else if (response.data.message) {
+                toast.success(response.data.message);
+                navigate('/Home/Historique');
+            }
         } catch (error) {
             toast.error(response.data.message);
             console.log(response);
@@ -126,20 +129,6 @@ function Reservation() {
         fetchReservedDates();
         fetchCarResrved();
     }, [id]);
-
-    const isDateReserved = (date) => {
-        return reservedDates.some(reservedDate =>
-            date >= reservedDate.start && date <= reservedDate.end
-        );
-    };
-
-    const isDateDisabled = (date) => {
-        return reservedDates.some(reservedDate =>
-            date >= reservedDate.start && date <= reservedDate.end
-        );
-    };
-
-
 
     const [count, setCount] = useState(3);
     useEffect(() => {
@@ -165,25 +154,24 @@ function Reservation() {
                             <label htmlFor="DateDebut">Début de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(AjoutReservation.DateDebut)) ? 'reserved-date' : ''}`}
+                                className='input'
                                 name='DateDebut'
                                 onChange={handleChange}
                                 required
                                 min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
-                            {errors.DateDebut && <div className="error">{errors.DateDebut}</div>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="DateFin">Fin de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(AjoutReservation.DateFin)) ? 'reserved-date' : ''}`}
+                                className='input'
                                 name='DateFin'
                                 onChange={handleChange}
                                 required
                                 min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
-                            {errors.DateFin && <div className="error">{errors.DateFin}</div>}
+                        
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
