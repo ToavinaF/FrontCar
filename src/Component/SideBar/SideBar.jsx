@@ -64,17 +64,17 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink className='nav_item' to='/Home/listcar' onClick={() => setActivePage('All Car')}>
-                                    <FaCarAlt className='icon_list' /> {t('all_car')}
+                                <NavLink className='nav_item' to='/Home/listcar' onClick={() => setActivePage('Home/All Car')}>
+                                    <FaCarAlt className='icon_list' /> {t('all car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Add Car')}>
-                                    <RiPlayListAddFill className='icon_list' /> {t('add_car')}
+                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Home/Add Car')}>
+                                    <RiPlayListAddFill className='icon_list' /> {t('add car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Historiques')}>
+                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home/Historiques')}>
                                     <FaHistory  className='icon_list'/> {t('Historique')}
                                 </NavLink>
                             </li>
