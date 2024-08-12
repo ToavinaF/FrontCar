@@ -25,11 +25,18 @@ function Reservation() {
         DateFin:'',
         Price:''
     });
-    const [errorMessage, setErrorMessage] = useState('');
-    const [errors, setErrors] = useState({});
-    const [reservedDates, setReservedDates] = useState([]);
-    const [successMessage, setSuccessMessage] = useState('');
     const [CheckHisto, setCheckHisto] = useState([]);
+  const [errors, setErrors] = useState({});
+  const validForm = () => {
+    const errors = {};
+    if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
+    if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
+    if (!AjoutReservation.email) errors.email= 'Ce champ est requis !';
+    if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
+    if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
+    return errors;
+  };
+  // ///////
 
     const fetchCarCheck = async () => {
         try {
@@ -50,18 +57,6 @@ function Reservation() {
         }
     };
 
-    const fetchReservedDates = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/ReservedDates/${id}`);
-            setReservedDates(response.data.map(date => ({
-                start: new Date(date.DateDebut),
-                end: new Date(date.DateFin)
-            })));
-        } catch (error) {
-            console.error("Erreur lors de la récupération des dates réservées:", error.response ? error.response.data : error.message);
-            setErrorMessage(`Erreur lors de la récupération des dates réservées. Détails: ${error.response ? error.response.data.message : error.message}`);
-        }
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -82,6 +77,12 @@ function Reservation() {
 
     const handleModif = async (e) => {
         e.preventDefault();
+        const validationErrors = validForm();
+        if (Object.keys(validationErrors).length > 0) {
+          setErrors(validationErrors);
+        } else {
+          setErrors({});
+        }
         const dateDebut = new Date(AjoutReservation.DateDebut);
         const dateFin = new Date(AjoutReservation.DateFin);
 
@@ -129,20 +130,9 @@ function Reservation() {
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
-        fetchReservedDates();
         fetchCarResrved();
     }, [id]);
 
-    const [count, setCount] = useState(3);
-    useEffect(() => {
-        if (count <= 0) return;
-        localStorage.removeItem('message');
-        const intervalId = setInterval(() => {
-            setCount(prevCount => prevCount - 1);
-        }, 1000);
-
-        return () => clearInterval(intervalId);
-    }, [count])
 
     // calendrier
     const localizer = momentLocalizer(moment);
@@ -191,19 +181,23 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
-                            <input type="text" className='input' name='name' placeholder='Nom' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
+                            {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="prenom">Prenom</label>
-                            <input type="text" className='input' name='firstname' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.firstname ? 'input-error' : ''}`} name='firstname' onChange={handleChange} />
+                            {errors.firstname && <p className="error-text">{errors.firstname}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="email">E-mail</label>
-                            <input type="text" className='input' name='email' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.email ? 'input-error' : ''}`} name='email' onChange={handleChange} />
+                            {errors.email && <p className="error-text">{errors.email}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="contact">Contact</label>
-                            <input type="text" className='input' name='contact'  onChange={handleChange} />
+                            <input type="text" className={`input ${errors.contact ? 'input-error' : ''}`} name='contact'  onChange={handleChange} />
+                            {errors.contact && <p className="error-text">{errors.contact}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="lieu">Location de depart</label>
@@ -211,7 +205,8 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="adresse">Adresse</label>
-                            <input type="text" className='input' name='Adresse' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.Adresse ? 'input-error' : ''}`} name='Adresse' onChange={handleChange} />
+                            {errors.Adresse && <p className="error-text">{errors.Adresse}</p>}
                         </div>
                     </div>
                     <div className='NavRight'>
@@ -224,8 +219,6 @@ function Reservation() {
 
 
             </form>
-
-            {CheckHisto.length > 0 && (
                 <div className="histo">
                     <Calendar
                         localizer={localizer}
@@ -235,7 +228,6 @@ function Reservation() {
                         style={{ height: 400 }}
                     />
                 </div>
-            )}
         </div>
     );
 }
