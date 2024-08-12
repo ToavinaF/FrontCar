@@ -6,6 +6,12 @@ import { FaUser, FaEnvelope, FaPhone, FaPlusCircle, FaTimes } from "react-icons/
 import { useDropzone } from "react-dropzone";
 import "./EditUser.scss";
 import { toast } from "react-toastify";
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import Cookies from 'js-cookie';
+
+
+
 
 const EditUser = () => {
     const { id } = useParams();
@@ -14,6 +20,12 @@ const EditUser = () => {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [image, setImage] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const currentLanguageCode = Cookies.get('i18next') || 'en';
+
+    const languages = [
+        { code: 'fr', name: 'Français', country_code: 'fr' },
+        { code: 'en', name: 'English', country_code: 'gb' }
+    ];
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -66,8 +78,8 @@ const EditUser = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            }); 
-             toast.success("modif success"  ,{
+            });
+            toast.success("modif success", {
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -75,16 +87,21 @@ const EditUser = () => {
                 draggable: true,
                 progress: undefined,
                 theme: 'colored',
-              });
+            });
             console.log('Réponse :', response.data);
-          
+
             navigate('/Home');
         } catch (error) {
             toast.error("modif error");
             console.error('Erreur :', error.response ? error.response.data : error.message);
-            
+
         }
     };
+    const handleLanguageChange = (code) => {
+        i18next.changeLanguage(code);
+        Cookies.set('i18next', code);
+        console.log('Language changed to:', code);
+    }
 
     const handleRemoveImage = () => {
         setImage(null);
@@ -97,7 +114,7 @@ const EditUser = () => {
             <form onSubmit={handleSubmit(modify)}>
                 <div className="form-group">
                     <label htmlFor="photo" className="photo-label">
-                        <div {...getRootProps()} className="dropzone">    
+                        <div {...getRootProps()} className="dropzone">
                             <FaPlusCircle className="icon" />
                             <input {...getInputProps()} />
                             {image && (
@@ -109,7 +126,7 @@ const EditUser = () => {
                         </div>
                     </label>
                 </div>
-                
+
                 <div className="form-group">
                     <label htmlFor="name">
                         <FaUser /> Name:
@@ -118,7 +135,7 @@ const EditUser = () => {
                         id="name"
                         type="text"
                         {...register("name", { required: "Name is required" })}
-                        className={`input-field ${errors.name  ? 'error-border' : ''}`}
+                        className={`input-field ${errors.name ? 'error-border' : ''}`}
                     />
                     {errors.name && <p>{errors.name.message}</p>}
                 </div>
@@ -131,7 +148,7 @@ const EditUser = () => {
                         id="firstname"
                         type="text"
                         {...register("firstname", { required: "First name is required" })}
-                        className={`input-field ${errors.firstname  ? 'error-border' : ''}`}
+                        className={`input-field ${errors.firstname ? 'error-border' : ''}`}
                     />
                     {errors.firstname && <p>{errors.firstname.message}</p>}
                 </div>
@@ -144,7 +161,7 @@ const EditUser = () => {
                         id="email"
                         type="email"
                         {...register("email", { required: "Email is required" })}
-                        className={`input-field ${errors.email  ? 'error-border' : ''}`}
+                        className={`input-field ${errors.email ? 'error-border' : ''}`}
                     />
                     {errors.email && <p>{errors.email.message}</p>}
                 </div>
@@ -155,7 +172,7 @@ const EditUser = () => {
                         id="Job"
                         type="text"
                         {...register("Job")}
-                        className={`input-field ${errors.Job  ? 'error-border' : ''}`}
+                        className={`input-field ${errors.Job ? 'error-border' : ''}`}
                     />
                 </div>
 
@@ -167,7 +184,7 @@ const EditUser = () => {
                         id="contact"
                         type="text"
                         {...register("contact")}
-                        className={`input-field ${errors.contact  ? 'error-border' : ''}`}
+                        className={`input-field ${errors.contact ? 'error-border' : ''}`}
                     />
                 </div>
 
@@ -184,6 +201,23 @@ const EditUser = () => {
                         <option value="Admin">Admin</option>
                     </select>
                     {errors.Role && <p>{errors.Role.message}</p>}
+                </div>
+                <div className='li-dash'>
+                    <div className='btn-lang'>
+                        {languages.map(({ code, name, country_code }) => (
+                            <div key={country_code}>
+                                <button
+                                    onClick={() => handleLanguageChange(code)}
+                                    disabled={code === currentLanguageCode}
+                                >
+                                    <span
+                                        className={`flag-icon flag-icon-${country_code}`}
+                                        style={{ opacity: code === currentLanguageCode ? 0.5 : 1 }}
+                                    ></span>
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <button type="submit" className="btn-save">Save Changes</button>
