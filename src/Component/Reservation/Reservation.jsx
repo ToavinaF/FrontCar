@@ -139,11 +139,27 @@ function Reservation() {
                 title: 'Locations en cours',
                 start: start,
                 end: end,
+                status: event.statut,
             };
         }
         );
         setEvents(histo);
     };
+
+    // modification des style
+    const eventStyleGetter = (event) => {
+        const backgroundColor = event.status === 'confirmed' ? 'green' : event.status === 'uncofirmed' ? 'red' : 'gray';
+        const style = {
+            backgroundColor: backgroundColor,
+            color: 'white',
+            borderRadius: '5px',
+            padding: '5px',
+        };
+        return {
+            style: style
+        };
+    };
+    // end modification des style
     //end setter d'etat
 
     // useeffect de toutes les fonction
@@ -238,7 +254,8 @@ function Reservation() {
                         events={events}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 400 }}
+                        eventPropGetter={eventStyleGetter}
+                        style={{ height: 400}}
                     />
                 </div>
         </div>
