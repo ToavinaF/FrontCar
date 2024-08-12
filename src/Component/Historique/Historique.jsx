@@ -4,6 +4,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Historique({ searchTerm }) {
     const navigate = useNavigate();
@@ -39,26 +41,29 @@ function Historique({ searchTerm }) {
     }, []);
 
     const handleMenu = (index) => {
-        setIsActive(isActive === index ? null : index);
+        setIsActive(index); // Affiche le menu
+        setTimeout(() => {
+            setIsActive(null); // Cache le menu après 0,5 seconde
+        }, 1500); // 500 ms
     };
-
+    
     const calculateTotalPrice = (DateDebut, DateFin, prix) => {
         const startDate = new Date(DateDebut);
         const endDate = new Date(DateFin);
         const timeDiff = endDate - startDate;
-        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); 
+        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
         return daysDiff * prix;
     };
 
     const handleEdit = (histo) => {
-        setEditingId(histo.id_reservations);
+        setEditingId(histo.id_locations);
         setEditedData({
             client_name: histo.client_name,
             DateDebut: histo.DateDebut,
             DateFin: histo.DateFin,
             PriceTotal: histo.PriceTotal,
             prix: histo.prix,
-            vehicule_id: histo.vehicule_id // Ajoutez le champ vehicule_id pour l'historique
+            vehicule_id: histo.vehicule_id
         });
         const selected = vehicules.find(v => v.id === histo.vehicule_id);
         if (selected) {
@@ -66,30 +71,24 @@ function Historique({ searchTerm }) {
         }
     };
 
-    const handleSave = async (id) => {
+
+    const suppr = async (id) => {
+        console.log("Suppression de l'ID:", id);
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/update/${id}`, editedData);
-            const updatedHisto = Histo.map(histo => {
-                if (histo.id_reservations === id) {
-                    return { ...histo, ...response.data }; 
-                }
-                return histo;
-            });
-            setHisto(updatedHisto);
-            setEditingId(null); // Réinitialiser l'édition
+            await axios.delete(`http://127.0.0.1:8000/api/suppr/${id}`);
+            setHisto(Histo.filter(histo => histo.id_locations !== id));
+            toast.success('Réservation supprimée avec succès');
         } catch (error) {
-            console.error('Erreur lors de la mise à jour:', error);
+            console.error('Erreur lors de la suppression:', error); // Affichez toute l'erreur
+            if (error.response) {
+                console.error('Réponse de l\'API:', error.response.data);
+                toast.error(`Erreur lors de la suppression: ${error.response.data.message || error.message}`);
+            } else {
+                toast.error('Erreur lors de la suppression');
+            }
         }
     };
 
-    const suppr = async (id) => {
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/suppr/${id}`);
-            setHisto(Histo.filter(histo => histo.id_reservations !== id));
-        } catch (error) {
-            console.error('Erreur lors de la suppression:', error);
-        }
-    };
 
     const handleVehiculeChange = (event) => {
         const vehiculeId = event.target.value;
@@ -98,21 +97,42 @@ function Historique({ searchTerm }) {
         setEditedData({
             ...editedData,
             vehicule_id: vehiculeId,
-            prix: selected?.prix || 0,
             PriceTotal: calculateTotalPrice(editedData.DateDebut, editedData.DateFin, selected?.prix || 0)
         });
     };
 
-    const filteredHistorique = Histo.filter(histo => {
-        return (
-            histo.client_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            histo.marque.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            histo.matricule.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            histo.DateDebut.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            histo.DateFin.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            histo.PriceTotal.toString().includes(searchTerm.toLowerCase())
-        );
-    });
+
+    const handleSave = async (id) => {
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/update/${id}`, editedData);
+            const updatedHisto = Histo.map(histo => {
+                if (histo.id_locations === id) {
+                    return { ...histo, ...response.data };
+                }
+                return histo;
+            });
+            setHisto(updatedHisto);
+            setEditingId(null);
+            toast.success('Réservation mise à jour avec succès');
+        } catch (error) {
+            if (error.response && error.response.data.error) {
+                toast.error('La date est déjà réservée. Impossible de modifier la réservation.');
+            } else {
+                toast.error('Erreur lors de la mise à jour.');
+            }
+        }
+    };
+    
+    // const filteredHistorique = Histo.filter(histo => {
+    //     return (
+    //         histo.client_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         histo.marque.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         histo.matricule.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         histo.DateDebut.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         histo.DateFin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         histo.PriceTotal.toString().includes(searchTerm.toLowerCase())
+    //     );
+    // });
 
     return (
         <div className='Historique'>
@@ -139,21 +159,24 @@ function Historique({ searchTerm }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredHistorique.map((histo, index) => (
+                            {Histo.map((histo, index) => (
                                 <tr key={index}>
-                                    <td><strong className='id-col'>{histo.id_reservations}</strong></td>
+                                    <td><strong className='id-col'>{histo.id_locations}</strong></td>
                                     <td>{histo.client_name}</td>
                                     <td>
-                                    {editingId === histo.id_reservations ? (
-                                        selectedVehicule.marque
-                                    ) : (
-                                        histo.marque
-                                    )}
+                                        {editingId === histo.id_locations ? (
+                                            selectedVehicule.marque
+                                        ) : (
+                                            histo.marque
+                                        )}
                                     </td>
+
+
+
                                     <td>
-                                        {editingId === histo.id_reservations ? (
-                                            <select value={editedData.vehicule_id || ''} onChange={handleVehiculeChange}>
-                                                <option value="">{(histo.matricule)}</option>
+                                        {editingId === histo.id_locations ? (
+                                            <select value={editedData.vehicule_id || histo.matricule} onChange={handleVehiculeChange}>
+                                                <option value="" className="editData">{(histo.matricule)}</option>
                                                 {vehicules.map(vehicule => (
                                                     <option key={vehicule.id} value={vehicule.id}>{vehicule.matricule}</option>
                                                 ))}
@@ -162,15 +185,16 @@ function Historique({ searchTerm }) {
                                             histo.matricule
                                         )}
                                     </td>
-                                    <td>{editingId === histo.id_reservations ? (
-                                        selectedVehicule.prix
+                                    <td>{editingId === histo.id_locations ? (
+                                        selectedVehicule.prix || histo.prix
                                     ) : (
                                         histo.prix
                                     )}</td>
+
                                     <td>
-                                        {editingId === histo.id_reservations ? (
+                                        {editingId === histo.id_locations ? (
                                             <input
-                                                type="date"
+                                                type="date" className="editData"
                                                 value={editedData.DateDebut}
                                                 onChange={e => setEditedData({
                                                     ...editedData,
@@ -183,9 +207,9 @@ function Historique({ searchTerm }) {
                                         )}
                                     </td>
                                     <td>
-                                        {editingId === histo.id_reservations ? (
+                                        {editingId === histo.id_locations ? (
                                             <input
-                                                type="date"
+                                                type="date" className="editData"
                                                 value={editedData.DateFin}
                                                 onChange={e => setEditedData({
                                                     ...editedData,
@@ -198,11 +222,13 @@ function Historique({ searchTerm }) {
                                         )}
                                     </td>
                                     <td><span className='regle'>Non Reglé</span></td>
+
+
                                     <td>
-                                        {editingId === histo.id_reservations ? (
+                                        {editingId === histo.id_locations ? (
                                             <input
-                                                type="number"
-                                                value={editedData.PriceTotal}
+                                                type="number" className="editData"
+                                                value={calculateTotalPrice(editedData.DateDebut, editedData.DateFin, selectedVehicule.prix) || editedData.PriceTotal}
                                                 onChange={e => setEditedData({ ...editedData, PriceTotal: e.target.value })}
                                             />
                                         ) : (
@@ -210,18 +236,28 @@ function Historique({ searchTerm }) {
                                         )}
                                     </td>
                                     <td>
-                                        <BsThreeDots className={`three ${isActive === index ? 'active' : ''}`} onClick={() => handleMenu(index)} />
+                                        <BsThreeDots
+                                            className={`three ${isActive === index ? 'active' : ''}`}
+                                            onClick={() => handleMenu(index)}
+                                        />
                                         {isActive === index && (
                                             <div className='menu'>
                                                 <ul>
-                                                    <li><a onClick={() => suppr(histo.id_reservations)}>Supprimer</a></li>
                                                     <li>
-                                                        {editingId === histo.id_reservations ? (
-                                                            <a onClick={() => handleSave(histo.id_reservations)}>Sauvegarder</a>
+                                                        <a onClick={() => suppr(histo.id_locations)}>Supprimer</a>
+                                                    </li>
+                                                    <li>
+                                                        {editingId === histo.id_locations ? (
+                                                            <a onClick={() => handleSave(histo.id_locations)}>Sauvegarder</a>
                                                         ) : (
                                                             <a onClick={() => handleEdit(histo)}>Modifier</a>
                                                         )}
                                                     </li>
+                                                    {editingId === histo.id_locations && (
+                                                        <li>
+                                                            <a onClick={() => setEditingId(null)}>Annuler</a>
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         )}
