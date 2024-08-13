@@ -21,11 +21,20 @@ const EditUser = () => {
     const [image, setImage] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const currentLanguageCode = Cookies.get('i18next') || 'en';
+    const [role, setRole] = useState('');
 
     const languages = [
         { code: 'fr', name: 'Français', country_code: 'fr' },
         { code: 'en', name: 'English', country_code: 'gb' }
     ];
+    
+    useEffect(() => {
+        // Récupérer le rôle depuis localStorage et mettre à jour l'état
+        const storedRole = localStorage.getItem('role');
+        if (storedRole) {
+            setRole(storedRole);
+        }
+    }, []);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -187,7 +196,7 @@ const EditUser = () => {
                         className={`input-field ${errors.contact ? 'error-border' : ''}`}
                     />
                 </div>
-
+                {role === 'superAdmin' && (
                 <div className="form-group">
                     <label htmlFor="Role">
                         <FaUser /> Role:
@@ -202,6 +211,7 @@ const EditUser = () => {
                     </select>
                     {errors.Role && <p>{errors.Role.message}</p>}
                 </div>
+                )}
                 <div className='li-dash'>
                     <div className='btn-lang'>
                         {languages.map(({ code, name, country_code }) => (
