@@ -57,15 +57,15 @@ const SideBar = ({ setActivePage }) => {
                     </NavLink>
 
                     <div className='li-dash'>
-                        <div onClick={() => handleDropdownClick(0)}>
-                            <FaCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} />
+                        <div>
+                            <FaCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)}/>
                             <p>
                                 {t('car')} <FaChevronDown className={`down ${activeDropdown === 0 ? 'active' : ''}`} />
                             </p>
                         </div>
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink className='nav_item' to='/Home/listcar' onClick={() => setActivePage('Home/All Car')}>
+                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage('Home/All Car')}>
                                     <FaCarAlt className='icon_list' /> {t('all car')}
                                 </NavLink>
                             </li>
@@ -76,15 +76,15 @@ const SideBar = ({ setActivePage }) => {
                             </li>
                             <li className='nav_link'>
                                 <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home/Historiques')}>
-                                    <FaHistory  className='icon_list'/> {t('Historique')}
+                                    <FaHistory  className='icon_list_histo'/> {t('Historique')}
                                 </NavLink>
                             </li>
                         </div>
                     </div>
 
                     <div className='li-dash'>
-                        <div onClick={() => handleDropdownClick(1)}>
-                            <FaUser className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} />
+                        <div>
+                            <FaUser className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)}/>
                             <p>
                                 {t('user')} <FaChevronDown className={`down ${activeDropdown === 1 ? 'active' : ''}`} />
                             </p>
