@@ -25,11 +25,18 @@ function Reservation() {
         DateFin: '',
         Price: ''
     });
-    const [errorMessage, setErrorMessage] = useState('');
-    const [errors, setErrors] = useState({});
-    const [reservedDates, setReservedDates] = useState([]);
-    const [successMessage, setSuccessMessage] = useState('');
     const [CheckHisto, setCheckHisto] = useState([]);
+  const [errors, setErrors] = useState({});
+  const validForm = () => {
+    const errors = {};
+    if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
+    if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
+    if (!AjoutReservation.email) errors.email= 'Ce champ est requis !';
+    if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
+    if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
+    return errors;
+  };
+  // ///////
 
     const fetchCarCheck = async () => {
         try {
@@ -50,6 +57,7 @@ function Reservation() {
         }
     };
 
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setAjoutReservation({
@@ -69,6 +77,12 @@ function Reservation() {
 
     const handleModif = async (e) => {
         e.preventDefault();
+        const validationErrors = validForm();
+        if (Object.keys(validationErrors).length > 0) {
+          setErrors(validationErrors);
+        } else {
+          setErrors({});
+        }
         const dateDebut = new Date(AjoutReservation.DateDebut);
         const dateFin = new Date(AjoutReservation.DateFin);
 
@@ -96,9 +110,12 @@ function Reservation() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            toast.success(response.data.message);
-            toast.error(response.data.messageError);
-            navigate('/Home/Historique');
+            if (response.data.messageError) {
+                toast.error(response.data.messageError);
+            } else if (response.data.message) {
+                toast.success(response.data.message);
+                navigate('/Home/Historique');
+            }
         } catch (error) {
             toast.error(response.data.message);
             console.log(response);
@@ -122,11 +139,27 @@ function Reservation() {
                 title: 'Locations en cours',
                 start: start,
                 end: end,
+                status: event.statut,
             };
         }
         );
         setEvents(histo);
     };
+
+    // modification des style
+    const eventStyleGetter = (event) => {
+        const backgroundColor = event.status === 'confirmed' ? 'green' : event.status === 'uncofirmed' ? 'red' : 'gray';
+        const style = {
+            backgroundColor: backgroundColor,
+            color: 'white',
+            borderRadius: '5px',
+            padding: '5px',
+        };
+        return {
+            style: style
+        };
+    };
+    // end modification des style
     //end setter d'etat
 
     // useeffect de toutes les fonction
@@ -137,19 +170,6 @@ function Reservation() {
     }, [id]);
     //end du useefect
 
-    // start condition of date 
-    const isDateReserved = (date) => {
-        return reservedDates.some(reservedDate =>
-            date >= reservedDate.start && date <= reservedDate.end
-        );
-    };
-
-    const isDateDisabled = (date) => {
-        return reservedDates.some(reservedDate =>
-            date >= reservedDate.start && date <= reservedDate.end
-        );
-    };
-    // end of condition of date
 
     // calendrier
     const localizer = momentLocalizer(moment);
@@ -169,41 +189,44 @@ function Reservation() {
                             <label htmlFor="DateDebut">Début de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(AjoutReservation.DateDebut)) ? 'reserved-date' : ''}`}
+                                className='input'
                                 name='DateDebut'
                                 onChange={handleChange}
                                 required
                                 min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
-                            {errors.DateDebut && <div className="error">{errors.DateDebut}</div>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="DateFin">Fin de la location</label>
                             <input
                                 type="date"
-                                className={`input ${isDateReserved(new Date(AjoutReservation.DateFin)) ? 'reserved-date' : ''}`}
+                                className='input'
                                 name='DateFin'
                                 onChange={handleChange}
                                 required
                                 min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
-                            {errors.DateFin && <div className="error">{errors.DateFin}</div>}
+                        
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
-                            <input type="text" className='input' name='name' placeholder='Nom' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
+                            {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="prenom">Prenom</label>
-                            <input type="text" className='input' name='firstname' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.firstname ? 'input-error' : ''}`} name='firstname' onChange={handleChange} />
+                            {errors.firstname && <p className="error-text">{errors.firstname}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="email">E-mail</label>
-                            <input type="text" className='input' name='email' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.email ? 'input-error' : ''}`} name='email' onChange={handleChange} />
+                            {errors.email && <p className="error-text">{errors.email}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="contact">Contact</label>
-                            <input type="text" className='input' name='contact' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.contact ? 'input-error' : ''}`} name='contact'  onChange={handleChange} />
+                            {errors.contact && <p className="error-text">{errors.contact}</p>}
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="lieu">Location de depart</label>
@@ -211,7 +234,8 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="adresse">Adresse</label>
-                            <input type="text" className='input' name='Adresse' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.Adresse ? 'input-error' : ''}`} name='Adresse' onChange={handleChange} />
+                            {errors.Adresse && <p className="error-text">{errors.Adresse}</p>}
                         </div>
                     </div>
                     <div className='NavRight'>
@@ -224,18 +248,16 @@ function Reservation() {
 
 
             </form>
-
-            {CheckHisto.length > 0 && (
                 <div className="histo">
                     <Calendar
                         localizer={localizer}
                         events={events}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 400 }}
+                        eventPropGetter={eventStyleGetter}
+                        style={{ height: 400}}
                     />
                 </div>
-            )}
         </div>
     );
 }
