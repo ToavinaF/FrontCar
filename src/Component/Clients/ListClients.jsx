@@ -3,6 +3,8 @@ import './ListClients.scss';
 import { FaRegTrashAlt } from "react-icons/fa";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { ImUserPlus } from "react-icons/im";
+import { NavLink } from 'react-router-dom';
 
 const ListClients = () => {
   const [clients, setClients] = useState([]);
@@ -10,17 +12,14 @@ const ListClients = () => {
 
   useEffect(() => {
     // Fetch clients data
-    fetch('http://127.0.0.1:8000/api/clients')
-      .then(response => response.json())
-      .then(data => setClients(data))
+    axios.get('http://127.0.0.1:8000/api/clients')
+      .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
     // Fetch reservation counts
-    fetch('http://127.0.0.1:8000/api/countReservedClient')
-      .then(response => response.json())
-      .then(data => {
-        // Create a dictionary of reservation counts
-        const counts = data.count.reduce((acc, item) => {
+    axios.get('http://127.0.0.1:8000/api/countReservedClient')
+      .then(response => {
+        const counts = response.data.count.reduce((acc, item) => {
           acc[item.id_client] = item.total;
           return acc;
         }, {});
@@ -32,12 +31,11 @@ const ListClients = () => {
   const handleDeleteClick = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/DeleteClient/${id}`);
-      // Update clients state to remove the deleted client
       setClients(clients.filter(client => client.id !== id));
       toast.success("Delete Client success");
     } catch (error) {
       toast.error("Delete Client error");
-      console.log('Erreur lors de la suppression de l\'utilisateur', error);
+      console.error('Erreur lors de la suppression de l\'utilisateur', error);
     }
   };
 
@@ -52,7 +50,7 @@ const ListClients = () => {
               <th>Email</th>
               <th>Contact</th>
               <th>Adresse</th>
-              <th>Nombre de réservation</th>
+              <th>Nombre de réservations</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -63,14 +61,17 @@ const ListClients = () => {
                 <td>{client.email}</td>
                 <td>{client.contact}</td>
                 <td>{client.Adresse}</td>
-                <td>{reservationCounts[client.id] || 0}</td> {/* Display reservation count */}
+                <td>{reservationCounts[client.id] || 0}</td>
                 <td>
-                  <a href="" className='trash' aria-label="Delete" onClick={(e) => {
-                    e.stopPropagation();
+                  <a href="#" className='trash' aria-label="Delete" onClick={(e) => {
+                    e.preventDefault();
                     handleDeleteClick(client.id);
                   }}>
                     <FaRegTrashAlt />
                   </a>
+                  <NavLink to={`/Home/client/${client.id}`} className='nav_item'>
+                    <ImUserPlus className='trash' />
+                  </NavLink>
                 </td>
               </tr>
             ))}

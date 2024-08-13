@@ -1,0 +1,160 @@
+.Client__detail{
+    background-color: var(--body-color);
+    color: var(--blanch);
+    
+    .personnel{
+        font-size: 25px;
+        font-weight: 600;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: var(--blanch);
+        display: flex;
+        // border: 2px solid var(--color-principal);
+        .left {
+            width: 50%;
+            flex: 2;
+            gap: 2rem;
+            flex-direction: column;
+        }
+        .right {
+            width: 50%;
+            flex: 2;
+            gap: 2rem;
+            flex-direction: column;
+        }
+    }
+    .entete{
+        background-color: var(--body-bg);
+        border-radius: 25px;
+        padding: 25px 0 25px 0;
+        margin: 15px 0 25px 0;
+        display: flex;
+        border: 2px solid var(--color-principal);
+     .row{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        
+    
+        .left {
+            width: 50%;
+            flex: 6;
+            gap: 3rem;
+            flex-direction: column;
+            .tous{
+                display: flex;
+                text-align: center;
+                justify-content: space-around;
+                padding: 2px 4px 2px 3px;
+                    li{
+                        list-style: none;
+                        .badge{
+                            background-color: var(--color-principal);
+                            justify-content: space-around;
+                            margin: 0 10px 0 10px;
+                            color: var(--blanch);
+                            width: 25px;
+
+                        }
+                        
+                    }
+                
+            }
+    
+        }
+    
+        .right {
+            width: 50%;
+            flex: 1;
+            gap: 2rem;
+            margin: 0px 10px 0px 10px;
+            .button{
+                border-radius: 15px;
+                margin:-10px 10px 0 10px;
+                padding: 0 3px 0 3px;
+                color: var(--blanch);
+                background-color: var(--color-principal);
+                width: 200px;
+                height: 50px;
+                &:hover{
+                    background-color: var(--body-bg);
+                }
+                .NavLink{
+                    color: var(--blanch);
+                    &:hover{
+                        text-decoration-line: none;
+                    }
+                }
+            }
+            
+        }
+        
+     }   
+    }
+    .corps{
+        .factures{
+            background-color: var(--body-bg);
+            width: 20%;
+            height: auto;
+            border-radius: 20px;
+            border: 2px solid var(--color-principal);
+            color: var(--blanch);
+            margin-bottom: 100px;
+        }
+        .list{
+            border-radius: 25px;
+            background-color: var(--body-bg);
+            padding: 55px 4px 30px 3px;
+            width: 100%;
+            border: 2px solid var(--color-principal);
+            .tous{
+                display: flex;
+                text-align: center;
+                justify-content: space-around;
+                background-color: rgba(73, 44, 44, 0.53);
+                // height: 150px;
+                border-radius: 25px;
+                padding: 25px 0 25px 25px;
+                margin: 15px 0 0 5%;
+                width: 90%;
+                
+                    li{
+                        list-style: none;
+                        
+                        
+                    }
+                    .etat{
+                        background-color: var(--recommend-car01-bg);
+                        height: 25px;
+                        width: 100px;
+                        border-radius: 25px;
+                        // padding: 25px 0 0 0;
+
+                   
+                        
+                     
+                        color: white;
+                        text-align: center;
+                    }
+                    
+                    .annulée {
+                        background-color: red;
+                    }
+                    
+                    .confirmée {
+                        background-color: green;
+                    }
+                    
+                    .attente {
+                        background-color: orange;
+                    }
+                    .menu{
+                        background-color: var(--recommend-car01-bg);
+                        height: 25px;
+                        width: 35px;
+                        border-radius: 25px;
+                    }
+                
+            }
+        }
+    }
+}
