@@ -1,3 +1,4 @@
+// Styles pour le header
 header {
     display: flex;
     flex-direction: row;
@@ -22,7 +23,7 @@ header {
             text-align: center;
             font-size: 30px;
         }
-        .active{
+        .active {
             display: none;
         }
     }
@@ -33,6 +34,7 @@ header {
         flex-direction: row;
         align-items: center;
         justify-content: right;
+        position: relative; // Pour positionner le dropdown
 
         .search {
             width: 25%;
@@ -70,6 +72,7 @@ header {
             text-align: center;
             margin: 1% 2% 0 10%;
             align-items: center;
+            position: relative;
 
             span {
                 width: 20px;
@@ -93,13 +96,64 @@ header {
                 position: relative;
                 z-index: 0;
                 cursor: pointer;
+
+                &:hover + .notification-dropdown {
+                    display: block;
+                }
+            }
+
+            .notification-dropdown {
+                position: absolute;
+                top: 100%; // Affiche juste en dessous de l'icône
+                right: 0;
+                width: 250px;
+                background: #24292D;
+                border: 1px solid #828690;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                max-height: 300px;
+                overflow-y: auto;
+                padding: 10px;
+                border-radius: 10px;
+                color: white;
+                display: none; // Caché par défaut
+
+                .notification-item {
+                    padding: 10px;
+                    border-bottom: 1px solid #828690;
+                    cursor: pointer;
+                    transition: background 0.3s;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    &:hover {
+                        background-color: #333;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+
+                    &.unread {
+                        font-weight: bold;
+                    }
+                }
+
+                p {
+                    text-align: center;
+                    margin: 0;
+                    padding: 10px;
+                    color: #ccc;
+                }
             }
             .notifications-box {
                 position: absolute;
-                top: 68%;
+                top: 170%;
                 right: 24%;
                 width: 250px;
-                background:#24292d;
+                background:#232226;
                 // border: 1px solid #ffe241;
                 border-radius: 4px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -138,7 +192,7 @@ header {
             border-left: 2px solid #828690;
 
             img {
-                width: 40Px;
+                width: 40px;
                 height: 40px;
                 border-radius: 10px;
                 margin: 0% 0 0 0;
@@ -154,11 +208,11 @@ header {
                     font-size: 1rem;
                     color: white;
                     font-weight: bold;
-                    margin:3% 0 0 0;
+                    margin: 3% 0 0 0;
                 }
 
                 p {
-                    font-size: .8rem;
+                    font-size: 0.8rem;
                 }
             }
 
@@ -188,7 +242,7 @@ header {
                         margin: 0% 0 0% 0%;
                         padding: 5% 0% 5% 10%;
                         cursor: pointer;
-                        transition: .5s;
+                        transition: 0.5s;
                         font-weight: 600;
                         font-size: 15px;
 
@@ -219,10 +273,7 @@ header {
                         }
                     }
                 }
-
-
             }
         }
     }
-
 }

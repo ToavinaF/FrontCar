@@ -99,6 +99,7 @@ const Header = ({ activepage, setActivePage }) => {
                         : notifications
                 )
             );
+            navigate('/Home/Historique')
         } catch (error) {
             console.error('Erreur lors de la mise à jour de la notification:', error);
         }
