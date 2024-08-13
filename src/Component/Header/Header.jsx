@@ -68,6 +68,44 @@ const Header = ({ activepage, setActivePage }) => {
         }));
     };
 
+    // notification par nouvelle reservation
+    const [notifications, setNotifications] = useState([]);
+    const [showNotifications, setShowNotifications] = useState(false);
+    useEffect(()=>{
+       const fetchNotifications = async() =>{
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/notifications');
+            setNotifications(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des notifications:', error);
+        }
+       };
+       fetchNotifications();
+       const intervalId = setInterval(fetchNotifications, 5000);
+       return () => clearInterval(intervalId);
+    },[]);
+
+    const handleNotificationClick = async (notificationId) => {
+        // Marquer la notification comme lue
+        try {
+            await axios.post(`http://127.0.0.1:8000/api/notifications/${notificationId}/read`);
+            
+            // Mettre à jour l'état local pour refléter le changement
+            setNotifications(prevNotifications =>
+                prevNotifications.map(notification =>
+                    notifications.id === notificationId
+                        ? { ...notifications, is_read: true }
+                        : notifications
+                )
+            );
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour de la notification:', error);
+        }
+        
+        // Afficher ou masquer les notifications
+        setShowNotifications(!showNotifications);
+    };
     return (
         <header>
             <div className="text_logo">
@@ -91,8 +129,26 @@ const Header = ({ activepage, setActivePage }) => {
                         <FaCommentDots className='icon' />
                     </div>
                     <div>
-                        <span>2</span>
-                        <IoIosNotifications className='icon' />
+                        <span>{notifications.length}</span>
+                        <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)}/>
+                        {showNotifications && (
+                            <div className="notifications-box">
+                                {notifications.length > 0 ? (
+                                    notifications.map((notification, index) => (
+                                        <div
+                                            key={index}
+                                            className={`notification-item ${notification.is_read ? 'read' : ''}`}
+                                            onClick={() => handleNotificationClick(notification.id)}
+                                        >
+                                            <p>{notification.message}</p>
+                                            <p>{new Date(notification.created_at).toLocaleString()}</p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>Aucune notification</p>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="profil_show">
