@@ -19,33 +19,34 @@ const Recherche = () => {
             <div className="search-result">
                 <div className="result_voiture">
                     {
-                        results.map((car) => (
-                            <div className="search_voiture">
-                                <div className="image-vehi">
-                                    <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${car.photo}`} alt="" />
+                        results.length>0 ?(
+                            results.map((car) => (
+                                <div className="search_voiture">
+                                    <div className="image-vehi">
+                                        <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${car.photo}`} alt="" />
+                                    </div>
+                                    <div className="desc-vehi">
+                                        <div className="title">
+                                            <h1>{car.marque}</h1>
+                                            <p>{car.description}</p>
+                                        </div>
+                                        <div className="parag">
+                                            <p><strong><LuRockingChair /></strong> <span>{car.place} places</span></p>
+                                            <p><strong><FaDoorOpen /></strong> <span>{car.porte} portes</span></p>
+                                            <p><strong><IoBagAdd /></strong> <span>{car.bagage} bagages</span></p>
+                                            <p><strong><GiGearStickPattern /></strong> <span>{car.transmission}</span></p>
+                                        </div>
+                                        <div className='descri'>
+                                            <a className='Voir' onClick={() => Voirplus(car.id)}>Voir plus</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="desc-vehi">
-                                    <div className="title">
-                                        <h1>{car.marque}</h1>
-                                        <p>{car.description}</p>
-                                    </div>
-                                    <div className="parag">
-                                        <p><strong><LuRockingChair /></strong> <span>{car.place} places</span></p>
-                                        <p><strong><FaDoorOpen /></strong> <span>{car.porte} portes</span></p>
-                                        <p><strong><IoBagAdd /></strong> <span>{car.bagage} bagages</span></p>
-                                        <p><strong><GiGearStickPattern /></strong> <span>{car.transmission}</span></p>
-                                    </div>
-                                    <div className='descri'>
-                                        <a className='Voir' onClick={() => Voirplus(car.id)}>Voir plus</a>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
+                            ))
+                        ) :
+                        <div className="reserv_voiture">
+                            <h1>Aucune resultat pour votre recherche!</h1>
+                        </div>
                     }
-
-                </div>
-                <div className="reserv_voiture">
-
                 </div>
             </div>
         </>

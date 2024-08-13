@@ -193,39 +193,34 @@
         border-radius: 20px;
 
         .rbc-calendar {
+            // personnalisation du body du calendrier
             background-color: transparent;
             color: white;
             font-weight: bold;
-            /* Couleur de fond du calendrier */
         }
 
         .rbc-toolbar {
+            // personnalisation de la bare d'outils
             background-color: #ffc107;
-            /* Couleur de fond de la barre d'outils */
             color: white;
         }
 
         .rbc-month-view {
-            border: 1px solid #ddd;
+            // personnalisation des mois 
             color: white;
-            /* Bordure autour de la vue mensuelle */
         }
 
         .rbc-day-bg {
+            // personnalisation des jours
             background-color: #292929;
             color: white;
-            /* Couleur de fond des jours */
         }
 
         .rbc-event {
-            background-color: red;
-            // #28a745
-            /* Couleur de fond des événements */
+            /* personnalisation des événements */
             color: white;
             border-radius: 4px;
-            /* Coins arrondis pour les événements */
             padding: 2px 5px;
-            /* Espacement interne */
         }
 
     }
