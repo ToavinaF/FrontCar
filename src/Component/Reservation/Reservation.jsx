@@ -26,17 +26,17 @@ function Reservation() {
         Price: ''
     });
     const [CheckHisto, setCheckHisto] = useState([]);
-  const [errors, setErrors] = useState({});
-  const validForm = () => {
-    const errors = {};
-    if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
-    if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
-    if (!AjoutReservation.email) errors.email= 'Ce champ est requis !';
-    if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
-    if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
-    return errors;
-  };
-  // ///////
+    const [errors, setErrors] = useState({});
+    const validForm = () => {
+        const errors = {};
+        if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
+        if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
+        if (!AjoutReservation.email) errors.email = 'Ce champ est requis !';
+        if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
+        if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
+        return errors;
+    };
+    // ///////
 
     const fetchCarCheck = async () => {
         try {
@@ -79,9 +79,9 @@ function Reservation() {
         e.preventDefault();
         const validationErrors = validForm();
         if (Object.keys(validationErrors).length > 0) {
-          setErrors(validationErrors);
+            setErrors(validationErrors);
         } else {
-          setErrors({});
+            setErrors({});
         }
         const dateDebut = new Date(AjoutReservation.DateDebut);
         const dateFin = new Date(AjoutReservation.DateFin);
@@ -136,7 +136,9 @@ function Reservation() {
             const start = new Date(dateStartString);
             const end = new Date(dateEndString);
             return {
-                title: 'Locations en cours',
+                title: event.statut === 'confirmed'? 'Locations en cours' 
+                : event.statut === 'uncofirmed' ? 'Locations non confirmée' 
+                : 'En attente de confirmation',
                 start: start,
                 end: end,
                 status: event.statut,
@@ -206,7 +208,7 @@ function Reservation() {
                                 required
                                 min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
                             />
-                        
+
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
@@ -225,7 +227,7 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="contact">Contact</label>
-                            <input type="text" className={`input ${errors.contact ? 'input-error' : ''}`} name='contact'  onChange={handleChange} />
+                            <input type="text" className={`input ${errors.contact ? 'input-error' : ''}`} name='contact' onChange={handleChange} />
                             {errors.contact && <p className="error-text">{errors.contact}</p>}
                         </div>
                         <div className="inputCarat">
@@ -248,16 +250,16 @@ function Reservation() {
 
 
             </form>
-                <div className="histo">
-                    <Calendar
-                        localizer={localizer}
-                        events={events}
-                        startAccessor="start"
-                        endAccessor="end"
-                        eventPropGetter={eventStyleGetter}
-                        style={{ height: 400}}
-                    />
-                </div>
+            <div className="histo">
+                <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    eventPropGetter={eventStyleGetter}
+                    style={{ height: 400 }}
+                />
+            </div>
         </div>
     );
 }
