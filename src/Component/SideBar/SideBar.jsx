@@ -8,6 +8,7 @@ import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { RiPlayListAddFill } from "react-icons/ri";
+import { PiUserListFill } from "react-icons/pi";
 import { FaBars } from "react-icons/fa6";
 import { FaHistory } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
@@ -101,7 +102,13 @@ const SideBar = ({ setActivePage }) => {
                                     </NavLink>
                                 </li>
                             )}
+                            <li className='nav_link'>
+                                    <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('All clients')}>
+                                        <PiUserListFill className='icon_list'/> {t('All-Clients')}
+                                    </NavLink>
+                                </li>
                         </div>
+                        
                     </div>
 
                    

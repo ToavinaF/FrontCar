@@ -10,6 +10,7 @@ import Addcar from '../AddCar/Addcar'
 import ListCar from '../listCar/listCar'
 import DeatilCar from '../DetailCar/DeatilCar'
 import Historique from '../Historique/Historique'
+import ListClients from '../Clients/ListClients'
 
 
 import { Route, Routes } from 'react-router-dom'
@@ -35,13 +36,15 @@ const Home = () => {
                     <Theme/>
                 </div>
                 <div className="content">
-                    <Routes>
+                    
+                    { <Routes>
                         <Route path='/dashboard' element={<Dashboard />} />
                         <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
                         <Route path='/addcar' element={<Addcar />} />
                         <Route path='/Profile' element={<Profil />} />
                         <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
+                        <Route path="/ListClients" element={<ListClients/>} />
                         
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
@@ -64,7 +67,7 @@ const Home = () => {
                         
                         <Route path="/AjoutUser" element={<AddUser/>}/>
                         <Route path='/facture/:id' element={<Facture/>}/>
-                    </Routes>
+                    </Routes> }
 
 
                 </div>

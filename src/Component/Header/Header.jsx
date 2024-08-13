@@ -91,7 +91,7 @@ const Header = ({ activepage, setActivePage }) => {
                         <FaCommentDots className='icon' />
                     </div>
                     <div>
-                        <span>2</span>
+                        <span>4</span>
                         <IoIosNotifications className='icon' />
                     </div>
                 </div>
