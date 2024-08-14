@@ -72,7 +72,7 @@ function Historique({ searchTerm }) {
             PriceTotal: histo.PriceTotal,
             prix: histo.prix,
             vehicule_id: histo.vehicule_id,
-            statut: histo.statut, // Ajoutez le statut ici
+            statut: histo.statut, 
         });
 
         const filteredVehicules = vehicules.filter(v => v.id === histo.vehicule_id);
@@ -112,45 +112,7 @@ function Historique({ searchTerm }) {
         }));
     };
 
-    // const handleSave = async (id) => {
-    //     try {
-    //         const response = await axios.post(`http://127.0.0.1:8000/api/update/${id}`, editedData);
-
-    //         console.log(response.data);
-    //         await fetchHistorique();
-    //         setEditingId(null);
-    //         toast.success('Réservation mise à jour avec succès');
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error(error.response?.data.error || 'Erreur lors de la mise à jour.');
-    //     }
-    // };
-    // const handleSave = async (id) => {
-    //     try {
-    //         const dataToSend = {
-    //             client_name: editedData.client_name,
-    //             DateDebut: editedData.DateDebut,
-    //             DateFin: editedData.DateFin,
-    //             PriceTotal: editedData.PriceTotal,
-    //             prix: Number(editedData.prix),
-    //             statut: editedData.statut,
-    //             vehicule_id: Number(editedData.vehicule_id)
-    //         };
-
-    //         const response = await axios.post(`http://127.0.0.1:8000/api/update/${id}`, dataToSend);
-
-    //         if (response.status === 200) {
-    //             toast.success('Réservation mise à jour avec succès');
-    //             await fetchHistorique();
-    //             setEditingId(null);
-    //         } else {
-    //             toast.error('Erreur lors de la mise à jour.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Erreur:', error.response?.data);
-    //         toast.error(error.response?.data.error || 'Erreur lors de la mise à jour.');
-    //     }
-    // };
+    
     const handleSave = async (id) => {
         try {
             // Obtenir la réservation actuelle pour garder l'ancien vehicule_id

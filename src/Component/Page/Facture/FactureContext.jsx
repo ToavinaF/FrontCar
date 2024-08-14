@@ -46,16 +46,9 @@ const Facture = () => {
 
     // Récupérer les réservations sélectionnées
     const selectedReservations = location.state?.selectedReservations || [];
-    const totalPrice = selectedReservations.reduce((total, reservation) => {
-        const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-        const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
-        return total + subTotal; // Ajouter le sous-total au total
-    }, 0);
-    // // Calculer le prix total
-    // const totalPrice = selectedReservations.reduce((total, reservation) => {
-    //     console.log(reservation); // Déboguer pour vérifier la structure de reservation
-    //     return total + Number(reservation.prix); // Convertir en nombre si nécessaire
-    // }, 0);
+
+    // Calculer le prix total
+    const totalPrice = selectedReservations.reduce((total, reservation) => total + reservation.prix, 0);
     
     // Calculer le nombre total de jours
     const totalDays = selectedReservations.reduce((total, reservation) => {
@@ -69,7 +62,8 @@ const Facture = () => {
 
         Nom: ${fact.name}
         Date de réservation: ${formatDate(fact.created_at)}
-       
+        Date de début: ${formatDate(selectedReservations[0]?.DateDebut)}
+        Date de fin: ${formatDate(selectedReservations[0]?.DateFin)}
         Prix total: ${totalPrice}
         Matricule: ${selectedReservations.map(reservation => reservation.matricule).join(', ')}
         Marque: ${selectedReservations.map(reservation => reservation.marque).join(', ')}
@@ -151,7 +145,7 @@ const Facture = () => {
                         <tbody>
                             {selectedReservations.map((reservation, index) => {
                                 const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-                                const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
+                                const subTotal = reservation.prix * nbJours; // Calculer le sous-total
                                 return (
                                     <tr key={index}>
                                         <td>{reservation.marque} {reservation.matricule}</td>
@@ -172,7 +166,16 @@ const Facture = () => {
                         </tfoot>
                     </table>
                 </div>
-               
+                <div className='contents__free'>
+                    <h1>Méthode de paiement</h1>
+                    <form>
+                        <input type='radio' name='payment' className='input' value="cash" /> Espèces
+                        <input type='radio' name='payment' className='input' value="credit" /> Carte de crédit
+                        <input type='radio' name='payment' className='input' value="bank" /> Virement bancaire
+                        <input type='radio' name='payment' className='input' value="online" /> Paiement en ligne
+                        <input type='radio' name='payment' className='input' value="mobile" /> Paiement mobile
+                    </form>
+                </div>
                 <div className='qr__code'>
                     <h1>QR Code</h1>
                     <div className='qr'>
