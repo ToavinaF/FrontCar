@@ -117,7 +117,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: space-around;
-
+                margin: -5.5% 0 0 0;
                 .caracter {
                     width: 100%;
                     height: auto;
@@ -266,7 +266,7 @@
 
                     .desc {
                         width: 101%;
-                        height: 100%;
+                        height: 45px;
                         border-radius: 10px;
                         background: var(--body-color);
                         color: var(--text-color);
