@@ -3,6 +3,7 @@ import './Header.scss';
 import axios from 'axios';
 import { FaCommentDots, FaRegUser } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -53,7 +54,7 @@ const Header = ({ activepage, setActivePage }) => {
             }
             try {
                 const response = await axios.post(`http://127.0.0.1:8000/api/recherche`, Recherche);
-                navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1:response.data.result1  } });
+                navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
             } catch (error) {
                 console.log('Vérifiez le code', error);
             }
@@ -71,26 +72,26 @@ const Header = ({ activepage, setActivePage }) => {
     // notification par nouvelle reservation
     const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
-    useEffect(()=>{
-       const fetchNotifications = async() =>{
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/notifications');
-            setNotifications(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Erreur lors de la récupération des notifications:', error);
-        }
-       };
-       fetchNotifications();
-       const intervalId = setInterval(fetchNotifications, 5000);
-       return () => clearInterval(intervalId);
-    },[]);
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/notifications');
+                setNotifications(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des notifications:', error);
+            }
+        };
+        fetchNotifications();
+        const intervalId = setInterval(fetchNotifications, 5000);
+        return () => clearInterval(intervalId);
+    }, []);
 
     const handleNotificationClick = async (notificationId) => {
         // Marquer la notification comme lue
         try {
             await axios.post(`http://127.0.0.1:8000/api/notifications/${notificationId}/read`);
-            
+
             // Mettre à jour l'état local pour refléter le changement
             setNotifications(prevNotifications =>
                 prevNotifications.map(notification =>
@@ -103,7 +104,7 @@ const Header = ({ activepage, setActivePage }) => {
         } catch (error) {
             console.error('Erreur lors de la mise à jour de la notification:', error);
         }
-        
+
         // Afficher ou masquer les notifications
         setShowNotifications(!showNotifications);
     };
@@ -116,11 +117,11 @@ const Header = ({ activepage, setActivePage }) => {
                 <div className="search">
                     <IoIosSearch className='iconSearch' />
                     <div className="recherche-container">
-                        <input 
-                            type='text' 
-                            placeholder="Search here..." 
-                            onChange={handleSearch} 
-                            name="Keyword" 
+                        <input
+                            type='text'
+                            placeholder="Search here..."
+                            onChange={handleSearch}
+                            name="Keyword"
                         />
                     </div>
                 </div>
@@ -131,7 +132,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                     <div>
                         <span>{notifications.length}</span>
-                        <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)}/>
+                        <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)} />
                         {showNotifications && (
                             <div className="notifications-box">
                                 {notifications.length > 0 ? (
@@ -141,8 +142,17 @@ const Header = ({ activepage, setActivePage }) => {
                                             className={`notification-item ${notification.is_read ? 'read' : ''}`}
                                             onClick={() => handleNotificationClick(notification.id)}
                                         >
-                                            <p>{notification.message}</p>
-                                            <p>{new Date(notification.created_at).toLocaleString()}</p>
+                                             {console.log(notification.message.trim())}
+                                            {notification.message.trim() === "nouveau client enregistre" ? (
+                                                <FaRegUser  className='notifUser'/>
+                                            ) : (
+                                                <MdOutlineNotificationsActive className='notif' />
+                                            )}
+                                            <div className="detailNotif">
+                                                <h1>{notification.message}</h1>
+                                                <p>{new Date(notification.created_at).toLocaleString()}</p>
+                                            </div>
+
                                         </div>
                                     ))
                                 ) : (
@@ -161,8 +171,8 @@ const Header = ({ activepage, setActivePage }) => {
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">
                             <li>
-                                <NavLink to={'/Home/editUser/'+id}>
-                                    <FaRegUser className='icon'/> {t('Profile')}
+                                <NavLink to={'/Home/editUser/' + id}>
+                                    <FaRegUser className='icon' /> {t('Profile')}
                                 </NavLink>
                             </li>
                             <li onClick={handleLogout}>

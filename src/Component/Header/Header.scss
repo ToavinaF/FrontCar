@@ -150,9 +150,9 @@ header {
             }
             .notifications-box {
                 position: absolute;
-                top: 170%;
-                right: 24%;
-                width: 250px;
+                top: 175%;
+                right:5%;
+                width: 350px;
                 background:#232226;
                 // border: 1px solid #ffe241;
                 border-radius: 4px;
@@ -164,10 +164,31 @@ header {
                     padding: 10px;
                     border-bottom: 1px solid #ffffff;
                     display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: center;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
                     margin:0 10px;
+                    .notif{
+                        font-size: 2rem;
+                        color: rgb(0, 251, 0);
+                    }
+                    .notifUser{
+                        font-size: 2rem;
+                        color: rgb(0, 226, 251);
+                    }
+                    .detailNotif{
+                        width: auto;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        justify-content: center;
+                        margin-left: 5%;
+                        h1{
+                            font-size: 1rem;
+                            color: white;
+                        }
+                    }
                 }
                 .notification-item:last-child {
                     border-bottom: none;
