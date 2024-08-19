@@ -5,6 +5,7 @@ import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
 import AddUser from '../user/AddUser'
 import EditUser from '../user/EditUser'
+import ArchiveCar from '../ArchiveCar/ArchiveCar'
 import UsersDelete from '../user/usersDelete'
 
 import Addcar from '../AddCar/Addcar'
@@ -59,6 +60,7 @@ const Home = () => {
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path='/search' element={<Recherche/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
+                        <Route path="/ArchiveCar" element={<ArchiveCar/>}/>
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
