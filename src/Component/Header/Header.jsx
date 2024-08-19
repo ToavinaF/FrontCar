@@ -77,7 +77,7 @@ const Header = ({ activepage, setActivePage }) => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/notifications');
                 setNotifications(response.data);
-                console.log(response.data);
+        
             } catch (error) {
                 console.error('Erreur lors de la récupération des notifications:', error);
             }

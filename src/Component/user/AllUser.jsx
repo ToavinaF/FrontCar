@@ -36,10 +36,16 @@ const AllUser = ({searchTerm}) => {
     const handleCardClick = (id) => {
         setSelectedUserId(id === selectedUserId ? null : id);
     };
-
     const handleDeleteClick = async (id) => {
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`);
+            const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
+    
+            await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`, {
+                data: { 
+                    deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
+                }
+            });
+    
             setAllUserData(allUserData.filter(user => user.id !== id));
             toast.success("Delete User success");
         } catch (error) {
@@ -47,6 +53,7 @@ const AllUser = ({searchTerm}) => {
             console.log('Erreur lors de la suppression de l\'utilisateur', error);
         }
     };
+    
 
     const handleEditClick = (id) => {
         navigate('/Home/editUser/' + id);
