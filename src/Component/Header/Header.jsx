@@ -77,7 +77,7 @@ const Header = ({ activepage, setActivePage }) => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/notifications');
                 setNotifications(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des notifications:', error);
             }
@@ -164,9 +164,9 @@ const Header = ({ activepage, setActivePage }) => {
                 </div>
                 <div className="profil_show">
                     <img src={`http://127.0.0.1:8000/storage/${image}` || 'default-profile.png'} alt="Profile" />
-                    <div className="cont_prof" onClick={() => handleClick(0)}>
-                        <h1>{name}</h1>
-                        <p>{role}</p>
+                    <div className="cont-prof" onClick={() => handleClick(0)}>
+                        <h1 className='nametitle'>{name}</h1>
+                        <p className='prole'>{role}</p>
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">

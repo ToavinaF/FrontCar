@@ -9,10 +9,11 @@
     // border: solid 2px white;
     flex-wrap: wrap;
     gap: 3%;
-    .Error{
+
+    .Error {
         position: absolute;
         top: 0%;
-        left : 40%;
+        left: 40%;
         width: auto;
         height: 70px;
         display: flex;
@@ -24,14 +25,17 @@
         z-index: 1000;
         transform: translatey(20%);
         transition: 1s;
-        p{
+
+        p {
             font-size: 1.2rem;
         }
-        &.active{
+
+        &.active {
             display: none;
             transition: 1s;
         }
     }
+
     .ListBlock {
         width: 28%;
         height: 450px;
@@ -64,11 +68,13 @@
                 text-align: center;
                 justify-content: center;
                 display: flex;
-                .bar{
+
+                .bar {
                     font-size: 1.5rem;
                 }
 
             }
+
             .menu {
                 position: absolute;
                 top: 7.5%;
@@ -78,9 +84,9 @@
                 padding: 5px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
-              }
-              
-              button {
+            }
+
+            button {
                 display: block;
                 width: 100%;
                 border: none;
@@ -91,26 +97,29 @@
                 text-align: left;
                 color: rgb(0, 0, 0);
                 display: flex;
-                .del{
+
+                .del {
                     font-size: 1.3rem;
                     margin-right: 5px;
                 }
-                
+
                 &:hover {
                     background-color: #fbe541b6;
-                  }
-              }
-              
-              
-              
+                }
+            }
+
+
+
         }
 
         h1 {
+            all: unset;
             font-size: 1.5rem;
             color: var(--blanch);
         }
 
         h2 {
+            all: unset;
             font-size: 1rem;
             color: var(--blanch);
         }
@@ -159,19 +168,23 @@
                 }
 
                 h3 {
+                    all: unset;
                     // color: beige;
                     color: var(--blanch);
                     font-size: 1rem;
                     font-weight: normal;
                 }
-                &:hover{
+
+                &:hover {
                     background: var(--color-principal);
                     transition: 0.5s;
+
                     .imgIcon {
                         font-size: 1.2rem;
                         // color: #1e1d1c;
                         color: var(--blanch);
                     }
+
                     h3 {
                         color: rgb(17, 17, 16);
                         font-size: 1rem;

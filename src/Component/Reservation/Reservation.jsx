@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/DateRangePicker/styles/index.css';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -136,9 +138,9 @@ function Reservation() {
             const start = new Date(dateStartString);
             const end = new Date(dateEndString);
             return {
-                title: event.statut === 'confirmed'? 'Locations en cours' 
-                : event.statut === 'uncofirmed' ? 'Locations non confirmée' 
-                : 'En attente de confirmation',
+                title: event.statut === 'confirmed' ? 'Locations en cours'
+                    : event.statut === 'uncofirmed' ? 'Locations non confirmée'
+                        : 'En attente de confirmation',
                 start: start,
                 end: end,
                 status: event.statut,
@@ -178,8 +180,21 @@ function Reservation() {
     const [events, setEvents] = useState([]);
     // end calendrier
 
+    // start controller rangepicker
+    const { combine, allowedMaxDays, beforeToday } = DateRangePicker;
+    const [selectedDates, setSelectedDates] = useState([null, null]);
+    const handleDateRangeChange = (value) => {
+        setSelectedDates(value);
+        if (value && value.length === 2) {
+            setAjoutReservation({
+                ...AjoutReservation,
+                DateDebut: value[0].toISOString().split('T')[0],
+                DateFin: value[1].toISOString().split('T')[0]
+            });
+        }
+    };
     return (
-        <div className='ReservBlock'>
+        <div className='ReservBlock reservation-container'>
             <form onSubmit={handleModif} className="contentReserv">
                 <div className="NavTop">
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
@@ -187,32 +202,20 @@ function Reservation() {
                 </div>
                 <div className="NavBottom">
                     <div className='NavLeft'>
-                        <div className="inputCarat">
+                        <div className="inputCarat ">
                             <label htmlFor="DateDebut">Début de la location</label>
-                            <input
-                                type="date"
-                                className='input'
-                                name='DateDebut'
-                                onChange={handleChange}
-                                required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
-                            />
-                        </div>
-                        <div className="inputCarat">
-                            <label htmlFor="DateFin">Fin de la location</label>
-                            <input
-                                type="date"
-                                className='input'
-                                name='DateFin'
-                                onChange={handleChange}
-                                required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
+                            <DateRangePicker
+                                placeholder="Sélectionnez la période"
+                                value={selectedDates}
+                                onChange={handleDateRangeChange}
+                                shouldDisableDate={beforeToday()}
+                                className='inputrange'
                             />
 
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
-                            <input type="text" className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
+                            <input type="text"  className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
                             {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
                         <div className="inputCarat">

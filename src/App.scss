@@ -1,10 +1,10 @@
 :root{
-    --color-principal: #ffc107;
-    --title-color: hsl(0, 0%, 40%);
     --text-color: hsl(0, 7%, 79%);
     --container-color: hsl(0, 0%, 93%);
     --border-color: hsl(0, 0%, 87%);
     --body-color:  #23282c;
+    --color-principal: #ffc107;
+    --title-color: hsl(0, 0%, 40%);
     --border-car-one: rgb(130, 5, 161);
     --blanch: #fff;
     --color-hover: rgba(98, 98, 5, 0.402);
@@ -56,7 +56,6 @@
     --label:#242323;
     --profile:rgba(57, 56, 55, 0.1);
 }
-
 body{
     background: var(--body-color);
 }
@@ -74,7 +73,7 @@ body{
         width: 100%;
         background: #24292D;
     }
-
+    
     .content{
         width: calc(100% - 180px);
         height: 100%;
