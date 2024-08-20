@@ -17,7 +17,6 @@ const Addcar = () => {
   const navigate = useNavigate();
   const [ShowUpload, setShowUpload] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
-  const [profile, setProfile] = useState(null);
   const [formData, setFormData] = useState({
     marque: '',
     matricule: '',

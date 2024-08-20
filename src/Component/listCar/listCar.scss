@@ -150,7 +150,7 @@
             .icon {
                 width: 53px;
                 height: 53px;
-                // border: solid 2px white;
+                position : relative;
                 border-radius: 100%;
                 background: #595233;
                 display: flex;
@@ -159,6 +159,44 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                transition: all 0.2s linear;
+                transition: all 0.2s linear;
+                .tooltip {
+                    position: absolute;
+                    top: 0;
+                    font-size: 14px;
+                    background: #fff;
+                    color: #fff;
+                    padding: 5px 8px;
+                    border-radius: 5px;
+                    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        height: 8px;
+                        width: 8px;
+                        background: #fff;
+                        bottom: -3px;
+                        left: 50%;
+                        transform: translate(-50%) rotate(45deg);
+                        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                    }
+                }
+                &:hover .tooltip {
+                    top: -40px;
+                    opacity: 1;
+                    visibility: visible;
+                    pointer-events: auto;
+                    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+                }
+
+                &:hover span {
+                    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+                }
 
                 .imgIcon {
                     font-size: 1.2rem;
@@ -172,22 +210,28 @@
                     font-weight: normal;
                 }
 
-                &:hover {
-                    background: var(--color-principal);
-                    transition: 0.5s;
+                // &:hover {
+                //     background: var(--color-principal);
+                //     transition: 0.5s;
 
-                    .imgIcon {
-                        font-size: 1.2rem;
-                        // color: #1e1d1c;
-                        color: var(--blanch);
-                    }
+                //     .imgIcon {
+                //         font-size: 1.2rem;
+                //         // color: #1e1d1c;
+                //         color: var(--blanch);
+                //     }
 
-                    h3 {
-                        color: rgb(17, 17, 16);
-                        font-size: 1rem;
-                        font-weight: normal;
-                    }
-                }
+                //     h3 {
+                //         color: rgb(17, 17, 16);
+                //         font-size: 1rem;
+                //         font-weight: normal;
+                //     }
+                // }
+                &:hover,
+                            &:hover .tooltip,
+                            &:hover .tooltip::before {
+                                background: #fffb00;
+                                color: #000000;
+                            }
             }
 
         }
