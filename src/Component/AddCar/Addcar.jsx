@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MdOutlineSaveAlt } from "react-icons/md";
 
 const Addcar = () => {
   const { t } = useTranslation();
@@ -207,7 +208,12 @@ const Addcar = () => {
                 <textarea id="description" className={`desc ${errors.description ? 'input-error' : ''}`} name='description' onChange={handleChange}></textarea>
                 {errors.description && <p className="error-text"><span><IoAlertCircleOutline /></span>{errors.description}</p>}
               </div>
-              <button type='submit' className='btn'>{t('Enregistre')}</button>
+              <button type='submit' className='btn'>
+                <div className='svg-wrapper'>
+                <MdOutlineSaveAlt className='Ico'/>
+                </div>
+                <span>{t('Enregistre')}</span>
+              </button>
             </div>
 
             {/* end formulaire */}

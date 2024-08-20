@@ -65,7 +65,7 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage('Home/All Car')}>
+                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage('Home>All Car')}>
                                     <FaCarAlt className='icon_list' /> {t('all car')}
                                 </NavLink>
                             </li>
