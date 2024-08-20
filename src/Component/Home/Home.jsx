@@ -5,6 +5,8 @@ import Profil from '../Profil/Profil'
 import AllUser from '../user/AllUser'
 import AddUser from '../user/AddUser'
 import EditUser from '../user/EditUser'
+import ArchiveCar from '../ArchiveCar/ArchiveCar'
+import UsersDelete from '../user/usersDelete'
 
 import Addcar from '../AddCar/Addcar'
 import ListCar from '../listCar/listCar'
@@ -46,7 +48,7 @@ const Home = () => {
                         <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
                         <Route path="/ListClients" element={<ListClients/>} />
-                        
+                        <Route path='/usersDelete' element={<UsersDelete/>}/>
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
                         <Route path="/reservation/:id" element={<Reservation/>} />
@@ -58,6 +60,7 @@ const Home = () => {
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path='/search' element={<Recherche/>}/>
                         <Route path="/listcar" element={<ListCar/>} />
+                        <Route path="/ArchiveCar" element={<ArchiveCar/>}/>
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
@@ -65,6 +68,7 @@ const Home = () => {
                         <Route path='/listUser' element={<AllUser/>}/>
                         <Route path='/Historique' element={<Historique searchTerm={searchTerm}/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
+
                         
                         <Route path="/AjoutUser" element={<AddUser/>}/>
                         <Route path='/facture/:id' element={<Facture/>}/>

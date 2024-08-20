@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
-import { MdDashboard } from 'react-icons/md';
-import { FaChevronDown, FaCar, FaUser, FaUsers, FaCarAlt } from 'react-icons/fa';
+import { FaChevronDown, FaCar, FaUser, FaUsers, FaCarAlt, FaArchive } from 'react-icons/fa';
+import { MdDashboard, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { RiPlayListAddFill } from "react-icons/ri";
+import { RiDeleteBin6Line, RiPlayListAddFill } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { FaBars } from "react-icons/fa6";
 import { FaHistory } from "react-icons/fa";
@@ -79,6 +79,11 @@ const SideBar = ({ setActivePage }) => {
                                     <FaHistory  className='icon_list_histo'/> {t('Historique')}
                                 </NavLink>
                             </li>
+                            <li className='nav_link'>
+                                <NavLink to='/Home/ArchiveCar' className='nav_item' onClick={() => setActivePage('Home/Archive')}>
+                                    <RiDeleteBin6Line  className='icon_list_histo'/> {t('Corbeille')}
+                                </NavLink>
+                            </li>
                         </div>
                     </div>
 
@@ -105,6 +110,11 @@ const SideBar = ({ setActivePage }) => {
                             <li className='nav_link'>
                                     <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('All clients')}>
                                         <PiUserListFill className='icon_list'/> {t('All-Clients')}
+                                    </NavLink>
+                                </li>
+                                <li className='nav_link'>
+                                    <NavLink to='/Home/UsersDelete' className='nav_item' onClick={() => setActivePage('Home ->  delete')}>
+                                        <MdDelete className='icon_list'/> {t('All-delete')}
                                     </NavLink>
                                 </li>
                         </div>
