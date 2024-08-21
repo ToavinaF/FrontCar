@@ -8,6 +8,8 @@ import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+
+
 const Header = ({ activepage, setActivePage }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
@@ -111,7 +113,7 @@ const Header = ({ activepage, setActivePage }) => {
     return (
         <header>
             <div className="text_logo">
-                <h1>{t(activepage)}</h1>
+                <h1 className='Modif'>{t(activepage)}</h1>
             </div>
             <div className="left_cont">
                 <div className="search">

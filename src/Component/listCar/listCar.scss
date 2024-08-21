@@ -9,10 +9,11 @@
     // border: solid 2px white;
     flex-wrap: wrap;
     gap: 3%;
-    .Error{
+
+    .Error {
         position: absolute;
         top: 0%;
-        left : 40%;
+        left: 40%;
         width: auto;
         height: 70px;
         display: flex;
@@ -24,14 +25,17 @@
         z-index: 1000;
         transform: translatey(20%);
         transition: 1s;
-        p{
+
+        p {
             font-size: 1.2rem;
         }
-        &.active{
+
+        &.active {
             display: none;
             transition: 1s;
         }
     }
+
     .ListBlock {
         width: 28%;
         height: 450px;
@@ -64,11 +68,13 @@
                 text-align: center;
                 justify-content: center;
                 display: flex;
-                .bar{
+
+                .bar {
                     font-size: 1.5rem;
                 }
 
             }
+
             .menu {
                 position: absolute;
                 top: 7.5%;
@@ -78,9 +84,9 @@
                 padding: 5px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
-              }
-              
-              button {
+            }
+
+            button {
                 display: block;
                 width: 100%;
                 border: none;
@@ -91,18 +97,19 @@
                 text-align: left;
                 color: rgb(0, 0, 0);
                 display: flex;
-                .del{
+
+                .del {
                     font-size: 1.3rem;
                     margin-right: 5px;
                 }
-                
+
                 &:hover {
                     background-color: #fbe541b6;
-                  }
-              }
-              
-              
-              
+                }
+            }
+
+
+
         }
 
         h1 {
@@ -143,7 +150,7 @@
             .icon {
                 width: 53px;
                 height: 53px;
-                // border: solid 2px white;
+                position : relative;
                 border-radius: 100%;
                 background: #595233;
                 display: flex;
@@ -152,6 +159,44 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                transition: all 0.2s linear;
+                transition: all 0.2s linear;
+                .tooltip {
+                    position: absolute;
+                    top: 0;
+                    font-size: 14px;
+                    background: #fff;
+                    color: #fff;
+                    padding: 5px 8px;
+                    border-radius: 5px;
+                    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        height: 8px;
+                        width: 8px;
+                        background: #fff;
+                        bottom: -3px;
+                        left: 50%;
+                        transform: translate(-50%) rotate(45deg);
+                        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                    }
+                }
+                &:hover .tooltip {
+                    top: -40px;
+                    opacity: 1;
+                    visibility: visible;
+                    pointer-events: auto;
+                    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+                }
+
+                &:hover span {
+                    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+                }
 
                 .imgIcon {
                     font-size: 1.2rem;
@@ -164,40 +209,86 @@
                     font-size: 1rem;
                     font-weight: normal;
                 }
-                &:hover{
-                    background: var(--color-principal);
-                    transition: 0.5s;
-                    .imgIcon {
-                        font-size: 1.2rem;
-                        // color: #1e1d1c;
-                        color: var(--blanch);
-                    }
-                    h3 {
-                        color: rgb(17, 17, 16);
-                        font-size: 1rem;
-                        font-weight: normal;
-                    }
-                }
+
+                // &:hover {
+                //     background: var(--color-principal);
+                //     transition: 0.5s;
+
+                //     .imgIcon {
+                //         font-size: 1.2rem;
+                //         // color: #1e1d1c;
+                //         color: var(--blanch);
+                //     }
+
+                //     h3 {
+                //         color: rgb(17, 17, 16);
+                //         font-size: 1rem;
+                //         font-weight: normal;
+                //     }
+                // }
+                &:hover,
+                            &:hover .tooltip,
+                            &:hover .tooltip::before {
+                                background: #fffb00;
+                                color: #000000;
+                            }
             }
 
         }
 
         .btn {
-            width: 45%;
-            height: 40px;
-            border: solid 1px;
-            border-color: var(--color-principal);
-            border-radius: 10px;
-            // background: #2f363e;
-            background: var(--body-bg);
-
-            color: var(--blanch);
-            font-size: 1rem;
+            --color:#ffc107;
+            padding: 0.8em 1.7em;
+            background-color: transparent;
+            border-radius: .3em;
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
+            transition: .5s;
+            font-weight: 400;
+            font-size: 17px;
+            border: 1px solid;
+            font-family: inherit;
+            text-transform: uppercase;
+            color: var(--color);
+            z-index: 1;
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                width: 50px;
+                height: 50px;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                border-radius: 50%;
+                z-index: -1;
+                background-color: var(--color);
+                transition: 1s ease;
+            }
+
+            &::before {
+                top: -1em;
+                left: -1em;
+            }
+
+            &::after {
+                left: calc(100% + 1em);
+                top: calc(100% + 1em);
+            }
+
+            &:hover::before,
+            &:hover::after {
+                height: 410px;
+                width: 410px;
+            }
 
             &:hover {
-                background: var(--color-principal);
-                transition: 0.2s;
+                color: rgb(10, 25, 30);
+            }
+
+            &:active {
+                filter: brightness(.8);
             }
         }
     }

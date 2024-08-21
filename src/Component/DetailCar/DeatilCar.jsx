@@ -124,7 +124,7 @@ const DetailCar = () => {
         <h1>{CarDetail.prix}Ar/jrs</h1>
         <NavLink className='btn' to={`/Home/reservation/${CarDetail.id}`}>
           <FaCalendarAlt className='ico' />
-          Réservation
+          <span className='text'>Reservation</span>
         </NavLink>
       </div>
     </div>

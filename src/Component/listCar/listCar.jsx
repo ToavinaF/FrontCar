@@ -120,18 +120,22 @@ const ListCar = () => {
                     </div>
                     <div className="aprop">
                       <div className="icon">
+                      <span className='tooltip'>Place</span>
                         <FaUser className='imgIcon' />
                         <h3> {list.place} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Bagage</span>
                         <BsFillSuitcase2Fill className='imgIcon' />
                         <h3>{list.bagage} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Porte</span>
                         <GiCarDoor className='imgIcon' />
                         <h3>{list.porte} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Transmission</span>
                         <TbManualGearboxFilled className='imgIcon' />
                         <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
                       </div>

@@ -1,86 +1,68 @@
-
-.user-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    background-color: var(--body-bg);
-}
-.user-cards {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    
-}.user-card {
-    background-color: var(--body-color);
-    border-radius: 8px;
-    box-shadow: 0 0 5px black;
-    color: var(--blanch);
-    margin-bottom: 20px;
-    overflow: hidden;
-    width: 100%; // Vous pouvez définir une largeur spécifique si nécessaire
-    max-width: 400px; // Ajustez la largeur maximale selon vos besoins
-    height: auto; // Ajustez la hauteur si nécessaire
-
-    .card-header {
-        padding: 15px; // Augmenter le padding pour une meilleure apparence
-        border-bottom: 1px solid #333;
-    }
-
-    .user-actions {
-        padding: 10px;
-        background-color: var(--color-principal);
-        text-align: right;
-        
-        .restore-profile {
-          display: inline-flex;
-          align-items: center;
-          cursor: pointer;
-          color: #ffffff;
-          
-          svg {
-            margin-right: 5px;
-          }
-          
-          &:hover {
-            color: #ffffff;
-          }
+.ContDelete{
+    width: 100%;
+    height: auto;
+    // border: solid 2px white;
+    .table-Delete{
+        width: 100%;
+        height: auto;
+        background: var(--body-bg);
+        margin: 2% 0 0 0;
+        padding: 2% 0 2% 0;
+        border-radius: 10px;
+        h2{
+            font-size: 1.5rem;
+            margin-left: 2%;
+            font-weight: 600;
         }
-      }
-    .user-info {
-        .card-title {
-            font-size: 1.75rem; // Augmenter la taille de la police du titre
-            margin-bottom: 10px; // Ajuster la marge
-        }
-
-        .card-text {
-            margin: 5px 0;
-            color: #828690;
-        }
-    }
-
-    .user-image img {
-        width: 100px; // Augmenter la taille de l'image
-        height: 100px;
-        object-fit: cover;
-    }
-
-    .card-body {
-        padding: 15px; // Augmenter le padding pour le corps
-        color: #828690;
-
-        .card-text {
+        .tableUser{
+            width: 100%;
+            height: auto;
             display: flex;
+            justify-content: center;
+            padding: 0 4% 0 4%;
             align-items: center;
-            margin: 10px 0;
 
-            svg {
-                margin-right: 5px;
+            table {
+                width: 100%;
+                height: auto;
+                text-align: center;
+
+                tr {
+                    position: relative;
+                    padding: 0% 0 2% 0;
+                    z-index: 0;
+                    th {
+                        padding: 2% 0 2% 0;
+                        border-bottom: 1px solid var(--blanch);
+                        border-top: 1px solid var(--blanch);
+
+                    }
+
+                    td {
+                        padding: 3% 0 0% 0;
+                        color: #828690;
+                        border-bottom: 1px solid var(--blanch);
+                        text-align: center;
+               
+                        align-items: center;
+                        justify-content: center;
+              
+                        .IconBtn{
+                            font-size: 2.5rem;
+                            margin: 0 5% 8px 0;
+                            cursor: pointer;
+                        }
+                        .force{
+                            color: rgba(255, 0, 0, 0.893);
+                        }
+                        .restore{
+                            color: rgb(11, 4, 4);
+                            font-size: 2.4rem;
+                        }
+                    }
+
+                }
             }
         }
-    }
-
-    &:hover {
-        box-shadow: 0 0 10px black;
     }
 }
