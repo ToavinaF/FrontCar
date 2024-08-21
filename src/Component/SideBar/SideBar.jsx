@@ -7,18 +7,12 @@ import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { RiDeleteBin6Line, RiPlayListAddFill } from "react-icons/ri";
-import { PiUserListFill } from "react-icons/pi";
-import { FaBars } from "react-icons/fa6";
-import { FaHistory } from "react-icons/fa";
-import { FaUserPlus } from "react-icons/fa";
+import { RiDeleteBin6Line, RiPlayListAddFill } from 'react-icons/ri';
+import { PiUserListFill } from 'react-icons/pi';
+import { FaBars } from 'react-icons/fa6';
+import { FaHistory } from 'react-icons/fa';
+import { FaUserPlus } from 'react-icons/fa';
 
-const languages = [
-    { code: 'fr', name: 'Français', country_code: 'fr' },
-    { code: 'en', name: 'English', country_code: 'gb' }
-];
-const role = localStorage.getItem('role');
-console.log(role);
 const SideBar = ({ setActivePage }) => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [role, setRole] = useState('');
@@ -31,7 +25,7 @@ const SideBar = ({ setActivePage }) => {
         if (storedRole) {
             setRole(storedRole);
         }
-    }, []); // Le tableau vide [] signifie que ce useEffect s'exécute une seule fois après le premier rendu
+    }, []);
 
     const handleDropdownClick = (index) => {
         setActiveDropdown(activeDropdown === index ? null : index);
@@ -95,7 +89,7 @@ const SideBar = ({ setActivePage }) => {
                                     <FaUsers className='icon_list'/> {t('all_users')}
                                 </NavLink>
                             </li>
-                            {role === 'superAdmin' && ( // Correction ici
+                            {role === 'superAdmin' && (
                                 <li className='nav_link'>
                                     <NavLink to='/Home/AjoutUser' className='nav_item' onClick={() => setActivePage('Home > Add User')}>
                                         <FaUserPlus className='icon_list'/> {t('add_user')}

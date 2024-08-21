@@ -15,30 +15,40 @@ function Reservation() {
     const navigate = useNavigate();
     const { id } = useParams();
     const loggedInUserId = localStorage.getItem('id');
-    const [CarCheck, setCarCheck] = useState([]);
+    const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
+    const [maps, setMaps] = useState([]);
+    const [currentMap, setCurrentMap] = useState(null);
+
+    // const [formValues, setFormValues] = useState({  });
+
     const [AjoutReservation, setAjoutReservation] = useState({
         name: '',
         firstname: '',
         email: '',
-        Adresse: '',
+        adresse: '',
+        lieu: '',
+        latitude: '',
+        longitude: '',
         contact: '',
         DateDebut: '',
         DateFin: '',
         Price: ''
     });
+
     const [CheckHisto, setCheckHisto] = useState([]);
     const [errors, setErrors] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
+
     const validForm = () => {
         const errors = {};
         if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
         if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
         if (!AjoutReservation.email) errors.email = 'Ce champ est requis !';
-        if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
+        if (!AjoutReservation.adresse) errors.adresse = 'Ce champ est requis !';
         if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
         return errors;
     };
-    // ///////
 
     const fetchCarCheck = async () => {
         try {
@@ -59,7 +69,6 @@ function Reservation() {
         }
     };
 
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setAjoutReservation({
@@ -77,6 +86,15 @@ function Reservation() {
         }
     };
 
+    const isDateDisabled = (date) => {
+        // Fonction pour vérifier si la date est déjà réservée
+        return CheckHisto.some(reservation => {
+            const start = new Date(reservation.DateDebut);
+            const end = new Date(reservation.DateFin);
+            return date >= start && date <= end;
+        });
+    };
+
     const handleModif = async (e) => {
         e.preventDefault();
         const validationErrors = validForm();
@@ -84,52 +102,45 @@ function Reservation() {
             setErrors(validationErrors);
         } else {
             setErrors({});
-        }
-        const dateDebut = new Date(AjoutReservation.DateDebut);
-        const dateFin = new Date(AjoutReservation.DateFin);
+            const dateDebut = new Date(AjoutReservation.DateDebut);
+            const dateFin = new Date(AjoutReservation.DateFin);
 
+            // Calculer le prix total
+            const prixParJour = parseFloat(CarCheck.prix?.trim() || 0);
+            const diffTemp = dateFin - dateDebut;
+            const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
+            const totalPrice = nbjour * prixParJour;
 
-
-        // Calculer le prix total
-        const prixParJour = parseFloat(CarCheck.prix.trim());
-        const diffTemp = new Date(dateFin) - new Date(dateDebut);
-        const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
-        const totalPrice = nbjour * prixParJour;
-
-        const data = new FormData();
-        data.append('name', AjoutReservation.name);
-        data.append('firstname', AjoutReservation.firstname);
-        data.append('email', AjoutReservation.email);
-        data.append('Adresse', AjoutReservation.Adresse);
-        data.append('contact', AjoutReservation.contact);
-        data.append('DateDebut', AjoutReservation.DateDebut);
-        data.append('DateFin', AjoutReservation.DateFin);
-        data.append('Price', totalPrice);
-
-        try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            try {
+                const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, {
+                    name: AjoutReservation.name,
+                    firstname: AjoutReservation.firstname,
+                    email: AjoutReservation.email,
+                    adresse: AjoutReservation.adresse,
+                    lieu: AjoutReservation.lieu,
+                    contact: AjoutReservation.contact,
+                    DateDebut: AjoutReservation.DateDebut,
+                    DateFin: AjoutReservation.DateFin,
+                    Price: totalPrice,
+                    latitude: AjoutReservation.latitude,
+                    longitude: AjoutReservation.longitude
+                });
+                if (response.data.messageError) {
+                    toast.error(response.data.messageError);
+                } else if (response.data.message) {
+                    toast.success(response.data.message);
+                    navigate('/Home/Historique');
                 }
-            });
-            if (response.data.messageError) {
-                toast.error(response.data.messageError);
-            } else if (response.data.message) {
-                toast.success(response.data.message);
-                navigate('/Home/Historique');
+            } catch (error) {
+                toast.error("Erreur lors de l'enregistrement");
+                console.error(error);
             }
-        } catch (error) {
-            toast.error(response.data.message);
-            console.log(response);
-            console.error(error);
         }
     };
 
-    // setter d'etat du tableau avec les donneer qui vient de la base de donné
     const fetchCarResrved = async () => {
-        const response = await axios.get("http://127.0.0.1:8000/api/histotab/" + id);
+        const response = await axios.get(`http://127.0.0.1:8000/api/histotab/${id}`);
         setCheckHisto(response.data.hitotab);
-        console.log(response.data.hitotab);
         const histo = response.data.hitotab.map((event) => {
             const dateStart = event.DateDebut;
             const dateEnd = event.DateFin;
@@ -141,16 +152,17 @@ function Reservation() {
                 title: event.statut === 'confirmed' ? 'Locations en cours'
                     : event.statut === 'uncofirmed' ? 'Locations non confirmée'
                         : 'En attente de confirmation',
+                title: event.statut === 'confirmed' ? 'Locations en cours'
+                    : event.statut === 'uncofirmed' ? 'Locations non confirmée'
+                        : 'En attente de confirmation',
                 start: start,
                 end: end,
                 status: event.statut,
             };
-        }
-        );
+        });
         setEvents(histo);
     };
 
-    // modification des style
     const eventStyleGetter = (event) => {
         const backgroundColor = event.status === 'confirmed' ? 'green' : event.status === 'uncofirmed' ? 'red' : 'gray';
         const style = {
@@ -163,19 +175,25 @@ function Reservation() {
             style: style
         };
     };
-    // end modification des style
-    //end setter d'etat
 
-    // useeffect de toutes les fonction
+
+
+    const resetForm = () => {
+        // setFormValues({ name: '', latitude: '', longitude: '' });
+        setCurrentMap(null);
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+    };
+
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
         fetchCarResrved();
     }, [id]);
-    //end du useefect
 
-
-    // calendrier
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
     // end calendrier
@@ -239,20 +257,34 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="adresse">Adresse</label>
-                            <input type="text" className={`input ${errors.Adresse ? 'input-error' : ''}`} name='Adresse' onChange={handleChange} />
-                            {errors.Adresse && <p className="error-text">{errors.Adresse}</p>}
+                            <input type="text" className={`input ${errors.adresse ? 'input-error' : ''}`} name='adresse' onChange={handleChange} />
+                            {errors.adresse && <p className="error-text">{errors.adresse}</p>}
+                        </div>
+                        <div className='inputCarat'>
+                            <label htmlFor='longitude'>Longitude</label>
+                            <input type="number" className={`input ${errors.longitude ? 'input-error' : ''}`} name='longitude' onChange={handleChange} step="0.0001" placeholder='Longitude' required />
+                        </div>
+                        <div className='inputCarat'>
+                            <label htmlFor='latitude'>Latitude</label>
+                            <input type="number" step="0.0001" className={`input ${errors.longitude ? 'input-error' : ''}`} name='latitude' onChange={handleChange} placeholder='latitude' required />
                         </div>
                     </div>
                     <div className='NavRight'>
                         <div className="imgCar">
                             <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
                         </div>
-                        <button type='submit' className='btn'>Valider</button>
+                        <button
+                            type='submit'
+                            className='btn'
+                        >
+                            {currentMap ? 'Modifier' : 'Valider'}
+                        </button>
                     </div>
                 </div>
 
 
             </form>
+            <button >Obtenir des coordonnées</button>
             <div className="histo">
                 <Calendar
                     localizer={localizer}

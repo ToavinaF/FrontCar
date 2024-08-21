@@ -9,6 +9,7 @@ import './Dashboard.scss'
 import Skills from './Skills/Skills';
 import Utilisateur from './Utilisateur/Utilisateur';
 import axios from 'axios';
+import Map from '../Map/Map';
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -47,6 +48,7 @@ const Dashboard = () => {
                         <h3 className='stats__titre'><span>{t('Statiques de reservation par semaine')}</span> </h3>
                         <Chart />
                     </div>
+
                 </div>
                 
             </div>
@@ -54,6 +56,8 @@ const Dashboard = () => {
                 <Car Vehicule={Vehicule}/>
                 <Utilisateur User={User}/>
             </div>
+            <Map/>
+            
             
         </div>
     )
