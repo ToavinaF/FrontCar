@@ -113,7 +113,7 @@ const Header = ({ activepage, setActivePage }) => {
     return (
         <header>
             <div className="text_logo">
-                <h1>{t(activepage)}</h1>
+                <h1 className='Modif'>{t(activepage)}</h1>
             </div>
             <div className="left_cont">
                 <div className="search">
