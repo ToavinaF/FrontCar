@@ -1,98 +1,125 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './usersDelete.scss';
-import { FaPhone, FaEnvelope } from 'react-icons/fa';
-import { MdRestore } from 'react-icons/md';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { MdDeleteForever, MdRestorePage } from "react-icons/md";
+import { toast } from "react-toastify";
+import './usersDelete.scss'
+const DeletedEntitiesTable = () => {
+  const [deletedEntities, setDeletedEntities] = useState({
+    clients: [],
+    users: [],
+  });
 
-const UsersDelete = () => {
-    const [deletedUsers, setDeletedUsers] = useState([]);
-    const [selectedUserId, setSelectedUserId] = useState(null);
-    const [selectedDeletedUserId, setSelectedDeletedUserId] = useState(null);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/userDelete")
+      .then((response) => {
+        setDeletedEntities(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error fetching the deleted entities!",
+          error
+        );
+      });
+  }, []);
 
-    useEffect(() => {
-        console.log('Récupération des utilisateurs et des utilisateurs supprimés');
-        fetchUsers();
-        fetchDeletedUsers();
-    }, []);
+  // Supprimer définitivement
+  const handDelete = async (id, type) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/DeleteForce/${id}`);
+      setDeletedEntities((prevState) => ({
+        ...prevState,
+        [type]: prevState[type].filter((item) => item.id !== id),
+      }));
+      toast.success("Supprimé avec succès!");
+    } catch (error) {
+      console.error("Error deleting entity", error);
+      toast.error("Erreur lors de la suppression!");
+    }
+  };
 
-    const fetchUsers = async () => {
-        // Implémentez la logique de récupération des utilisateurs si nécessaire
-    };
+  // Restaurer
+  const handRestore = async (id, type) => {
+    try {
+      await axios.patch(`http://127.0.0.1:8000/api/restore${type}/${id}`);
+      setDeletedEntities((prevState) => ({
+        ...prevState,
+        [type]: prevState[type].filter((item) => item.id !== id),
+      }));
+      toast.success("Restauré avec succès!");
+    } catch (error) {
+      console.error("Error restoring entity", error);
+      toast.error("Erreur lors de la restauration!");
+    }
+  };
 
-    const fetchDeletedUsers = async () => {
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/userDelete');
-            setDeletedUsers(response.data);
-        } catch (error) {
-            console.error('Error fetching deleted users', error);
-        }
-    };
-
-    const handleCardClick = (id, isDeleted = false) => {
-        if (isDeleted) {
-            setSelectedDeletedUserId(id === selectedDeletedUserId ? null : id);
-        } else {
-            setSelectedUserId(id === selectedUserId ? null : id);
-        }
-    };
-
-    const handleEditClick = (id) => {
-        // Handle edit logic here
-    };
-
-    const handleDeleteClick = async (id) => {
-        // Handle delete logic here
-    };
-
-    const handleRestoreClick = async (id) => {
-        try {
-            await axios.patch(`http://127.0.0.1:8000/api/userRestore/${id}`);
-            fetchUsers();
-            fetchDeletedUsers();
-        } catch (error) {
-            console.error('Error restoring user', error);
-        }
-    };
-
-    return (
-        <div className="user-cards">
-            {deletedUsers.map((user) => (
-                <div
-                    key={user.id}
-                    className="user-card deleted"
-                    onClick={() => handleCardClick(user.id, true)}
-                >
-                    {selectedDeletedUserId === user.id && (
-                        <div className="user-actions">
-                            <div
-                                className="restore-profile"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRestoreClick(user.id);
-                                }}
-                            >
-                                <MdRestore /> Restore user
-                            </div>
-                        </div>
-                    )}
-                    <div className="card-header d-flex align-items-center justify-content-between">
-                        <div className="user-info">
-                            <h5 className="card-title">{user.name} {user.firstname}</h5>
-                            <p className="card-text">Job: {user.Job}</p>
-                            <p className="card-text">Role: {user.Role}</p>
-                        </div>
-                        <div className="user-image">
-                            <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
-                        </div>
-                    </div>
-                    <div className="card-body">
-                        <p className="card-text"><FaPhone /> {user.contact}</p>
-                        <p className="card-text"><FaEnvelope /> {user.email}</p>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+  return (
+    <div className="ContDelete">
+    <div className="table-Delete">
+      <h2>Deleted Clients and Users</h2>
+      <div className="tableUser">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Deleted By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {deletedEntities.clients.map((client) => (
+            <tr key={`client-${client.id}`}>
+              <td>{client.id}</td>
+              <td>{client.name}</td>
+              <td>{client.email}</td>
+              <td>Client</td>
+              <td>
+                {client.deleted_by_client
+                  ? client.deleted_by_client.name
+                  : "N/A"}
+              </td>
+              <td className="btnPlace">
+                <MdDeleteForever
+                  className="IconBtn force"
+                  onClick={() => handDelete(client.id, 'clients')}
+                />
+                <MdRestorePage
+                  className="IconBtn restore"
+                  onClick={() => handRestore(client.id, 'clients')}
+                />
+              </td>
+            </tr>
+          ))}
+          {deletedEntities.users.map((user) => (
+            <tr key={`user-${user.id}`}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>User</td>
+              <td>
+                {user.deleted_by_user ? user.deleted_by_user.name : "N/A"}
+              </td>
+              <td className="btnPlace">
+                <MdDeleteForever
+                  className="IconBtn force"
+                  onClick={() => handDelete(user.id, 'users')}
+                />
+                <MdRestorePage
+                  className="IconBtn restore"
+                  onClick={() => handRestore(user.id, 'users')}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+  );
 };
 
-export default UsersDelete;
+export default DeletedEntitiesTable;
