@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
-import { MdDashboard } from 'react-icons/md';
-import { FaChevronDown, FaCar, FaUser, FaUsers, FaCarAlt } from 'react-icons/fa';
+import { FaChevronDown, FaCar, FaUser, FaUsers, FaCarAlt, FaArchive } from 'react-icons/fa';
+import { MdDashboard, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { RiPlayListAddFill } from "react-icons/ri";
+import { RiDeleteBin6Line, RiPlayListAddFill } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { FaBars } from "react-icons/fa6";
 import { FaHistory } from "react-icons/fa";
@@ -51,8 +51,8 @@ const SideBar = ({ setActivePage }) => {
             
             <div className="navlink">
                 <ul>
-                    <NavLink to='/Home' className='li-dash' onClick={() => setActivePage('Dashboard')}>
-                        <MdDashboard className='icon-dash' />
+                    <NavLink to='/Home' className='li-dash' onClick={() => setActivePage('Dashboard')} >
+                        <MdDashboard className={`icon-dash ${activeDropdown === '' ? 'active' : ''}`} onClick={() => handleDropdownClick('')}/>
                         <p>{t('dashboard')}</p>
                     </NavLink>
 
@@ -65,17 +65,17 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage('Home/All Car')}>
+                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage(`HomeAll > Car`)}>
                                     <FaCarAlt className='icon_list' /> {t('all car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Home/Add Car')}>
+                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Home > Add Car')}>
                                     <RiPlayListAddFill className='icon_list' /> {t('add car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home/Historiques')}>
+                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home > Historiques')}>
                                     <FaHistory  className='icon_list_histo'/> {t('Historique')}
                                 </NavLink>
                             </li>
@@ -91,27 +91,34 @@ const SideBar = ({ setActivePage }) => {
                         </div>
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink to='/Home/listUser' className='nav_item' onClick={() => setActivePage('All Users')}>
+                                <NavLink to='/Home/listUser' className='nav_item' onClick={() => setActivePage('Home > All Users')}>
                                     <FaUsers className='icon_list'/> {t('all_users')}
                                 </NavLink>
                             </li>
                             {role === 'superAdmin' && ( // Correction ici
                                 <li className='nav_link'>
-                                    <NavLink to='/Home/AjoutUser' className='nav_item' onClick={() => setActivePage('Add User')}>
+                                    <NavLink to='/Home/AjoutUser' className='nav_item' onClick={() => setActivePage('Home > Add User')}>
                                         <FaUserPlus className='icon_list'/> {t('add_user')}
                                     </NavLink>
                                 </li>
                             )}
                             <li className='nav_link'>
-                                    <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('All clients')}>
+                                    <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('Home > All clients')}>
                                         <PiUserListFill className='icon_list'/> {t('All-Clients')}
                                     </NavLink>
                                 </li>
+                                <li className='nav_link'>
+                                    <NavLink to='/Home/UsersDelete' className='nav_item' onClick={() => setActivePage('Home > delete')}>
+                                        <RiDeleteBin6Line  className='icon_list_histo'/> {t('All-delete')}
+                                    </NavLink>
+                                </li>
                         </div>
-                        
                     </div>
 
-                   
+                    <NavLink to='/Home/ArchiveCar' className='li-dash' onClick={() => setActivePage('Home > Corbeille')}>
+                        <RiDeleteBin6Line className={`icon-dash ${activeDropdown === 2 ? 'active' : ''}`} onClick={() => handleDropdownClick(2)} />
+                        <p>{t('Corbeille')}</p>
+                    </NavLink>
                 </ul>
             </div>
         </div>

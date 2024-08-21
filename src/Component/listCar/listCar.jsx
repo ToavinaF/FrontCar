@@ -54,8 +54,15 @@ const ListCar = () => {
   };
 
   const handDelete = async (id) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      toast.error('Utilisateur non connecté');
+      return;
+    }
+    await axios.delete(`http://127.0.0.1:8000/api/DeleteCar/${id}`, {
+      data:{idconnecte:userId}
+    });
 
-    const valide = await axios.delete('http://127.0.0.1:8000/api/DeleteCar/' + id);
     setViewCar(ViewCar.filter(item => item.id !== id));
     toast.success('Supprimer avec success!')
     
