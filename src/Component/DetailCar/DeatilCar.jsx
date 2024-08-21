@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import './DetailCar.scss';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from 'react-icons/bs';
@@ -12,6 +12,7 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 import { useTranslation } from 'react-i18next';
+import { ApiProvider } from '../Home/ApiContext';
 
 const DetailCar = () => {
   const { id } = useParams();
@@ -20,14 +21,21 @@ const DetailCar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
 
-  const fetchCar = async () => {
-    try {
-      const list = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
-      setCarDetail(list.data.detailCar);
-    } catch (error) {
-      console.error(error);
+  // const fetchCar = async () => {
+  //   try {
+  //     const list = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+  //     setCarDetail(list.data.detailCar);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  const { apiData, apiGet } = useContext(ApiProvider);
+  useEffect(() => {
+    apiGet(`detail/${id}`);
+    if (apiData && apiData.detailCar) {
+      setCarDetail(apiData.detailCar);
     }
-  };
+  }, [apiGet,id,apiData])
 
   const fetchGal = async () => {
     try {
@@ -39,7 +47,7 @@ const DetailCar = () => {
   };
 
   useEffect(() => {
-    fetchCar();
+    // fetchCar();
     fetchGal();
   }, [id]);
 
