@@ -48,15 +48,10 @@ const Facture = () => {
     const selectedReservations = location.state?.selectedReservations || [];
     const totalPrice = selectedReservations.reduce((total, reservation) => {
         const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-        const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
-        return total + subTotal; // Ajouter le sous-total au total
+        const subTotal = Number(reservation.prix) * nbJours; 
+        return total + subTotal;
     }, 0);
-    // // Calculer le prix total
-    // const totalPrice = selectedReservations.reduce((total, reservation) => {
-    //     console.log(reservation); // Déboguer pour vérifier la structure de reservation
-    //     return total + Number(reservation.prix); // Convertir en nombre si nécessaire
-    // }, 0);
-    
+   
     // Calculer le nombre total de jours
     const totalDays = selectedReservations.reduce((total, reservation) => {
         const days = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
