@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MdOutlineSaveAlt } from "react-icons/md";
+import { ApiCall } from '../../ApiCall';
+import { API_URL } from '../../apiConfig';
 
 const Addcar = () => {
   const { t } = useTranslation();
@@ -72,7 +74,7 @@ const Addcar = () => {
       data.append('images[]', file);
     });
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/AddCar", data, {
+      const response = await ApiCall(`${API_URL}/AddCar`,'POST', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
