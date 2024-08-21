@@ -9,7 +9,6 @@
     // border: solid 2px white;
     flex-wrap: wrap;
     gap: 3%;
-
     .Error {
         position: absolute;
         top: 0%;
@@ -25,16 +24,15 @@
         z-index: 1000;
         transform: translatey(20%);
         transition: 1s;
-
         p {
             font-size: 1.2rem;
         }
-
         &.active {
             display: none;
             transition: 1s;
         }
     }
+
 
     .ListBlock {
         width: 28%;
@@ -68,12 +66,12 @@
                 text-align: center;
                 justify-content: center;
                 display: flex;
-
                 .bar {
                     font-size: 1.5rem;
                 }
 
             }
+
 
             .menu {
                 position: absolute;
@@ -85,7 +83,6 @@
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
             }
-
             button {
                 display: block;
                 width: 100%;
@@ -97,7 +94,6 @@
                 text-align: left;
                 color: rgb(0, 0, 0);
                 display: flex;
-
                 .del {
                     font-size: 1.3rem;
                     margin-right: 5px;
@@ -107,17 +103,16 @@
                     background-color: #fbe541b6;
                 }
             }
-
-
-
         }
 
         h1 {
+            all: unset;
             font-size: 1.5rem;
             color: var(--blanch);
         }
 
         h2 {
+            all: unset;
             font-size: 1rem;
             color: var(--blanch);
         }
@@ -204,6 +199,7 @@
                 }
 
                 h3 {
+                    all: unset;
                     // color: beige;
                     color: var(--blanch);
                     font-size: 1rem;
