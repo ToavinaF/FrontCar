@@ -11,21 +11,21 @@ const Facture = () => {
     const [fact, setFact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+
     useEffect(() => {
         fetchData();
-    }, []); 
+    }, []);
 
     const fetchData = async () => {
         setLoading(true);
-        setError(null); 
+        setError(null);
         await new Promise(resolve => setTimeout(resolve, 2000));
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/factureindi/${id}`);
-            setFact(response.data); 
+            setFact(response.data);
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
-            setError("Erreur lors de la récupération des données."); 
+            setError("Erreur lors de la récupération des données.");
         } finally {
             setLoading(false);
         }
@@ -36,7 +36,7 @@ const Facture = () => {
     }
 
     if (error) {
-        return <div>{error}</div>; 
+        return <div>{error}</div>;
     }
 
     const formatDate = (dateString) => {
@@ -49,7 +49,7 @@ const Facture = () => {
 
     // Calculer le prix total
     const totalPrice = selectedReservations.reduce((total, reservation) => total + reservation.prix, 0);
-    
+
     // Calculer le nombre total de jours
     const totalDays = selectedReservations.reduce((total, reservation) => {
         const days = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
@@ -59,7 +59,6 @@ const Facture = () => {
     const qrData = `
         Email: ${fact.email}
         Contact: ${fact.contact}
-
         Nom: ${fact.name}
         Date de réservation: ${formatDate(fact.created_at)}
         Date de début: ${formatDate(selectedReservations[0]?.DateDebut)}
@@ -113,7 +112,7 @@ const Facture = () => {
                             </li>
                             <li>
                                 <h3>Adresse</h3>
-                                <p>Adresse du prêteur</p>
+                                <p>{fact.adresse}</p>
                             </li>
                         </ul>
                     </div>

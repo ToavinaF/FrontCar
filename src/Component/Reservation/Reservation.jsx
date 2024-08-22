@@ -8,6 +8,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import L from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import IconUrl from 'leaflet/dist/images/marker-icon.png';
+import ShadowUrl from 'leaflet/dist/images/marker-shadow.png';
+import IconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: IconRetinaUrl,
+    iconUrl: IconUrl,
+    shadowUrl: ShadowUrl,
+});
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/DateRangePicker/styles/index.css';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -15,11 +31,18 @@ function Reservation() {
     const loggedInUserId = localStorage.getItem('id');
     const [CarCheck, setCarCheck] = useState([]);
     const [ListUser, setListUser] = useState([]);
+    const [maps, setMaps] = useState([]);
+    const [currentMap, setCurrentMap] = useState(null);
+    const [showMap, setShowMap] = useState(false);
+    const [center, setCenter] = useState([-18.903288, 47.521504]);
     const [AjoutReservation, setAjoutReservation] = useState({
         name: '',
         firstname: '',
         email: '',
-        Adresse: '',
+        adresse: '',
+        lieu: '',
+        latitude: null,
+        longitude: null,
         contact: '',
         DateDebut: '',
         DateFin: '',
@@ -73,6 +96,18 @@ function Reservation() {
                 setErrorMessage('');
             }
         }
+        if (name === 'lieu') {
+            setShowMap(true);
+        }
+    };
+
+    const isDateDisabled = (date) => {
+        // Fonction pour vérifier si la date est déjà réservée
+        return CheckHisto.some(reservation => {
+            const start = new Date(reservation.DateDebut);
+            const end = new Date(reservation.DateFin);
+            return date >= start && date <= end;
+        });
     };
 
     const handleModif = async (e) => {
@@ -136,9 +171,10 @@ function Reservation() {
             const start = new Date(dateStartString);
             const end = new Date(dateEndString);
             return {
-                title: event.statut === 'confirmed'? 'Locations en cours' 
-                : event.statut === 'uncofirmed' ? 'Locations non confirmée' 
-                : 'En attente de confirmation',
+                title: event.statut === 'confirmed' ? 'Locations en cours'
+                    : event.statut === 'uncofirmed' ? 'Locations non confirmée'
+                        : 'En attente de confirmation',
+                
                 start: start,
                 end: end,
                 status: event.statut,
@@ -161,21 +197,112 @@ function Reservation() {
             style: style
         };
     };
-    // end modification des style
-    //end setter d'etat
 
-    // useeffect de toutes les fonction
+
+
+
     useEffect(() => {
         fetchCarCheck();
         fetchUser();
         fetchCarResrved();
     }, [id]);
-    //end du useefect
 
+
+    const handleMapInteractions = (map) => {
+        const popup = L.popup();
+
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent(` ${e.latlng.toString()}`)
+                .openOn(map);
+        }
+
+        map.on('click', onMapClick);
+
+        return () => {
+            map.off('click', onMapClick);
+        };
+
+    };
+    // const MapCenter = () => {
+    //     const map = useMap();
+
+    //     useEffect(() => {
+    //         if (center) {
+    //             map.setView(center, 6);
+    //         }
+    //         handleMapInteractions(map);
+    //     }, [center, map]);
+
+    //     return null;
+    // };
+    const handleMapClick = (e) => {
+        const { lat, lng } = e.latlng;
+
+        const popupContent = `
+            <div>
+                <p>Latitude: ${lat.toFixed(4)}</p>
+                <p>Longitude: ${lng.toFixed(4)}</p>
+                <button id="confirm-button" class="primary" data-lat="${lat}" data-lng="${lng}">
+                    Obtenir (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})
+                </button>
+            </div>
+        `;
+
+        // Créez la popup et ouvrez-la
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(popupContent)
+            .openOn(e.target);
+
+        // Ajoutez un gestionnaire d'événements pour le bouton de confirmation
+        const mapDiv = document.querySelector('.leaflet-popup-content');
+        mapDiv?.addEventListener('click', (event) => {
+            if (event.target.id === 'confirm-button') {
+                const lat = parseFloat(event.target.getAttribute('data-lat'));
+                const lng = parseFloat(event.target.getAttribute('data-lng'));
+                setAjoutReservation(prevState => ({
+                    ...prevState,
+                    latitude: lat,
+                    longitude: lng
+                }));
+            }
+        }, { once: true });
+    };
+
+    const MapClickHandler = () => {
+        useMapEvents({
+            click: handleMapClick,
+        });
+        return null;
+    };
+
+    useEffect(() => {
+        fetchCarCheck();
+        fetchUser();
+        fetchCarResrved();
+
+        return () => {
+            document.querySelectorAll('#confirm-button').forEach(button => {
+                button.removeEventListener('click', handleConfirmButtonClick);
+            });
+        };
+    }, [id]);
+    const handleConfirmButtonClick = (event) => {
+        const lat = parseFloat(event.target.getAttribute('data-lat'));
+        const lng = parseFloat(event.target.getAttribute('data-lng'));
+        setAjoutReservation(prevState => ({
+            ...prevState,
+            latitude: lat,
+            longitude: lng
+        }));
+    };
 
     // calendrier
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
+
     // end calendrier
 
     return (
@@ -234,15 +361,73 @@ function Reservation() {
                             <label htmlFor="lieu">Location de depart</label>
                             <input type="text" className='input' name='lieu' onChange={handleChange} />
                         </div>
+
                         <div className="inputCarat">
                             <label htmlFor="adresse">Adresse</label>
-                            <input type="text" className={`input ${errors.Adresse ? 'input-error' : ''}`} name='Adresse' onChange={handleChange} />
-                            {errors.Adresse && <p className="error-text">{errors.Adresse}</p>}
+                            <input type="text" className={`input ${errors.adresse ? 'input-error' : ''}`} name='adresse' onChange={handleChange} />
+                            {errors.adresse && <p className="error-text">{errors.adresse}</p>}
+                        </div>
+                        <div className='inputCarat'>
+                            <label htmlFor='longitude'>Longitude</label>
+                            <input
+                                type="number"
+                                className={`input ${errors.longitude ? 'input-error' : ''}`}
+                                name='longitude'
+                                value={AjoutReservation.longitude || ''}
+                                onChange={handleChange}
+                            />
+                            {errors.longitude && <p className="error-text">{errors.longitude}</p>}
+                        </div>
+
+                        <div className='inputCarat'>
+                            <label htmlFor='latitude'>Latitude</label>
+                            <input
+                                type="number"
+                                className={`input ${errors.latitude ? 'input-error' : ''}`}
+                                name='latitude'
+                                value={AjoutReservation.latitude || ''}
+                                onChange={handleChange}
+                            />
+                            {errors.latitude && <p className="error-text">{errors.latitude}</p>}
                         </div>
                     </div>
+
                     <div className='NavRight'>
                         <div className="imgCar">
-                            <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+                            {showMap ? (
+                                <MapContainer
+                                    center={center}
+                                    zoom={13}
+                                    style={{ height: "100%", width: "100%" }}
+                                    onClick={handleMapClick}
+                                    minZoom={6}
+                                    maxBounds={[
+                                        [-26.0, 42.0],
+                                        [-11.0, 51.0],
+                                    ]}
+                                    maxBoundsViscosity={1.0}
+                                >
+                                    <TileLayer
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    />
+
+                                    <MapClickHandler />
+                                    {maps.map((map, index) => (
+                                        <Marker
+                                            key={index}
+                                            position={[map.latitude, map.longitude]}
+                                        >
+                                            <Popup>
+                                                <span>Latitude: {map.latitude}</span><br />
+                                                <span>Longitude: {map.longitude}</span>
+                                            </Popup>
+                                        </Marker>
+                                    ))}
+                                </MapContainer>
+                            ) : (
+                                <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+                            )}
                         </div>
                         <button type='submit' className='btn'>Valider</button>
                     </div>
@@ -250,6 +435,12 @@ function Reservation() {
 
 
             </form>
+            <div className='mapContainer'>
+
+            </div>
+
+
+         
             <div className="histo">
                 <Calendar
                     localizer={localizer}
