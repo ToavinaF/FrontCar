@@ -101,11 +101,11 @@ const SideBar = ({ setActivePage }) => {
                                         <PiUserListFill className='icon_list'/> {t('All-Clients')}
                                     </NavLink>
                                 </li>
-                                <li className='nav_link'>
+                                {/* <li className='nav_link'>
                                     <NavLink to='/Home/UsersDelete' className='nav_item' onClick={() => setActivePage('Home > delete')}>
                                         <RiDeleteBin6Line  className='icon_list_histo'/> {t('All-delete')}
                                     </NavLink>
-                                </li>
+                                </li> */}
                         </div>
                     </div>
 
