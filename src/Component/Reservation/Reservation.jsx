@@ -29,7 +29,7 @@ function Reservation() {
     const navigate = useNavigate();
     const { id } = useParams();
     const loggedInUserId = localStorage.getItem('id');
-    const [CarCheck, setCarCheck] = useState([]);
+    const [CarCheck, setCarCheck] = useState({});
     const [ListUser, setListUser] = useState([]);
     const [maps, setMaps] = useState([]);
     const [currentMap, setCurrentMap] = useState(null);
@@ -48,18 +48,20 @@ function Reservation() {
         DateFin: '',
         Price: ''
     });
+
     const [CheckHisto, setCheckHisto] = useState([]);
     const [errors, setErrors] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
+
     const validForm = () => {
         const errors = {};
         if (!AjoutReservation.name) errors.name = 'Ce champ est requis !';
         if (!AjoutReservation.firstname) errors.firstname = 'Ce champ est requis !';
         if (!AjoutReservation.email) errors.email = 'Ce champ est requis !';
-        if (!AjoutReservation.Adresse) errors.Adresse = 'Ce champ est requis !';
+        if (!AjoutReservation.adresse) errors.adresse = 'Ce champ est requis !';
         if (!AjoutReservation.contact) errors.contact = 'Ce champ est requis !';
         return errors;
     };
-    // ///////
 
     const fetchCarCheck = async () => {
         try {
@@ -79,7 +81,6 @@ function Reservation() {
             console.error(error);
         }
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -117,52 +118,45 @@ function Reservation() {
             setErrors(validationErrors);
         } else {
             setErrors({});
-        }
-        const dateDebut = new Date(AjoutReservation.DateDebut);
-        const dateFin = new Date(AjoutReservation.DateFin);
+            const dateDebut = new Date(AjoutReservation.DateDebut);
+            const dateFin = new Date(AjoutReservation.DateFin);
 
+            // Calculer le prix total
+            const prixParJour = parseFloat(CarCheck.prix?.trim() || 0);
+            const diffTemp = dateFin - dateDebut;
+            const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
+            const totalPrice = nbjour * prixParJour;
 
-
-        // Calculer le prix total
-        const prixParJour = parseFloat(CarCheck.prix.trim());
-        const diffTemp = new Date(dateFin) - new Date(dateDebut);
-        const nbjour = Math.ceil(diffTemp / (1000 * 60 * 60 * 24));
-        const totalPrice = nbjour * prixParJour;
-
-        const data = new FormData();
-        data.append('name', AjoutReservation.name);
-        data.append('firstname', AjoutReservation.firstname);
-        data.append('email', AjoutReservation.email);
-        data.append('Adresse', AjoutReservation.Adresse);
-        data.append('contact', AjoutReservation.contact);
-        data.append('DateDebut', AjoutReservation.DateDebut);
-        data.append('DateFin', AjoutReservation.DateFin);
-        data.append('Price', totalPrice);
-
-        try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            try {
+                const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, {
+                    name: AjoutReservation.name,
+                    firstname: AjoutReservation.firstname,
+                    email: AjoutReservation.email,
+                    adresse: AjoutReservation.adresse,
+                    lieu: AjoutReservation.lieu,
+                    contact: AjoutReservation.contact,
+                    DateDebut: AjoutReservation.DateDebut,
+                    DateFin: AjoutReservation.DateFin,
+                    Price: totalPrice,
+                    latitude: AjoutReservation.latitude,
+                    longitude: AjoutReservation.longitude
+                });
+                if (response.data.messageError) {
+                    toast.error(response.data.messageError);
+                } else if (response.data.message) {
+                    toast.success(response.data.message);
+                    navigate('/Home/Historique');
                 }
-            });
-            if (response.data.messageError) {
-                toast.error(response.data.messageError);
-            } else if (response.data.message) {
-                toast.success(response.data.message);
-                navigate('/Home/Historique');
+            } catch (error) {
+                toast.error("Erreur lors de l'enregistrement");
+                console.error(error);
             }
-        } catch (error) {
-            toast.error(response.data.message);
-            console.log(response);
-            console.error(error);
         }
     };
 
-    // setter d'etat du tableau avec les donneer qui vient de la base de donné
     const fetchCarResrved = async () => {
-        const response = await axios.get("http://127.0.0.1:8000/api/histotab/" + id);
+        const response = await axios.get(`http://127.0.0.1:8000/api/histotab/${id}`);
         setCheckHisto(response.data.hitotab);
-        console.log(response.data.hitotab);
         const histo = response.data.hitotab.map((event) => {
             const dateStart = event.DateDebut;
             const dateEnd = event.DateFin;
@@ -179,12 +173,10 @@ function Reservation() {
                 end: end,
                 status: event.statut,
             };
-        }
-        );
+        });
         setEvents(histo);
     };
 
-    // modification des style
     const eventStyleGetter = (event) => {
         const backgroundColor = event.status === 'confirmed' ? 'green' : event.status === 'uncofirmed' ? 'red' : 'gray';
         const style = {
@@ -299,14 +291,26 @@ function Reservation() {
         }));
     };
 
-    // calendrier
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
 
     // end calendrier
 
+    // start controller rangepicker
+    const { combine, allowedMaxDays, beforeToday } = DateRangePicker;
+    const [selectedDates, setSelectedDates] = useState([null, null]);
+    const handleDateRangeChange = (value) => {
+        setSelectedDates(value);
+        if (value && value.length === 2) {
+            setAjoutReservation({
+                ...AjoutReservation,
+                DateDebut: value[0].toISOString().split('T')[0],
+                DateFin: value[1].toISOString().split('T')[0]
+            });
+        }
+    };
     return (
-        <div className='ReservBlock'>
+        <div className='ReservBlock reservation-container'>
             <form onSubmit={handleModif} className="contentReserv">
                 <div className="NavTop">
                     <h1>Reservation <FaCalendarCheck className='Calendar' /></h1>
@@ -314,32 +318,20 @@ function Reservation() {
                 </div>
                 <div className="NavBottom">
                     <div className='NavLeft'>
-                        <div className="inputCarat">
+                        <div className="inputCarat ">
                             <label htmlFor="DateDebut">Début de la location</label>
-                            <input
-                                type="date"
-                                className='input'
-                                name='DateDebut'
-                                onChange={handleChange}
-                                required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
-                            />
-                        </div>
-                        <div className="inputCarat">
-                            <label htmlFor="DateFin">Fin de la location</label>
-                            <input
-                                type="date"
-                                className='input'
-                                name='DateFin'
-                                onChange={handleChange}
-                                required
-                                min={new Date().toISOString().split('T')[0]} // Empêche de choisir une date passée
+                            <DateRangePicker
+                                placeholder="Sélectionnez la période"
+                                value={selectedDates}
+                                onChange={handleDateRangeChange}
+                                shouldDisableDate={beforeToday()}
+                                className='inputrange'
                             />
 
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="nom">Nom</label>
-                            <input type="text" className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
+                            <input type="text"  className={`input ${errors.name ? 'input-error' : ''}`} name='name' placeholder='' onChange={handleChange} />
                             {errors.name && <p className="error-text">{errors.name}</p>}
                         </div>
                         <div className="inputCarat">
@@ -429,7 +421,12 @@ function Reservation() {
                                 <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
                             )}
                         </div>
-                        <button type='submit' className='btn'>Valider</button>
+                        <button
+                            type='submit'
+                            className='btn'
+                        >
+                            {currentMap ? 'Modifier' : 'Valider'}
+                        </button>
                     </div>
                 </div>
 

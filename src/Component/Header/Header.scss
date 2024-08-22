@@ -14,15 +14,22 @@ header {
     position: fixed;
     right: 0;
     top: 0;
-
     .text_logo {
         width: 25%;
-
         h1 {
             color: white;
             text-align: center;
             font-size: 30px;
         }
+        // .Modif{
+        //     color: #333;
+        //     display: flex;
+        //     border: solid 2px red;
+        //     align-items: center;
+        //     justify-content: center;
+        //     flex-direction: column;
+        //     text-align: center;
+        // }
         .active {
             display: none;
         }
@@ -211,28 +218,27 @@ header {
             padding: 0% 2% 0% 3%;
             margin: 0 0 0 4%;
             border-left: 2px solid #828690;
-
+            
             img {
                 width: 40px;
                 height: 40px;
                 border-radius: 10px;
                 margin: 0% 0 0 0;
             }
-
-            .cont_prof {
+            
+            .cont-prof {
                 width: 100%;
                 height: auto;
                 padding: 0 2% 0 10%;
                 cursor: pointer;
-
-                h1 {
+                .nametitle {
                     font-size: 1rem;
                     color: white;
                     font-weight: bold;
                     margin: 3% 0 0 0;
                 }
 
-                p {
+                .prole {
                     font-size: 0.8rem;
                 }
             }

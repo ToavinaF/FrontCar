@@ -11,6 +11,8 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {ApiCall} from '../../ApiCall';
+import { API_URL } from '../../apiConfig';
 
 const ListCar = () => {
   const location = useLocation();
@@ -38,11 +40,12 @@ const ListCar = () => {
 
   const fetchData = async () => {
     try {
-      const vehicl = await axios.get("http://127.0.0.1:8000/api/ViewCar");
+      const vehicl = await ApiCall(`${API_URL}/ViewCar`, 'GET');
+      console.log(vehicl.data.vehicules);
       setViewCar(vehicl.data.vehicules);
 
     } catch (error) {
-      console.log("verifier le code");
+      console.error('Erreur lors de l\'appel API:', error.response || error.message || error);
     }
   };
   const handleMenu = (index) => {
@@ -59,7 +62,7 @@ const ListCar = () => {
       toast.error('Utilisateur non connecté');
       return;
     }
-    await axios.delete(`http://127.0.0.1:8000/api/DeleteCar/${id}`, {
+    await ApiCall(`${API_URL}/DeleteCar/${id}`,'DELETE',{
       data:{idconnecte:userId}
     });
 
@@ -120,18 +123,22 @@ const ListCar = () => {
                     </div>
                     <div className="aprop">
                       <div className="icon">
+                      <span className='tooltip'>Place</span>
                         <FaUser className='imgIcon' />
                         <h3> {list.place} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Bagage</span>
                         <BsFillSuitcase2Fill className='imgIcon' />
                         <h3>{list.bagage} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Porte</span>
                         <GiCarDoor className='imgIcon' />
                         <h3>{list.porte} </h3>
                       </div>
                       <div className="icon">
+                      <span className='tooltip'>Transmission</span>
                         <TbManualGearboxFilled className='imgIcon' />
                         <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
                       </div>

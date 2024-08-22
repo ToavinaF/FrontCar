@@ -71,28 +71,77 @@ const Client = () => {
 
         fetchReservationCounts();
     }, [id]);
-
     const handleSelectReservation = (reservation) => {
-        // Vérifiez si la réservation est déjà sélectionnée
+        
+        if (reservation.statut !== 'confirmed') {
+        
+            toast.error(`La réservation de ${reservation.marque} n'est pas confirmée et ne peut pas être ajoutée à la facture !`);
+            return;
+        }
+    
+       
         const isSelected = selectedReservations.some(selected => selected.id_locations === reservation.id_locations);
         
         if (isSelected) {
-            // Afficher un message Toast indiquant que la réservation est déjà sélectionnée
+           
             toast.warning(`La réservation de ${reservation.marque} est déjà ajoutée à la facture !`);
-            return; // Ne pas ajouter la réservation à la liste
+            return;
         }
-    
-        // Ajouter la réservation sélectionnée à la liste
+        
+       
         setSelectedReservations(prevSelected => [...prevSelected, reservation]);
         
-        // Afficher un message Toast indiquant l'ajout
+       
         toast.success(`Réservation de ${reservation.marque} ajoutée à la facture !`);
     };
-
-    const handleNavigateToFacture = () => {
-        // Naviguer vers la page de facture en passant les réservations sélectionnées
-        navigate(`/Home/facture/${id}`, { state: { selectedReservations } });
+   
+    // const handleNavigateToFacture = () => {
+    //     // Vérifiez si des réservations ont été sélectionnées
+    //     if (selectedReservations.length === 0) {
+            
+    //         toast.error("Aucune réservation sélectionnée. Veuillez sélectionner une ou plusieurs réservations pour accéder à la facture.");
+    //         return; 
+    //     }
+    
+    //     // Naviguer vers la page de facture en passant les réservations sélectionnées
+    //     navigate(`/Home/facture/${id}`, { state: { selectedReservations } });
+    // };
+    const handleNavigateToFacture = async () => {
+        if (selectedReservations.length === 0) {
+            toast.error("Aucune réservation sélectionnée. Veuillez sélectionner une ou plusieurs réservations pour accéder à la facture.");
+            return; 
+        }
+    
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/factures', {
+                client_id: id,
+                total_price: selectedReservations.reduce((total, reservation) => {
+                    const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
+                    const subTotal = Number(reservation.prix) * nbJours;
+                    return total + subTotal;
+                }, 0),
+                reservations: selectedReservations,
+            });
+    
+            toast.success("Facture enregistrée avec succès!");
+    
+            // Mettre à jour l'état des réservations pour refléter les changements
+            setReservations(prevReservations =>
+                prevReservations.map(reservation => {
+                    if (selectedReservations.some(selected => selected.id_locations === reservation.id_locations)) {
+                        return { ...reservation, statut: 'déjà fait' };
+                    }
+                    return reservation;
+                })
+            );
+    
+            navigate(`/Home/facture/${id}`, { state: { selectedReservations } });
+        } catch (error) {
+            console.error('Erreur lors de l\'enregistrement de la facture :', error);
+            toast.error('Erreur lors de l\'enregistrement de la facture.');
+        }
     };
+  
 
     return (
         <div className='Client__detail'>
@@ -104,7 +153,7 @@ const Client = () => {
                         <div className='Prenom'>{client.firstname}</div>
                     </div>
                     <div className='right'>
-                        <div className='adresse'>{client.Adresse}</div>
+                        <div className='adresse'>{client.adresse}</div>
                         <div className='email'>{client.email}</div>
                         <div className='contact'>{client.contact}</div>
                     </div>
@@ -163,9 +212,12 @@ const Client = () => {
                                     <td className='etats'>
                                         <span className={getStatusClass(reservation.statut)}>{reservation.statut}</span>
                                     </td>
+                                    
                                     <td className='menu'>
-                                        <button className='bout' onClick={() => handleSelectReservation(reservation)}>séléctioner</button>
-                                        
+                                        {/* <button className='bout' onClick={() => handleSelectReservation(reservation)}>séléctioner</button> */}
+                                        <button className='bout' onClick={() => handleSelectReservation(reservation)} disabled={reservation.statut === 'déjà fait'}>
+                                            {reservation.statut === 'déjà fait' ? 'Déjà fait' : 'Sélectionner'}
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

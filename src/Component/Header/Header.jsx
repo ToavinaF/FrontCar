@@ -8,6 +8,8 @@ import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+
+
 const Header = ({ activepage, setActivePage }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
@@ -111,7 +113,7 @@ const Header = ({ activepage, setActivePage }) => {
     return (
         <header>
             <div className="text_logo">
-                <h1>{t(activepage)}</h1>
+                <h1 className='Modif'>{t(activepage)}</h1>
             </div>
             <div className="left_cont">
                 <div className="search">
@@ -164,9 +166,9 @@ const Header = ({ activepage, setActivePage }) => {
                 </div>
                 <div className="profil_show">
                     <img src={`http://127.0.0.1:8000/storage/${image}` || 'default-profile.png'} alt="Profile" />
-                    <div className="cont_prof" onClick={() => handleClick(0)}>
-                        <h1>{name}</h1>
-                        <p>{role}</p>
+                    <div className="cont-prof" onClick={() => handleClick(0)}>
+                        <h1 className='nametitle'>{name}</h1>
+                        <p className='prole'>{role}</p>
                     </div>
                     <div className={`sub-menu ${Active === 0 ? 'active' : ''}`}>
                         <div className="menu">

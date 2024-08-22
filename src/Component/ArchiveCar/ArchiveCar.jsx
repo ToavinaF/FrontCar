@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ArchiveCar.scss'
 import axios from 'axios';
-import { MdDeleteForever, MdRestorePage } from 'react-icons/md';
+import { MdDeleteForever, MdOutlineDelete, MdRestorePage, MdSettingsBackupRestore } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 const ArchiveCar = () => {
@@ -14,7 +14,6 @@ const ArchiveCar = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/ArchiveCar");
-      console.log(response.data.Archive);
       setViewArchive(response.data.Archive);
     } catch (error) {
       console.error("Erreur lors de la récupération des archives:", error);
@@ -58,8 +57,15 @@ const ArchiveCar = () => {
                   <td>{archive.prix}</td>
                   <td>{archive.user ? archive.user.name : 'Inconnu'}</td>
                   <td className='btnPlace'>
-                    <MdDeleteForever className='IconBtn force' onClick={() => handDelete(archive.id)} />
-                    <MdRestorePage className='IconBtn restore' onClick={() => handRestore(archive.id)} />
+                    <button className='IconBtn force' onClick={() => handDelete(archive.id)}>
+                    <span className='tooltip'>Supprimer</span>
+                    <MdOutlineDelete  className='btnIcon'  />
+                    </button>
+                    <button className='IconBtn restore' onClick={() => handRestore(archive.id)}>
+                    <span className='tooltip'>Restore</span>
+                    <MdSettingsBackupRestore className='btnIcon' />
+                    </button>
+                
                   </td>
                 </tr>
               ))}

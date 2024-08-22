@@ -131,7 +131,6 @@ const Galerie = () => {
       console.error(error);
     }
 
-    // console.log(data);
 
 
   }
