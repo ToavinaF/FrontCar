@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ApiCall } from '../../ApiCall';
+import { API_URL } from '../../apiConfig';
 
 function Historique() {
     const navigate = useNavigate();
@@ -28,7 +30,7 @@ function Historique() {
 
     const fetchHistorique = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/historique");
+            const response = await ApiCall(`${API_URL}/historique`,'GET');
             setHisto(response.data);
         } catch (error) {
             toast.error("Erreur lors de la récupération de l'historique.");
@@ -37,7 +39,7 @@ function Historique() {
 
     const fetchVehicules = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/ViewCar");
+            const response = await ApiCall(`${API_URL}/ViewCar`,'GET');
             setVehicules(response.data.vehicules);
         } catch (error) {
             console.error("Erreur lors de la récupération des véhicules:", error);
@@ -82,7 +84,7 @@ function Historique() {
 
     const suppr = async (id) => {
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/suppr/${id}`);
+            await ApiCall(`${API_URL}/suppr/${id}`,'DELETE');
             setHisto(Histo.filter(histo => histo.id_locations !== id));
             toast.success('Réservation supprimée avec succès');
         } catch (error) {
@@ -125,7 +127,7 @@ function Historique() {
                 vehicule_id: editedData.vehicule_id !== undefined && editedData.vehicule_id !== null ? editedData.vehicule_id : currentHisto.vehicule_id
             };
 
-            const response = await axios.post(`http://127.0.0.1:8000/api/update/${id}`, dataToSend);
+            const response = await ApiCall(`${API_URL}/update/${id}`,'POST', dataToSend);
 
             if (response.status === 200) {
                 toast.success('Réservation mise à jour avec succès');

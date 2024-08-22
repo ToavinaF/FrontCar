@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './ArchiveCar.scss'
-import axios from 'axios';
 import { MdDeleteForever, MdOutlineDelete, MdRestorePage, MdSettingsBackupRestore } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
+import axios from 'axios';
 
 const ArchiveCar = () => {
   const [viewArchive, setViewArchive] = useState([]);
@@ -13,8 +15,9 @@ const ArchiveCar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/ArchiveCar");
+      const response = await ApiCall(`${API_URL}/ArchiveCar`,'GET');
       setViewArchive(response.data.Archive);
+      console.log(response.data.Archive);
     } catch (error) {
       console.error("Erreur lors de la récupération des archives:", error);
     }
@@ -22,58 +25,187 @@ const ArchiveCar = () => {
 
   // Supprimer définitivement
   const handDelete = async (id) => {
-    await axios.delete(`http://127.0.0.1:8000/api/DeleteForce/${id}`);
+    await ApiCall(`${API_URL}/DeleteForce/${id}`,'DELETE');
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Supprimé avec succès!');
   };
 
   // Restaurer le véhicule
   const handRestore = async (id) => {
-    await axios.get(`http://127.0.0.1:8000/api/retosreCar/${id}`);
+    await ApiCall(`${API_URL}/retosreCar/${id}`,'GET');
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Restauré avec succès!');
   };
 
+  // menu 2 active
+  const [Active, setActive] = useState(null);
+
+  // start users and clients deleted
+  const [deletedEntities, setDeletedEntities] = useState({
+    clients: [],
+    users: [],
+  });
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/userDelete")
+      .then((response) => {
+        setDeletedEntities(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error fetching the deleted entities!",
+          error
+        );
+      });
+  }, []);
+
+  // Supprimer définitivement
+  const handleDelete = async (id, type) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/ForceDelet${type}/${id}`);
+      setDeletedEntities((prevState) => ({
+        ...prevState,
+        [type]: prevState[type].filter((item) => item.id !== id),
+      }));
+      toast.success("Supprimé avec succès!");
+    } catch (error) {
+      console.error("Error deleting entity", error);
+      toast.error("Erreur lors de la suppression!");
+    }
+  };
+
+  // Restaurer
+  const handleRestore = async (id, type) => {
+    try {
+      await axios.patch(`http://127.0.0.1:8000/api/restore${type}/${id}`);
+      setDeletedEntities((prevState) => ({
+        ...prevState,
+        [type]: prevState[type].filter((item) => item.id !== id),
+      }));
+      toast.success("Restauré avec succès!");
+    } catch (error) {
+      console.error("Error restoring entity", error);
+      toast.error("Erreur lors de la restauration!");
+    }
+  };
+
+  // end users and clients deleted
+
   return (
     <div className='ContArchive'>
       <div className="table-Archive">
-        <h1>Archive des véhicules</h1>
-        <div className="tableCar">
-          <table>
-            <thead>
-              <tr>
-                <th>Marque</th>
-                <th>Matricule</th>
-                <th>Prix</th>
-                <th>Supprimé par</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {viewArchive.map((archive, i) => (
-                <tr key={i}>
-                  <td>{archive.marque}</td>
-                  <td>{archive.matricule}</td>
-                  <td>{archive.prix}</td>
-                  <td>{archive.user ? archive.user.name : 'Inconnu'}</td>
-                  <td className='btnPlace'>
-                    <button className='IconBtn force' onClick={() => handDelete(archive.id)}>
-                    <span className='tooltip'>Supprimer</span>
-                    <MdOutlineDelete  className='btnIcon'  />
-                    </button>
-                    <button className='IconBtn restore' onClick={() => handRestore(archive.id)}>
-                    <span className='tooltip'>Restore</span>
-                    <MdSettingsBackupRestore className='btnIcon' />
-                    </button>
-                
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="entet">
+          <h1>Corbeille</h1>
+          <div className="menu">
+            <button className={`${Active ? '' : 'active'}`} onClick={() => setActive(null)}>Vehicule</button>
+            <button className={`${Active ? 'active' : ''}`} onClick={() => setActive(1)}>Client & Users</button>
+          </div>
         </div>
-      </div>
-    </div>
+        <div className="tableCar">
+
+          {
+            Active ? (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <th>Deleted By</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {deletedEntities.clients.map((client) => (
+                    <tr key={`client-${client.id}`}>
+                      <td>{client.id}</td>
+                      <td>{client.name}</td>
+                      <td>{client.email}</td>
+                      <td>Client</td>
+                      <td>
+                        {client.deleted_by_client
+                          ? client.deleted_by_client.name
+                          : "N/A"}
+                      </td>
+                      <td className="btnPlace">
+                        <button className='IconBtn force'>
+                          <span className='tooltip'>Supprimer</span>
+                          <MdOutlineDelete onClick={() => handleDelete(client.id, 'clients')}
+                            className="btnIcon" />
+                        </button>
+
+                        <button className='IconBtn restore'>
+                          <span className='tooltip'>Restore</span>
+                          <MdSettingsBackupRestore onClick={() => handleRestore(client.id, 'clients')}
+                            className='btnIcon' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {deletedEntities.users.map((user) => (
+                    <tr key={`user-${user.id}`}>
+                      <td>{user.id}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>User</td>
+                      <td>
+                        {user.deleted_by_user ? user.deleted_by_user.name : "N/A"}
+                      </td>
+                      <td className="btnPlace">
+                        <button className="IconBtn force">
+                          <span className='tooltip'>Supprimer</span>
+                          <MdOutlineDelete onClick={() => handleDelete(user.id, 'users')}
+                            className='btnIcon' />
+                        </button>
+
+                        <button className="IconBtn restore haut">
+                          <span className='tooltip'>Restore</span>
+                          <MdSettingsBackupRestore onClick={() => handleRestore(user.id, 'users')}
+                            className='btnIcon' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Marque</th>
+                    <th>Matricule</th>
+                    <th>Prix</th>
+                    <th>Supprimé par</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {viewArchive.map((archive, i) => (
+                    <tr key={i}>
+                      <td>{archive.marque}</td>
+                      <td>{archive.matricule}</td>
+                      <td>{archive.prix}</td>
+                      <td>{archive.user ? archive.user.name : 'Inconnu'}</td>
+                      <td className='btnPlace'>
+                        <button className='IconBtn force' onClick={() => handDelete(archive.id)}>
+                          <span className='tooltip'>Supprimer</span>
+                          <MdOutlineDelete className='btnIcon' />
+                        </button>
+                        <button className='IconBtn restore' onClick={() => handRestore(archive.id)}>
+                          <span className='tooltip'>Restore</span>
+                          <MdSettingsBackupRestore className='btnIcon' />
+                        </button>
+
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table >
+            )}
+        </div >
+      </div >
+    </div >
   );
 };
 

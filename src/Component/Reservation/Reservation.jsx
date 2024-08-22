@@ -8,8 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { DateRangePicker } from 'rsuite';
+import { AutoComplete, DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
+
 
 function Reservation() {
     const navigate = useNavigate();
@@ -52,7 +55,7 @@ function Reservation() {
 
     const fetchCarCheck = async () => {
         try {
-            const checkList = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+            const checkList = await ApiCall(`${API_URL}/detail/${id}`,'GET');
             setCarCheck(checkList.data.detailCar);
         } catch (error) {
             console.error(error);
@@ -61,7 +64,7 @@ function Reservation() {
 
     const fetchUser = async () => {
         try {
-            const user = await axios.get('http://127.0.0.1:8000/api/users');
+            const user = await ApiCall(`${API_URL}/users`,'GET');
             const filteredUsers = user.data.filter(user => user.id !== parseInt(loggedInUserId));
             setListUser(filteredUsers);
         } catch (error) {
@@ -112,7 +115,7 @@ function Reservation() {
             const totalPrice = nbjour * prixParJour;
 
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, {
+                const response = await ApiCall(`${API_URL}/location/${id}`,'POST', {
                     name: AjoutReservation.name,
                     firstname: AjoutReservation.firstname,
                     email: AjoutReservation.email,
@@ -139,7 +142,7 @@ function Reservation() {
     };
 
     const fetchCarResrved = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/api/histotab/${id}`);
+        const response = await ApiCall(`${API_URL}/histotab/${id}`,'GET');
         setCheckHisto(response.data.hitotab);
         const histo = response.data.hitotab.map((event) => {
             const dateStart = event.DateDebut;
@@ -271,7 +274,7 @@ function Reservation() {
                     </div>
                     <div className='NavRight'>
                         <div className="imgCar">
-                            <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+                            <img src={`${BASE_URL}/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
                         </div>
                         <button
                             type='submit'

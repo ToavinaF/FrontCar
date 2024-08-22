@@ -7,6 +7,8 @@ import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 
 
@@ -38,7 +40,7 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const getCars = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/ViewCar");
+                const response = await ApiCall(`${API_URL}/ViewCar`,'GET');
                 setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
             } catch (error) {
                 console.error('Erreur lors de la récupération des voitures:', error);
@@ -55,7 +57,7 @@ const Header = ({ activepage, setActivePage }) => {
                 return;
             }
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/api/recherche`, Recherche);
+                const response = await ApiCall(`${API_URL}/recherche`,'POST', Recherche);
                 navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
             } catch (error) {
                 console.log('Vérifiez le code', error);
@@ -77,7 +79,7 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/notifications');
+                const response = await ApiCall(`${API_URL}/notifications`,'GET');
                 setNotifications(response.data);
         
             } catch (error) {
@@ -92,7 +94,7 @@ const Header = ({ activepage, setActivePage }) => {
     const handleNotificationClick = async (notificationId) => {
         // Marquer la notification comme lue
         try {
-            await axios.post(`http://127.0.0.1:8000/api/notifications/${notificationId}/read`);
+            await ApiCall(`${API_URL}/notifications/${notificationId}/read`,'POST');
 
             // Mettre à jour l'état local pour refléter le changement
             setNotifications(prevNotifications =>
@@ -165,7 +167,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                    <img src={`http://127.0.0.1:8000/storage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`${BASE_URL}/storage/${image}` || 'default-profile.png'} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>

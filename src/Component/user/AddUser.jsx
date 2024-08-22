@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 function Register() {
     const { t } = useTranslation();
@@ -31,7 +33,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+            const response = await ApiCall(`${API_URL}/register`,'POST', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
