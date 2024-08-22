@@ -31,27 +31,19 @@ const ListClients = () => {
       .catch(error => console.error('Error fetching reservation counts:', error));
   }, []);
   const handleDeleteClick = async (id) => {
-    const userId = localStorage.getItem('userId');
-    try {
-        console.log('Suppression du client ID:', id);
-        console.log('ID de l\'utilisateur connecté:', userId);
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      toast.error('Utilisateur non connecté');
+      return;
+    }
 
-        const response = await ApiCall(`${API_URL}/DeleteClient/${id}`,'DELETE', {
-            data: { 
-                deleted_by: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
-            }
+          await ApiCall(`${API_URL}/clients/${id}`,'DELETE', {
+          deletedBy: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
         });
-
-        console.log('Réponse complète du serveur:', response); // Affichez toute la réponse du serveur
-        console.log('Données reçues (response.data):', response.data); // Affichez le contenu de response.data
-        console.log('Deleted by:', response.data.deleted_by); // Vérifiez l'accès à la valeur de deleted_by
 
         setClients(clients.filter(client => client.id !== id));
         toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
-    } catch (error) {
-        toast.error("Erreur lors de la suppression du client");
-        console.error('Erreur lors de la suppression du client', error);
-    }
+
 };
 
 

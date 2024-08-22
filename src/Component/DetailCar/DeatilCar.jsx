@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import './DetailCar.scss';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from 'react-icons/bs';
@@ -41,7 +41,7 @@ const DetailCar = () => {
   };
 
   useEffect(() => {
-    fetchCar();
+    // fetchCar();
     fetchGal();
   }, [id]);
 

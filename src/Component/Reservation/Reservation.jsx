@@ -8,10 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { DateRangePicker } from 'rsuite';
+import { AutoComplete, DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import { API_URL, BASE_URL } from '../../apiConfig';
 import { ApiCall } from '../../ApiCall';
+
 
 function Reservation() {
     const navigate = useNavigate();
