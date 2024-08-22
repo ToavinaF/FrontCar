@@ -30,13 +30,20 @@ const ListClients = () => {
   }, []);
   const handleDeleteClick = async (id) => {
     const userId = localStorage.getItem('userId');
+
+    // Vérifiez si userId est défini et non null
+    if (!userId) {
+        toast.error("ID de l'utilisateur non défini. La suppression est impossible.");
+        return;
+    }
+
     try {
         console.log('Suppression du client ID:', id);
         console.log('ID de l\'utilisateur connecté:', userId);
 
-        const response = await axios.delete(`http://127.0.0.1:8000/api/DeleteClient/${id}`, {
+        const response = await axios.delete(`http://127.0.0.1:8000/api/clients/${id}`, {
             data: { 
-                deleted_by: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
+                deleted_by: userId
             }
         });
 
@@ -44,13 +51,18 @@ const ListClients = () => {
         console.log('Données reçues (response.data):', response.data); // Affichez le contenu de response.data
         console.log('Deleted by:', response.data.deleted_by); // Vérifiez l'accès à la valeur de deleted_by
 
-        setClients(clients.filter(client => client.id !== id));
-        toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
+        if (response.status === 200) {
+            setClients(clients.filter(client => client.id !== id));
+            toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
+        } else {
+            toast.error("Erreur lors de la suppression du client.");
+        }
     } catch (error) {
         toast.error("Erreur lors de la suppression du client");
         console.error('Erreur lors de la suppression du client', error);
     }
 };
+
 
 
   return (

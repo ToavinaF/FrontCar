@@ -40,7 +40,7 @@ const AllUser = ({searchTerm}) => {
         try {
             const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
     
-            await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`, {
+          const response =  await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`, {
                 data: { 
                     deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
                 }
@@ -48,6 +48,7 @@ const AllUser = ({searchTerm}) => {
     
             setAllUserData(allUserData.filter(user => user.id !== id));
             toast.success("Delete User success");
+            toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
         } catch (error) {
             toast.error("Delete User error");
             console.log('Erreur lors de la suppression de l\'utilisateur', error);
