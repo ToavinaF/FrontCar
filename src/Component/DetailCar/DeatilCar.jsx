@@ -12,6 +12,8 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 import { useTranslation } from 'react-i18next';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 const DetailCar = () => {
   const { id } = useParams();
@@ -22,7 +24,7 @@ const DetailCar = () => {
 
   const fetchCar = async () => {
     try {
-      const list = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+      const list = await ApiCall(`${API_URL}/detail/${id}`,'GET');
       setCarDetail(list.data.detailCar);
     } catch (error) {
       console.error(error);
@@ -31,7 +33,7 @@ const DetailCar = () => {
 
   const fetchGal = async () => {
     try {
-      const galView = await axios.get(`http://127.0.0.1:8000/api/viewGalerie/${id}`);
+      const galView = await ApiCall(`${API_URL}/viewGalerie/${id}`,'GET');
       setGalerie(galView.data.galerie);
     } catch (error) {
       console.log('Erreur lors du chargement des galeries');
@@ -73,7 +75,7 @@ const DetailCar = () => {
           {Galerie.map((view, index) => (
             <SwiperSlide key={index}>
               <div className='boucle'>
-                <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${view.image}`} alt={`Galerie image ${index}`} />
+                <img src={`${BASE_URL}/storage/GalerieVehicule/${view.image}`} alt={`Galerie image ${index}`} />
               </div>
             </SwiperSlide>
           ))}
@@ -82,7 +84,7 @@ const DetailCar = () => {
           {Galerie.map((thumb, thumbIndex) => (
             <img
               key={thumbIndex}
-              src={`http://127.0.0.1:8000/storage/GalerieVehicule/${thumb.image}`}
+              src={`${BASE_URL}/storage/GalerieVehicule/${thumb.image}`}
               alt={`Thumbnail ${thumbIndex}`}
               className='thumbnailImage'
               onClick={() => handleThumbnailClick(thumbIndex)}

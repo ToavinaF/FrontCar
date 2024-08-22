@@ -10,6 +10,9 @@ import { IoAddCircleSharp } from 'react-icons/io5';
 import { CiTrash } from 'react-icons/ci';
 import { FaDownload } from "react-icons/fa";
 import { MdDeleteForever, MdOutlineExitToApp } from 'react-icons/md';
+import { ApiCall } from '../../ApiCall';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import { toast } from 'react-toastify';
 
 const Galerie = () => {
   const { t } = useTranslation();
@@ -33,7 +36,7 @@ const Galerie = () => {
 
   // affichage detaille car
   const fetchCar = async () => {
-    const detail = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+    const detail = await ApiCall(`${API_URL}/detail/${id}`,'GET');
     setViewCar(detail.data.detailCar);
   }
   const handleDrop = (acceptedFiles) => {
@@ -60,10 +63,11 @@ const Galerie = () => {
       data.append('images[]', file);
     });
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/addGalerie/${id}`, data, {
+      const response = await ApiCall(`${API_URL}/addGalerie/${id}`,'POST', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
+        
       });
       // affiche les image a l'instant
 
@@ -71,6 +75,7 @@ const Galerie = () => {
       setGalerie(prevGalerie => [...prevGalerie, ...newImages]);//metre a jour le galerie avec les nouvel image
       setUploadMessage(response.data.message || 'Images uploaded successfully');
       setSelectedImage([]);
+      toast.success(uploadMessage)
     } catch (error) {
       console.error(error);
       setUploadMessage('Error uploading images');
@@ -79,7 +84,7 @@ const Galerie = () => {
 
   const fetchImg = async () => {
     try {
-      const ViewImg = await axios.get(`http://127.0.0.1:8000/api/viewGalerie/${id}`);
+      const ViewImg = await ApiCall(`${API_URL}/viewGalerie/${id}`,'GET');
       setGalerie(ViewImg.data.galerie);
     } catch (error) {
       console.error('Error fetching images', error);
@@ -104,12 +109,14 @@ const Galerie = () => {
   };
   // suppresion d'un image
   const handDelete = async (id) => {
-    const valid = await axios.delete('http://127.0.0.1:8000/api/PhotoDelete/' + id);
+    const valid = await ApiCall(`${API_URL}/PhotoDelete/${id}`,'DELETE');
     const newGalerie = Galerie.filter((item) => {
       return (
         item.id !== id
       )
+      
     })
+    toast.success('Image supprimer')
     setGalerie(newGalerie);
     setOpen(false);
 
@@ -121,7 +128,7 @@ const Galerie = () => {
     const data = new FormData();
     data.append('nomPdp', image)
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/photoPdp/" + id, data, {
+      const response = await ApiCall(`${API_URL}/photoPdp/${id}`,'POST', data, {
         headers: {
           'methode': 'post'
         }
@@ -158,7 +165,6 @@ const Galerie = () => {
           </div>
         </div>
         <button type='submit' className='btn'><FaDownload className='down' /></button>
-        {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
       </form>
 
       {/* end dropzone */}
@@ -168,7 +174,7 @@ const Galerie = () => {
         {
           Galerie.map((image, i) => (
             <div className="BlockImg" key={i} onClick={() => OpenModal(i)}>
-              <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${image.image}`} alt={`Galerie image ${i}`} />
+              <img src={`${BASE_URL}/storage/GalerieVehicule/${image.image}`} alt={`Galerie image ${i}`} />
 
               <div className='image-overlay'>
                 <div className="overlay-buttons" onClick={(e) => e.stopPropagation()}>
@@ -196,7 +202,7 @@ const Galerie = () => {
             <GrCaretPrevious className='prev-button' onClick={prevImage} />
             <MdDeleteForever className='delet' onClick={() => handDelete(Galerie[ImageIndex]?.id)} />
 
-            <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${Galerie[ImageIndex]?.image}`} alt={`Galerie image ${ImageIndex}`} className="modal-image" />
+            <img src={`${BASE_URL}/storage/GalerieVehicule/${Galerie[ImageIndex]?.image}`} alt={`Galerie image ${ImageIndex}`} className="modal-image" />
             <GrCaretNext className='next-button' onClick={nextImage} />
           </div>
         </div>

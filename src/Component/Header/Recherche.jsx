@@ -7,6 +7,7 @@ import { FaDoorOpen } from "react-icons/fa6";
 import { LuRockingChair } from "react-icons/lu";
 import { TbNumber } from "react-icons/tb";
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../apiConfig';
 const Recherche = () => {
     const location = useLocation();
     const { results, results1 } = location.state || { results: [], results1: [] };
@@ -23,7 +24,7 @@ const Recherche = () => {
                             results.map((car) => (
                                 <div className="search_voiture">
                                     <div className="image-vehi">
-                                        <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${car.photo}`} alt="" />
+                                        <img src={`${BASE_URL}/storage/GalerieVehicule/${car.photo}`} alt="" />
                                     </div>
                                     <div className="desc-vehi">
                                         <div className="title">

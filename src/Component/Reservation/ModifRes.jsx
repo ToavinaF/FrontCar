@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { DateRangePicker } from 'rsuite';
 import { toast } from 'react-toastify';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -33,7 +35,7 @@ function Reservation() {
 
     const fetchRes = async () => {
         try {
-            const reserv = await axios.get('http://127.0.0.1:8000/api/showres/' + id);
+            const reserv = await ApiCall(`${API_URL}/showres/${id}`,'GET');
             const reservation = reserv.data.reservation[0];
             // alert(reserv.data.reservation);
             setRes(reserv.data.reservation);
@@ -64,7 +66,7 @@ function Reservation() {
     const handleModif = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/ModifReser/' + id, Data);
+            const response = await ApiCall(`${API_URL}/ModifReser/${id}`,'POST', Data);
             navigate('/Home/Historique');
             toast.success(response.data.message);
         } catch (error) {
@@ -133,7 +135,7 @@ function Reservation() {
                             </div>
                             <div className='NavRight'>
                                 <div className="imgCar">
-                                    <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${Data.photo}`} alt="" />
+                                    <img src={`${BASE_URL}/storage/GalerieVehicule/${Data.photo}`} alt="" />
                                 </div>
                             </div>
                         </div>

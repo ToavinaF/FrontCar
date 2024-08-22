@@ -1,4 +1,5 @@
 // apiConfig.js
-export const API_URL = 'http://127.0.0.1:8000/api'; // Assure-toi que c'est la bonne URL
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const API_URL = `${BASE_URL}/api`;
 
 

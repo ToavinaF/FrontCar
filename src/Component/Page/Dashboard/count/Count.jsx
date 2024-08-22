@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import{FaTaxi, FaCar, FaCommentDots, FaUsers} from 'react-icons/fa';
 import{FiCamera, FiCalendar} from 'react-icons/fi';
+import { API_URL } from '../../../../apiConfig';
+import { ApiCall } from '../../../../ApiCall';
 
 const Count = () => {
     const [Reserv, SetReser]= useState(0);
@@ -12,7 +14,7 @@ const Count = () => {
     },[])
     const fetchData = async () => {
         try {
-            const usercount =await axios.get("http://127.0.0.1:8000/api/CountUser")
+            const usercount =await ApiCall(`${API_URL}/CountUser`,'GET')
             SetCount(usercount.data.counter);
             SetCountVehi(usercount.data.vehi);
             SetReser(usercount.data.res);

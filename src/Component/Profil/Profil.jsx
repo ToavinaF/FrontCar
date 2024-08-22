@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { useState } from 'react';
 import { NavLink } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../apiConfig';
 const Profil = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Profil = () => {
 
                     <div className="prof-cont">
                         <div className="image-text">
-                            <img src={`http://127.0.0.1:8000/storage/${image}`} alt="" />
+                            <img src={`${BASE_URL}/storage/${image}`} alt="" />
                             <div className="cont-span">
                                 <h2><span> {name} {firstname}</span></h2>
                                 <p>{job}</p>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './ArchiveCar.scss'
-import axios from 'axios';
 import { MdDeleteForever, MdOutlineDelete, MdRestorePage, MdSettingsBackupRestore } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 const ArchiveCar = () => {
   const [viewArchive, setViewArchive] = useState([]);
@@ -13,8 +14,9 @@ const ArchiveCar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/ArchiveCar");
+      const response = await ApiCall(`${API_URL}/ArchiveCar`,'GET');
       setViewArchive(response.data.Archive);
+      console.log(response.data.Archive);
     } catch (error) {
       console.error("Erreur lors de la récupération des archives:", error);
     }
@@ -22,14 +24,14 @@ const ArchiveCar = () => {
 
   // Supprimer définitivement
   const handDelete = async (id) => {
-    await axios.delete(`http://127.0.0.1:8000/api/DeleteForce/${id}`);
+    await ApiCall(`${API_URL}/DeleteForce/${id}`,'DELETE');
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Supprimé avec succès!');
   };
 
   // Restaurer le véhicule
   const handRestore = async (id) => {
-    await axios.get(`http://127.0.0.1:8000/api/retosreCar/${id}`);
+    await ApiCall(`${API_URL}/retosreCar/${id}`,'GET');
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Restauré avec succès!');
   };

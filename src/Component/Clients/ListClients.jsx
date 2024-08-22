@@ -5,6 +5,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ImUserPlus } from "react-icons/im";
 import { NavLink } from 'react-router-dom';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
 
 const ListClients = () => {
   const [clients, setClients] = useState([]);
@@ -13,12 +15,12 @@ const ListClients = () => {
 
   useEffect(() => {
     // Fetch clients data
-    axios.get('http://127.0.0.1:8000/api/clients')
+    ApiCall(`${API_URL}/clients`,'GET')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
     // Fetch reservation counts
-    axios.get('http://127.0.0.1:8000/api/countReservedClient')
+    ApiCall(`${API_URL}/countReservedClient`,'GET')
       .then(response => {
         const counts = response.data.count.reduce((acc, item) => {
           acc[item.id_client] = item.total;
@@ -34,7 +36,7 @@ const ListClients = () => {
         console.log('Suppression du client ID:', id);
         console.log('ID de l\'utilisateur connecté:', userId);
 
-        const response = await axios.delete(`http://127.0.0.1:8000/api/DeleteClient/${id}`, {
+        const response = await ApiCall(`${API_URL}/DeleteClient/${id}`,'DELETE', {
             data: { 
                 deleted_by: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
             }

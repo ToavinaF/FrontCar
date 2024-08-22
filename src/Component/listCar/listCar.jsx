@@ -6,7 +6,6 @@ import { GiCarDoor } from "react-icons/gi";
 import { TbManualGearboxFilled } from "react-icons/tb";
 import { MdDeleteForever, MdOutlineInsertPhoto, MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
-import axios from 'axios';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
@@ -57,14 +56,15 @@ const ListCar = () => {
   };
 
   const handDelete = async (id) => {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('id');
     if (!userId) {
       toast.error('Utilisateur non connecté');
       return;
     }
     await ApiCall(`${API_URL}/DeleteCar/${id}`,'DELETE',{
-      data:{idconnecte:userId}
+      idconnecte:userId//envoi ID pour la Deleted_by
     });
+  
 
     setViewCar(ViewCar.filter(item => item.id !== id));
     toast.success('Supprimer avec success!')
