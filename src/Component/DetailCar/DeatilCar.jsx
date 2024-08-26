@@ -26,6 +26,7 @@ const DetailCar = () => {
     try {
       const list = await ApiCall(`${API_URL}/detail/${id}`,'GET');
       setCarDetail(list.data.detailCar);
+      console.log(list.data.detailCar);
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +42,7 @@ const DetailCar = () => {
   };
 
   useEffect(() => {
-    // fetchCar();
+    fetchCar();
     fetchGal();
   }, [id]);
 
