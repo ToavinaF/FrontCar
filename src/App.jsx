@@ -16,6 +16,8 @@ const languages = [
   { code: 'en', name: 'English', country_code: 'gb' }
 ];
 
+
+
 function App() {
   const currentLanguageCode = Cookies.get('i18next') || 'en';
   const { t } = useTranslation();
