@@ -4,8 +4,7 @@ import axios from 'axios';
 import { useParams, useLocation } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { IoCarSport } from 'react-icons/io5';
-import { API_URL } from '../../../apiConfig';
-import { ApiCall } from '../../../ApiCall';
+import ApiService from '../../../axiosConfig';
 
 const Facture = () => {
     const { id } = useParams();
@@ -23,7 +22,7 @@ const Facture = () => {
         setError(null); 
         await new Promise(resolve => setTimeout(resolve, 2000));
         try {
-            const response = await ApiCall(`${API_URL}/factureindi/${id}`,'GET');
+            const response = await ApiService.get(`/factureindi/${id}`);
             setFact(response.data); 
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);

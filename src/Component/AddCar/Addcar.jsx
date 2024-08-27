@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MdOutlineSaveAlt } from "react-icons/md";
 import { ApiCall } from '../../ApiCall';
 import { API_URL } from '../../apiConfig';
-import axiosInstance from '../../axiosConfig';
+import ApiService from '../../axiosConfig';
 
 const Addcar = () => {
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ const Addcar = () => {
       data.append('images[]', file);
     });
     try {
-      const response = await axiosInstance.post(`/AddCar`,data)
+      const response = await ApiService.post(`/AddCar`,data)
       toast.success(response.data.message);
       navigate('/Home/listcar');
 

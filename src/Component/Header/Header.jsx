@@ -9,6 +9,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { API_URL, BASE_URL } from '../../apiConfig';
 import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 
 
@@ -40,7 +41,7 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const getCars = async () => {
             try {
-                const response = await ApiCall(`${API_URL}/ViewCar`,'GET');
+                const response = await ApiService.get(`/ViewCar`);
                 setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
             } catch (error) {
                 console.error('Erreur lors de la récupération des voitures:', error);
@@ -57,7 +58,7 @@ const Header = ({ activepage, setActivePage }) => {
                 return;
             }
             try {
-                const response = await ApiCall(`${API_URL}/recherche`,'POST', Recherche);
+                const response = await ApiService.post(`/recherche`, Recherche);
                 navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
             } catch (error) {
                 console.log('Vérifiez le code', error);
@@ -79,7 +80,7 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await ApiCall(`${API_URL}/notifications`,'GET');
+                const response = await ApiService.get(`/notifications`);
                 setNotifications(response.data);
         
             } catch (error) {
@@ -94,7 +95,7 @@ const Header = ({ activepage, setActivePage }) => {
     const handleNotificationClick = async (notificationId) => {
         // Marquer la notification comme lue
         try {
-            await ApiCall(`${API_URL}/notifications/${notificationId}/read`,'POST');
+            await ApiService.post(`/notifications/${notificationId}/read`);
 
             // Mettre à jour l'état local pour refléter le changement
             setNotifications(prevNotifications =>

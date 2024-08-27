@@ -8,6 +8,8 @@ import { LuRockingChair } from "react-icons/lu";
 import { TbNumber } from "react-icons/tb";
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../apiConfig';
+
+
 const Recherche = () => {
     const location = useLocation();
     const { results, results1 } = location.state || { results: [], results1: [] };

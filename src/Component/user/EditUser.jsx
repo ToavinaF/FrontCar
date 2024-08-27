@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
 import { API_URL, BASE_URL } from "../../apiConfig";
-import { ApiCall } from "../../ApiCall";
+import ApiService from "../../axiosConfig";
 
 
 
@@ -41,7 +41,7 @@ const EditUser = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await ApiCall(`${API_URL}/user/${id}`,'GET');
+                const response = await ApiService.get(`/user/${id}`);
                 const data = response.data;
                 setValue("name", data.name);
                 setValue("firstname", data.firstname);
@@ -85,11 +85,7 @@ const EditUser = () => {
         formData.append('Role', data.Role);
 
         try {
-            const response = await ApiCall(`${API_URL}/updateUser/${id}`,'POST', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await ApiService.post(`/updateUser/${id}`, formData);
             toast.success("modif success", {
                 autoClose: 5000,
                 hideProgressBar: false,

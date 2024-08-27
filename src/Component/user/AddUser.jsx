@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { API_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 function Register() {
     const { t } = useTranslation();
@@ -33,11 +32,7 @@ function Register() {
         }
 
         try {
-            const response = await ApiCall(`${API_URL}/register`,'POST', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await ApiService.post(`/register`, formData);
             console.log('Inscription réussie:', response.data);
             toast.success("Ajout User success");
             navigate('../../Home');

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { API_URL } from '../../apiConfig';
 import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const Client = () => {
     const { id } = useParams();
@@ -23,7 +24,7 @@ const Client = () => {
 
     const fetchClient = async () => {
         try {
-            const response = await ApiCall(`${API_URL}/clientdetail/${id}`,'GET');
+            const response = await ApiService.get(`/clientdetail/${id}`);
             setClient(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des détails du client :', error);
@@ -32,7 +33,7 @@ const Client = () => {
 
     const fetchReservations = async () => {
         try {
-            const response = await ApiCall(`${API_URL}/reservationsByClient/${id}`,'GET');
+            const response = await ApiService.get(`/reservationsByClient/${id}`);
             setReservations(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des réservations :', error);
@@ -58,7 +59,7 @@ const Client = () => {
 
         const fetchReservationCounts = async () => {
             try {
-                const response = await ApiCall(`${API_URL}/countReservedClient/${id}`,'GET');
+                const response = await ApiService.get(`/countReservedClient/${id}`);
                 const counts = {
                     total: response.data.total || 0,
                     uncofirmed: response.data.uncofirmed || 0,
@@ -109,7 +110,7 @@ const Client = () => {
                 const subTotal = Number(reservation.prix) * nbJours;
                 return total + subTotal;
               }, 0);
-            const response = await ApiCall(`${API_URL}/factures`,'POST', {
+            const response = await ApiService.post(`/factures`, {
                 client_id: id,
                 total_price: total_price,
                 reservations: selectedReservations,

@@ -7,6 +7,7 @@ import { ImUserPlus } from "react-icons/im";
 import { NavLink } from 'react-router-dom';
 import { API_URL } from '../../apiConfig';
 import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const ListClients = () => {
   const [clients, setClients] = useState([]);
@@ -15,12 +16,12 @@ const ListClients = () => {
 
   useEffect(() => {
     // Fetch clients data
-    ApiCall(`${API_URL}/clients`,'GET')
+    ApiService.get('/clients')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
     // Fetch reservation counts
-    ApiCall(`${API_URL}/countReservedClient`,'GET')
+    ApiService.get('/countReservedClient')
       .then(response => {
         const counts = response.data.count.reduce((acc, item) => {
           acc[item.id_client] = item.total;
@@ -37,7 +38,7 @@ const ListClients = () => {
       return;
     }
 
-          await ApiCall(`${API_URL}/clients/${id}`,'DELETE', {
+          await ApiService.delete(`/clients/${id}`,{
           deletedBy: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
         });
 

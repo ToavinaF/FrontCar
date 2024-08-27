@@ -5,7 +5,6 @@ import { BsFillSuitcase2Fill } from 'react-icons/bs';
 import { GiCarDoor } from 'react-icons/gi';
 import { TbManualGearboxFilled } from 'react-icons/tb';
 import { NavLink, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';

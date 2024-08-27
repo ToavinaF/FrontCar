@@ -6,7 +6,7 @@ import axios from 'axios';
 import { DateRangePicker } from 'rsuite';
 import { toast } from 'react-toastify';
 import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 function Reservation() {
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Reservation() {
 
     const fetchRes = async () => {
         try {
-            const reserv = await ApiCall(`${API_URL}/showres/${id}`,'GET');
+            const reserv = await ApiService.get(`/showres/${id}`);
             const reservation = reserv.data.reservation[0];
             // alert(reserv.data.reservation);
             setRes(reserv.data.reservation);
@@ -66,7 +66,7 @@ function Reservation() {
     const handleModif = async (e) => {
         e.preventDefault();
         try {
-            const response = await ApiCall(`${API_URL}/ModifReser/${id}`,'POST', Data);
+            const response = await ApiService.post(`${API_URL}/ModifReser/${id}`, Data);
             navigate('/Home/Historique');
             toast.success(response.data.message);
         } catch (error) {

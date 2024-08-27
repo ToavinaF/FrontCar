@@ -8,10 +8,8 @@ import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
 import Utilisateur from './Utilisateur/Utilisateur';
-import axios from 'axios';
 import Map from '../Map/Map';
-import { API_URL } from '../../../apiConfig';
-import { ApiCall } from '../../../ApiCall';
+import ApiService from '../../../axiosConfig';
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -24,9 +22,9 @@ const Dashboard = () => {
     }, [])
     const fetchData = async () => {
       try {
-        const vehicul = await ApiCall(`${API_URL}/ViewCar`,'GET')
+        const vehicul = await ApiService.get('/ViewCar')
         SetVehicule(vehicul.data.vehicules);
-        const UserAll = await ApiCall(`${API_URL}/users`,'GET')
+        const UserAll = await ApiService.get('/users')
         SetUser(UserAll.data);
         console.log(UserAll.data);
       } catch (error) {

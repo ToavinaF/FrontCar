@@ -11,7 +11,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { AutoComplete, DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 
 function Reservation() {
@@ -55,7 +55,7 @@ function Reservation() {
 
     const fetchCarCheck = async () => {
         try {
-            const checkList = await ApiCall(`${API_URL}/detail/${id}`,'GET');
+            const checkList = await ApiService.get(`/detail/${id}`);
             setCarCheck(checkList.data.detailCar);
         } catch (error) {
             console.error(error);
@@ -64,7 +64,7 @@ function Reservation() {
 
     const fetchUser = async () => {
         try {
-            const user = await ApiCall(`${API_URL}/users`,'GET');
+            const user = await ApiService.get('/users');
             const filteredUsers = user.data.filter(user => user.id !== parseInt(loggedInUserId));
             setListUser(filteredUsers);
         } catch (error) {
@@ -115,7 +115,7 @@ function Reservation() {
             const totalPrice = nbjour * prixParJour;
 
             try {
-                const response = await ApiCall(`${API_URL}/location/${id}`,'POST', {
+                const response = await ApiService.post(`/location/${id}`, {
                     name: AjoutReservation.name,
                     firstname: AjoutReservation.firstname,
                     email: AjoutReservation.email,
@@ -142,7 +142,7 @@ function Reservation() {
     };
 
     const fetchCarResrved = async () => {
-        const response = await ApiCall(`${API_URL}/histotab/${id}`,'GET');
+        const response = await ApiService.get(`/histotab/${id}`);
         setCheckHisto(response.data.hitotab);
         const histo = response.data.hitotab.map((event) => {
             const dateStart = event.DateDebut;

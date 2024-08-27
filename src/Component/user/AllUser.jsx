@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const AllUser = ({searchTerm}) => {
     const { t } = useTranslation();
@@ -22,7 +22,7 @@ const AllUser = ({searchTerm}) => {
 
     const fetchData = async () => {
         try {
-            const response = await ApiCall(`${API_URL}/users`,'GET');
+            const response = await ApiService.get(`/users`);
             const filteredUsers = response.data.filter(user => user.id !== parseInt(loggedInUserId));
             setAllUserData(filteredUsers);
         } catch (error) {
@@ -42,7 +42,7 @@ const AllUser = ({searchTerm}) => {
         try {
             const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
     
-            await ApiCall(`${API_URL}/deleteUser/${id}`,'DELETE', {
+            await ApiService.delete(`/deleteUser/${id}`, {
                 data: { 
                     deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
                 }

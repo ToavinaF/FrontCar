@@ -13,6 +13,7 @@ import { MdDeleteForever, MdOutlineExitToApp } from 'react-icons/md';
 import { ApiCall } from '../../ApiCall';
 import { API_URL, BASE_URL } from '../../apiConfig';
 import { toast } from 'react-toastify';
+import ApiService from '../../axiosConfig';
 
 const Galerie = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const Galerie = () => {
 
   // affichage detaille car
   const fetchCar = async () => {
-    const detail = await ApiCall(`${API_URL}/detail/${id}`,'GET');
+    const detail = await ApiService.get(`/detail/${id}`);
     setViewCar(detail.data.detailCar);
   }
   const handleDrop = (acceptedFiles) => {
@@ -63,7 +64,7 @@ const Galerie = () => {
       data.append('images[]', file);
     });
     try {
-      const response = await ApiCall(`${API_URL}/addGalerie/${id}`,'POST', data, {
+      const response = await ApiService.post(`/addGalerie/${id}`,data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -75,7 +76,7 @@ const Galerie = () => {
       setGalerie(prevGalerie => [...prevGalerie, ...newImages]);//metre a jour le galerie avec les nouvel image
       setUploadMessage(response.data.message || 'Images uploaded successfully');
       setSelectedImage([]);
-      toast.success(uploadMessage)
+      toast.success('Images Inseret')
     } catch (error) {
       console.error(error);
       setUploadMessage('Error uploading images');
@@ -84,7 +85,7 @@ const Galerie = () => {
 
   const fetchImg = async () => {
     try {
-      const ViewImg = await ApiCall(`${API_URL}/viewGalerie/${id}`,'GET');
+      const ViewImg = await ApiService(`/viewGalerie/${id}`);
       setGalerie(ViewImg.data.galerie);
     } catch (error) {
       console.error('Error fetching images', error);
@@ -109,7 +110,7 @@ const Galerie = () => {
   };
   // suppresion d'un image
   const handDelete = async (id) => {
-    const valid = await ApiCall(`${API_URL}/PhotoDelete/${id}`,'DELETE');
+    const valid = await ApiService.delete(`/PhotoDelete/${id}`);
     const newGalerie = Galerie.filter((item) => {
       return (
         item.id !== id
@@ -128,7 +129,7 @@ const Galerie = () => {
     const data = new FormData();
     data.append('nomPdp', image)
     try {
-      const response = await ApiCall(`${API_URL}/photoPdp/${id}`,'POST', data, {
+      const response = await ApiService.post(`/photoPdp/${id}`, data, {
         headers: {
           'methode': 'post'
         }
