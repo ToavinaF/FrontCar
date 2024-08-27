@@ -8,8 +8,8 @@ import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
 import Utilisateur from './Utilisateur/Utilisateur';
-import axios from 'axios';
 import Map from '../Map/Map';
+import ApiService from '../../../axiosConfig';
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -22,9 +22,9 @@ const Dashboard = () => {
     }, [])
     const fetchData = async () => {
       try {
-        const vehicul = await axios.get("http://127.0.0.1:8000/api/ViewCar")
+        const vehicul = await ApiService.get('/ViewCar')
         SetVehicule(vehicul.data.vehicules);
-        const UserAll = await axios.get("http://127.0.0.1:8000/api/users")
+        const UserAll = await ApiService.get('/users')
         SetUser(UserAll.data);
         console.log(UserAll.data);
       } catch (error) {

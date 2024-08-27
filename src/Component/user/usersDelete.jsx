@@ -3,6 +3,7 @@ import axios from "axios";
 import { MdDeleteForever, MdRestorePage } from "react-icons/md";
 import { toast } from "react-toastify";
 import './usersDelete.scss'
+import ApiService from "../../axiosConfig";
 const DeletedEntitiesTable = () => {
   const [deletedEntities, setDeletedEntities] = useState({
     clients: [],
@@ -10,9 +11,7 @@ const DeletedEntitiesTable = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/userDelete")
-      .then((response) => {
+    ApiService.get('/userDelete').then((response) => {
         setDeletedEntities(response.data);
       })
       .catch((error) => {
@@ -26,7 +25,7 @@ const DeletedEntitiesTable = () => {
   // Supprimer définitivement
   const handDelete = async (id, type) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/DeleteForce/${id}`);
+      await ApiService.delete(`/DeleteForce/${id}`);
       setDeletedEntities((prevState) => ({
         ...prevState,
         [type]: prevState[type].filter((item) => item.id !== id),
@@ -41,7 +40,7 @@ const DeletedEntitiesTable = () => {
   // Restaurer
   const handRestore = async (id, type) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/api/restore${type}/${id}`);
+      await ApiService.patch(`/restore${type}/${id}`);
       setDeletedEntities((prevState) => ({
         ...prevState,
         [type]: prevState[type].filter((item) => item.id !== id),

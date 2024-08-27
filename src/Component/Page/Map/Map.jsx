@@ -11,6 +11,8 @@ import IconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import IconUrl from 'leaflet/dist/images/marker-icon.png';
 import ShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import MarkerClusterGroup from 'react-leaflet-cluster';
+import { API_URL } from '../../../apiConfig';
+import { ApiCall } from '../../../ApiCall';
 
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -41,7 +43,7 @@ const Map = () => {
 
   const fetchMaps = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/reservations');
+      const response = await ApiCall(`${API_URL}/reservations`,'GET');
       setMaps(response.data);
       if (response.data.length > 0) {
         setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);

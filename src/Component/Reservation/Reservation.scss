@@ -186,7 +186,15 @@
                         margin: 3% 0 0 0;
                     }
                 }
+                .map{
+                    width: 600px;
+                    height: 600px;
+                    position: absolute;
+                    top:1%;
+                    left: 50%;
+                    z-index: 10000;
 
+                }
             }
 
             .NavRight {

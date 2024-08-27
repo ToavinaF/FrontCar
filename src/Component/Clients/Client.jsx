@@ -5,6 +5,9 @@ import './Client.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const Client = () => {
     const { id } = useParams();
@@ -21,7 +24,7 @@ const Client = () => {
 
     const fetchClient = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/clientdetail/${id}`);
+            const response = await ApiService.get(`/clientdetail/${id}`);
             setClient(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des détails du client :', error);
@@ -30,7 +33,7 @@ const Client = () => {
 
     const fetchReservations = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/reservationsByClient/${id}`);
+            const response = await ApiService.get(`/reservationsByClient/${id}`);
             setReservations(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des réservations :', error);
@@ -56,7 +59,7 @@ const Client = () => {
 
         const fetchReservationCounts = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/countReservedClient/${id}`);
+                const response = await ApiService.get(`/countReservedClient/${id}`);
                 const counts = {
                     total: response.data.total || 0,
                     uncofirmed: response.data.uncofirmed || 0,
@@ -95,17 +98,6 @@ const Client = () => {
         toast.success(`Réservation de ${reservation.marque} ajoutée à la facture !`);
     };
    
-    // const handleNavigateToFacture = () => {
-    //     // Vérifiez si des réservations ont été sélectionnées
-    //     if (selectedReservations.length === 0) {
-            
-    //         toast.error("Aucune réservation sélectionnée. Veuillez sélectionner une ou plusieurs réservations pour accéder à la facture.");
-    //         return; 
-    //     }
-    
-    //     // Naviguer vers la page de facture en passant les réservations sélectionnées
-    //     navigate(`/Home/facture/${id}`, { state: { selectedReservations } });
-    // };
     const handleNavigateToFacture = async () => {
         if (selectedReservations.length === 0) {
             toast.error("Aucune réservation sélectionnée. Veuillez sélectionner une ou plusieurs réservations pour accéder à la facture.");
@@ -113,13 +105,14 @@ const Client = () => {
         }
     
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/factures', {
+            const total_price = selectedReservations.reduce((total, reservation) => {
+                const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
+                const subTotal = Number(reservation.prix) * nbJours;
+                return total + subTotal;
+              }, 0);
+            const response = await ApiService.post(`/factures`, {
                 client_id: id,
-                total_price: selectedReservations.reduce((total, reservation) => {
-                    const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-                    const subTotal = Number(reservation.prix) * nbJours;
-                    return total + subTotal;
-                }, 0),
+                total_price: total_price,
                 reservations: selectedReservations,
             });
     
