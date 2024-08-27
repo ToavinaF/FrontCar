@@ -29,6 +29,7 @@ const ArchiveCar = () => {
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Supprimé avec succès!');
   };
+  
 
   // Restaurer le véhicule
   const handRestore = async (id) => {
@@ -131,7 +132,7 @@ const ArchiveCar = () => {
                       <td className="btnPlace">
                         <button className='IconBtn force'>
                           <span className='tooltip'>Supprimer</span>
-                          <MdOutlineDelete onClick={() => handleDelete(client.id, 'clients')}
+                          <MdOutlineDelete onClick={() => handleDeleteClient(client.id, 'clients')}
                             className="btnIcon" />
                         </button>
 

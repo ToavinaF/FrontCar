@@ -168,7 +168,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                    <img src={`${BASE_URL}/storage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`${BASE_URL}/storage/exemple/${image}`} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>
