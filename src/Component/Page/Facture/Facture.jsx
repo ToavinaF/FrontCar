@@ -22,7 +22,7 @@ const Facture = () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/factureindi/${id}`);
-            setFact(response.data);
+            setFact(response.data.factureindi);
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
             setError("Erreur lors de la récupération des données.");
@@ -145,11 +145,14 @@ const Facture = () => {
                         </thead>
                         <tbody>
                             {selectedReservations.map((reservation, index) => {
+                                console.log(reservation);
                                 const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
                                 const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
                                 return (
+                                    
                                     <tr key={index}>
                                         <td>{reservation.marque} {reservation.matricule}</td>
+                                        
                                         <td>{formatDate(reservation.DateDebut)} - {formatDate(reservation.DateFin)}</td>
                                         <td>{reservation.prix}</td>
                                         <td>{nbJours}</td>
