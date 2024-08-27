@@ -39,7 +39,7 @@ const Login = () => {
                 localStorage.setItem('photo', response.data.photo);
                 localStorage.setItem('firstname', response.data.userFirstname);
                 localStorage.setItem('userId', response.data.userId);
-
+                localStorage.setItem('auth', response.data.auth);
 
                 // Rediriger vers la page d'accueil ou autre page protégée
                 navigate('/home');

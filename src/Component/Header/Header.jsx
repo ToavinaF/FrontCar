@@ -7,6 +7,7 @@ import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 
 
@@ -24,15 +25,23 @@ const Header = ({ activepage, setActivePage }) => {
     };
 
     const handleLogout = async () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userFirstname');
-        localStorage.removeItem('email');
-        localStorage.removeItem('Role');
-        localStorage.removeItem('Job');
-        localStorage.removeItem('contact');
-
-        navigate('/');
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/api/logout");
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userFirstname');
+            localStorage.removeItem('email');
+            localStorage.removeItem('Role');
+            localStorage.removeItem('Job');
+            localStorage.removeItem('contact');
+            navigate('/');
+            toast.success(response.data.message);
+        }
+        catch (error) {
+            console.error('Erreur lors de la deconnexion', error);
+            toast.error('Erreur lors de la deconnexion');
+        }
+        
     };
 
     useEffect(() => {
@@ -79,7 +88,7 @@ const Header = ({ activepage, setActivePage }) => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/notifications');
                 setNotifications(response.data);
-        
+
             } catch (error) {
                 console.error('Erreur lors de la récupération des notifications:', error);
             }
@@ -144,9 +153,9 @@ const Header = ({ activepage, setActivePage }) => {
                                             className={`notification-item ${notification.is_read ? 'read' : ''}`}
                                             onClick={() => handleNotificationClick(notification.id)}
                                         >
-                                             {console.log(notification.message.trim())}
+                                            {console.log(notification.message.trim())}
                                             {notification.message.trim() === "nouveau client enregistre" ? (
-                                                <FaRegUser  className='notifUser'/>
+                                                <FaRegUser className='notifUser' />
                                             ) : (
                                                 <MdOutlineNotificationsActive className='notif' />
                                             )}
@@ -165,7 +174,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                    <img src={`http://127.0.0.1:8000/storage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>
