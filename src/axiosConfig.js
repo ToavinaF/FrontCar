@@ -1,11 +1,9 @@
 // src/axiosConfig.js
 import axios from 'axios';
+import { API_URL, BASE_URL } from './apiConfig';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000', // L'URL de base pour vos requêtes
-    headers: {
-        'Content-Type': 'application/json', // En-tête par défaut
-    },
+    baseURL: API_URL, // L'URL de base pour vos requêtes
 });
 
 // Ajouter un interceptor pour inclure le jeton d'accès dans les en-têtes
