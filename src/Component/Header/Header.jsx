@@ -49,7 +49,7 @@ const Header = ({ activepage, setActivePage }) => {
         const getCars = async () => {
             try {
                 const response = await ApiService.get(`/ViewCar`);
-                setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
+                setViewCar(response.data.vehicules); 
             } catch (error) {
                 console.error('Erreur lors de la récupération des voitures:', error);
             }
