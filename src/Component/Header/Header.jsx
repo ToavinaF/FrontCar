@@ -9,6 +9,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import ApiService from '../../axiosConfig';
+import { toast } from 'react-toastify';
 
 
 
@@ -27,14 +28,8 @@ const Header = ({ activepage, setActivePage }) => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/logout");
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userFirstname');
-            localStorage.removeItem('email');
-            localStorage.removeItem('Role');
-            localStorage.removeItem('Job');
-            localStorage.removeItem('contact');
+            const response = await ApiService.post('/logout');
+            localStorage.clear();
             navigate('/');
             toast.success(response.data.message);
         }
@@ -138,10 +133,10 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="icon_head">
-                    <div>
+                    {/* <div>
                         <span>5</span>
                         <FaCommentDots className='icon' />
-                    </div>
+                    </div> */}
                     <div>
                         <span>{notifications.length}</span>
                         <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)} />

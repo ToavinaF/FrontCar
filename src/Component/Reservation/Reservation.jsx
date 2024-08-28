@@ -274,7 +274,7 @@ function Reservation() {
                     </div>
                     <div className='NavRight'>
                         <div className="imgCar">
-                            <img src={`${BASE_URL}/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+                            <img src={`${API_URL}/viewimage/${CarCheck.photo}`} alt={CarCheck.marque} />
                         </div>
                         <button
                             type='submit'

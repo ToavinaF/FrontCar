@@ -105,7 +105,7 @@ const AllUser = ({searchTerm}) => {
                                 <p className="card-text">{t('allUser.role')}: {user.Role}</p>
                             </div>
                             <div className="user-image">
-                                <img src={`${BASE_URL}/storage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
+                                <img src={`${API_URL}/viewimage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
                             </div>
                         </div>
                         <div className="card-body">
