@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
+import { API_URL, BASE_URL } from "../../apiConfig";
+import ApiService from "../../axiosConfig";
 
 
 
@@ -39,7 +41,7 @@ const EditUser = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/user/${id}`);
+                const response = await ApiService.get(`/user/${id}`);
                 const data = response.data;
                 setValue("name", data.name);
                 setValue("firstname", data.firstname);
@@ -47,7 +49,7 @@ const EditUser = () => {
                 setValue("Job", data.Job || "");
                 setValue("contact", data.contact || "");
                 setValue("Role", data.Role || "");
-                setImage(data.photo ? `http://127.0.0.1:8000/storage/${data.photo}` : null);
+                setImage(data.photo ? `${BASE_URL}/storage/${data.photo}` : null);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -83,11 +85,7 @@ const EditUser = () => {
         formData.append('Role', data.Role);
 
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/updateUser/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await ApiService.post(`/updateUser/${id}`, formData);
             toast.success("modif success", {
                 autoClose: 5000,
                 hideProgressBar: false,

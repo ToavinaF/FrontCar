@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams, useLocation } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { IoCarSport } from 'react-icons/io5';
+import ApiService from '../../../axiosConfig';
 
 const Facture = () => {
     const { id } = useParams();
@@ -21,8 +22,8 @@ const Facture = () => {
         setError(null);
         await new Promise(resolve => setTimeout(resolve, 2000));
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/factureindi/${id}`);
-            setFact(response.data.factureindi);
+            const response = await ApiService.get(`/factureindi/${id}`);
+            setFact(response.data); 
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
             setError("Erreur lors de la récupération des données.");

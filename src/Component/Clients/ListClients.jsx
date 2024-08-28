@@ -5,6 +5,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ImUserPlus } from "react-icons/im";
 import { NavLink } from 'react-router-dom';
+import { API_URL } from '../../apiConfig';
+import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const ListClients = () => {
   const [clients, setClients] = useState([]);
@@ -13,12 +16,12 @@ const ListClients = () => {
 
   useEffect(() => {
     // Fetch clients data
-    axios.get('http://127.0.0.1:8000/api/clients')
+    ApiService.get('/clients')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
     // Fetch reservation counts
-    axios.get('http://127.0.0.1:8000/api/countReservedClient')
+    ApiService.get('/countReservedClient')
       .then(response => {
         const counts = response.data.count.reduce((acc, item) => {
           acc[item.id_client] = item.total;
@@ -29,27 +32,19 @@ const ListClients = () => {
       .catch(error => console.error('Error fetching reservation counts:', error));
   }, []);
   const handleDeleteClick = async (id) => {
-    const userId = localStorage.getItem('userId');
-    try {
-        console.log('Suppression du client ID:', id);
-        console.log('ID de l\'utilisateur connecté:', userId);
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      toast.error('Utilisateur non connecté');
+      return;
+    }
 
-        const response = await axios.delete(`http://127.0.0.1:8000/api/DeleteClient/${id}`, {
-            data: { 
-                deleted_by: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
-            }
+          await ApiService.delete(`/clients/${id}`,{
+          deletedBy: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
         });
-
-        console.log('Réponse complète du serveur:', response); // Affichez toute la réponse du serveur
-        console.log('Données reçues (response.data):', response.data); // Affichez le contenu de response.data
-        console.log('Deleted by:', response.data.deleted_by); // Vérifiez l'accès à la valeur de deleted_by
 
         setClients(clients.filter(client => client.id !== id));
         toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
-    } catch (error) {
-        toast.error("Erreur lors de la suppression du client");
-        console.error('Erreur lors de la suppression du client', error);
-    }
+
 };
 
 

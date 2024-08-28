@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { AutoComplete, DateRangePicker } from 'rsuite';
 import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import IconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -22,8 +23,11 @@ L.Icon.Default.mergeOptions({
     iconUrl: IconUrl,
     shadowUrl: ShadowUrl,
 });
-import { DateRangePicker } from 'rsuite';
+
 import 'rsuite/DateRangePicker/styles/index.css';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import ApiService from '../../axiosConfig';
+
 
 function Reservation() {
     const navigate = useNavigate();
@@ -65,7 +69,7 @@ function Reservation() {
 
     const fetchCarCheck = async () => {
         try {
-            const checkList = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`);
+            const checkList = await ApiService.get(`/detail/${id}`);
             setCarCheck(checkList.data.detailCar);
         } catch (error) {
             console.error(error);
@@ -74,7 +78,7 @@ function Reservation() {
 
     const fetchUser = async () => {
         try {
-            const user = await axios.get('http://127.0.0.1:8000/api/users');
+            const user = await ApiService.get('/users');
             const filteredUsers = user.data.filter(user => user.id !== parseInt(loggedInUserId));
             setListUser(filteredUsers);
         } catch (error) {
@@ -128,7 +132,7 @@ function Reservation() {
             const totalPrice = nbjour * prixParJour;
 
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/api/location/${id}`, {
+                const response = await ApiService.post(`/location/${id}`, {
                     name: AjoutReservation.name,
                     firstname: AjoutReservation.firstname,
                     email: AjoutReservation.email,
@@ -155,7 +159,7 @@ function Reservation() {
     };
 
     const fetchCarResrved = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/api/histotab/${id}`);
+        const response = await ApiService.get(`/histotab/${id}`);
         setCheckHisto(response.data.hitotab);
         const histo = response.data.hitotab.map((event) => {
             const dateStart = event.DateDebut;
@@ -229,39 +233,137 @@ function Reservation() {
 
     //     return null;
     // };
-    const handleMapClick = (e) => {
+    // const handleMapClick = (e) => {
+    //     const { lat, lng } = e.latlng;
+
+    //     const popupContent = `
+    //         <div>
+    //             <p>Latitude: ${lat.toFixed(4)}</p>
+    //             <p>Longitude: ${lng.toFixed(4)}</p>
+    //             <button id="confirm-button" class="primary" data-lat="${lat}" data-lng="${lng}">
+    //                 Obtenir (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})
+    //             </button>
+    //         </div>
+    //     `;
+
+    //     // Créez la popup et ouvrez-la
+    //     L.popup()
+    //         .setLatLng(e.latlng)
+    //         .setContent(popupContent)
+    //         .openOn(e.target);
+
+    //     // Ajoutez un gestionnaire d'événements pour le bouton de confirmation
+    //     const mapDiv = document.querySelector('.leaflet-popup-content');
+    //     mapDiv?.addEventListener('click', (event) => {
+    //         if (event.target.id === 'confirm-button') {
+    //             const lat = parseFloat(event.target.getAttribute('data-lat'));
+    //             const lng = parseFloat(event.target.getAttribute('data-lng'));
+    //             setAjoutReservation(prevState => ({
+    //                 ...prevState,
+    //                 latitude: lat,
+    //                 longitude: lng,
+    //                 lieu: location
+
+    //             }));
+    //         }
+    //     }, { once: true });
+    // };
+    const handleMapClick = async (e) => {
         const { lat, lng } = e.latlng;
 
-        const popupContent = `
-            <div>
-                <p>Latitude: ${lat.toFixed(4)}</p>
-                <p>Longitude: ${lng.toFixed(4)}</p>
-                <button id="confirm-button" class="primary" data-lat="${lat}" data-lng="${lng}">
-                    Obtenir (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})
-                </button>
-            </div>
-        `;
+        // Appel à l'API de géocodage inversé pour obtenir l'adresse
+        try {
+            const response = await axios.get(`https://nominatim.openstreetmap.org/reverse`, {
+                params: {
+                    lat,
+                    lon: lng,
+                    format: 'json',
+                },
+            });
 
-        // Créez la popup et ouvrez-la
-        L.popup()
-            .setLatLng(e.latlng)
-            .setContent(popupContent)
-            .openOn(e.target);
+            const address = response.data.address;
+            const location = `${address.road ? address.road + ', ' : ''}${address.village || address.city || address.town || ''}`;
 
-        // Ajoutez un gestionnaire d'événements pour le bouton de confirmation
-        const mapDiv = document.querySelector('.leaflet-popup-content');
-        mapDiv?.addEventListener('click', (event) => {
-            if (event.target.id === 'confirm-button') {
-                const lat = parseFloat(event.target.getAttribute('data-lat'));
-                const lng = parseFloat(event.target.getAttribute('data-lng'));
-                setAjoutReservation(prevState => ({
-                    ...prevState,
-                    latitude: lat,
-                    longitude: lng
-                }));
-            }
-        }, { once: true });
+            // Mise à jour de l'état avec les nouvelles coordonnées et l'adresse
+            setAjoutReservation(prevState => ({
+                ...prevState,
+                latitude: lat,
+                longitude: lng,
+                lieu: location
+            }));
+
+            // Affichage du popup avec les coordonnées et l'adresse
+            L.popup()
+                .setLatLng(e.latlng)
+                .setContent(`
+                    <div>
+                        <p>Latitude: ${lat.toFixed(4)}</p>
+                        <p>Longitude: ${lng.toFixed(4)}</p>
+                        <p>Lieu: ${location}</p>
+                        
+                    </div>
+                `)
+                .openOn(e.target);
+
+        } catch (error) {
+            console.error("Erreur lors de la récupération de l'adresse :", error);
+        }
     };
+    // const handleMapClick = async (e) => {
+    //     const { lat, lng, lieu } = e.latlng;
+    //     const popupContent = `
+    //     <div>
+    //         <p>Latitude: ${lat.toFixed(4)}</p>
+    //         <p>Longitude: ${lng.toFixed(4)}</p>
+    //         <p>Lieu: ${lieu.toFixed(10)}</p>
+    //         <button id="confirm-button" class="primary" data-lat="${lat}" data-lng="${lng}">
+    //             Obtenir (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}, lieu: ${lieu.toFixed(10)})
+    //         </button>
+    //     </div>
+    // `;
+    //     // Créez la popup et ouvrez-la
+    //     L.popup()
+    //         .setLatLng(e.latlng)
+    //         .setContent(popupContent)
+    //         .openOn(e.target);
+    //     // Ajoutez un gestionnaire d'événements pour le bouton de confirmation
+    //     const mapDiv = document.querySelector('.leaflet-popup-content');
+    //     mapDiv?.addEventListener('click', (event) => {
+    //         if (event.target.id === 'confirm-button') {
+    //             const lat = parseFloat(event.target.getAttribute('data-lat'));
+    //             const lng = parseFloat(event.target.getAttribute('data-lng'));
+    //             setAjoutReservation(prevState => ({
+    //                 ...prevState,
+    //                 latitude: lat,
+    //                 longitude: lng,
+    //                 lieu: location
+
+    //             }));
+    //         }
+    //     }, { once: true });
+    //     // Appel à l'API de géocodage inversé pour obtenir l'adresse
+    //     try {
+    //         const response = await axios.get(`https://nominatim.openstreetmap.org/reverse`, {
+    //             params: {
+    //                 lat,
+    //                 lon: lng,
+    //                 format: 'json',
+    //             },
+    //         });
+
+    //         const address = response.data.address;
+    //         const location = `${address.road ? address.road + ', ' : ''}${address.city || address.town || address.village || ''}`;
+
+    //         setAjoutReservation(prevState => ({
+    //             ...prevState,
+    //             latitude: lat,
+    //             longitude: lng,
+    //             lieu: location
+    //         }));
+    //     } catch (error) {
+    //         console.error("Erreur lors de la récupération de l'adresse :", error);
+    //     }
+    // };
 
     const MapClickHandler = () => {
         useMapEvents({
@@ -351,7 +453,7 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="lieu">Location de depart</label>
-                            <input type="text" className='input' name='lieu' onChange={handleChange} />
+                            <input type="text" className={`input ${errors.lieu ? 'input-error' : ''}`} name='lieu' value={AjoutReservation.lieu || ''} onChange={handleChange} />
                         </div>
 
                         <div className="inputCarat">
@@ -360,9 +462,9 @@ function Reservation() {
                             {errors.adresse && <p className="error-text">{errors.adresse}</p>}
                         </div>
                         <div className='inputCarat'>
-                            <label htmlFor='longitude'>Longitude</label>
+                            
                             <input
-                                type="number"
+                                type="hidden"
                                 className={`input ${errors.longitude ? 'input-error' : ''}`}
                                 name='longitude'
                                 value={AjoutReservation.longitude || ''}
@@ -372,9 +474,9 @@ function Reservation() {
                         </div>
 
                         <div className='inputCarat'>
-                            <label htmlFor='latitude'>Latitude</label>
+                            
                             <input
-                                type="number"
+                                type="hidden"
                                 className={`input ${errors.latitude ? 'input-error' : ''}`}
                                 name='latitude'
                                 value={AjoutReservation.latitude || ''}
@@ -408,17 +510,20 @@ function Reservation() {
                                     {maps.map((map, index) => (
                                         <Marker
                                             key={index}
-                                            position={[map.latitude, map.longitude]}
+                                            position={[map.latitude, map.longitude, map.lieu]}
                                         >
                                             <Popup>
                                                 <span>Latitude: {map.latitude}</span><br />
-                                                <span>Longitude: {map.longitude}</span>
+                                                <span>Longitude: {map.longitude}</span> <br/>
+                                               <span>Lieu: {map.lieu}</span> 
                                             </Popup>
                                         </Marker>
                                     ))}
                                 </MapContainer>
                             ) : (
-                                <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+                                    <img src={`${BASE_URL}/storage/GalerieVehicule/${CarCheck.photo}`} alt={CarCheck.marque} />
+
+                                
                             )}
                         </div>
                         <button
