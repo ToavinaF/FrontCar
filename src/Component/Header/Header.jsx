@@ -27,7 +27,7 @@ const Header = ({ activepage, setActivePage }) => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/logout");
+            const response = await ApiService.get('/logout');
             localStorage.removeItem('accessToken');
             localStorage.removeItem('userName');
             localStorage.removeItem('userFirstname');
