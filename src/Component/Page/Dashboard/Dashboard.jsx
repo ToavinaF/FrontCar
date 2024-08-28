@@ -18,7 +18,7 @@ const Dashboard = () => {
     const [User, SetUser] = useState([]);
     console.log(Vehicule);
     useEffect(() => {
-      fetchData();
+        fetchData();
     }, [])
     const fetchData = async () => {
       try {
@@ -41,7 +41,7 @@ const Dashboard = () => {
             <div className='statics'>
                 <div className='stats'>
                     <h3 className='stats__titre'><span> {t('Statistiques de client par semaine')} </span> </h3>
-                    <CarChart/>
+                    <CarChart />
                 </div>
                 <div className='statiq'>
                     <div className='stats'>
@@ -50,11 +50,11 @@ const Dashboard = () => {
                     </div>
 
                 </div>
-                
+
             </div>
             <div className="recommend__car__wrapper">
-                <Car Vehicule={Vehicule}/>
-                <Utilisateur User={User}/>
+                <Car Vehicule={Vehicule} />
+                <Utilisateur User={User} />
             </div>
             <Map/>
             

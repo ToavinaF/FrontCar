@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useParams, useLocation } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { IoCarSport } from 'react-icons/io5';
-import ApiService from '../../../axiosConfig';
 
 const Facture = () => {
     const { id } = useParams();
@@ -20,10 +19,9 @@ const Facture = () => {
     const fetchData = async () => {
         setLoading(true);
         setError(null);
-        await new Promise(resolve => setTimeout(resolve, 2000));
         try {
-            const response = await ApiService.get(`/factureindi/${id}`);
-            setFact(response.data); 
+            const response = await axios.get(`http://127.0.0.1:8000/api/factureindi/${id}`);
+            setFact(response.data);
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
             setError("Erreur lors de la récupération des données.");
@@ -47,6 +45,8 @@ const Facture = () => {
 
     // Récupérer les réservations sélectionnées
     const selectedReservations = location.state?.selectedReservations || [];
+    
+    // Calculer le prix total
     const totalPrice = selectedReservations.reduce((total, reservation) => {
         const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
         const subTotal = Number(reservation.prix) * nbJours;
@@ -59,13 +59,12 @@ const Facture = () => {
         return total + days;
     }, 0);
 
+    // Créer les données pour le QR code
     const qrData = `
         Email: ${fact.email}
         Contact: ${fact.contact}
-
         Nom: ${fact.name}
         Date de réservation: ${formatDate(fact.created_at)}
-       
         Prix total: ${totalPrice}
         Matricule: ${selectedReservations.map(reservation => reservation.matricule).join(', ')}
         Marque: ${selectedReservations.map(reservation => reservation.marque).join(', ')}
@@ -132,6 +131,7 @@ const Facture = () => {
                         </ul>
                     </div>
                 </div>
+
                 <div className='contents__two'>
                     <h1>Détails de la location</h1>
                     <table>
@@ -146,14 +146,11 @@ const Facture = () => {
                         </thead>
                         <tbody>
                             {selectedReservations.map((reservation, index) => {
-                                console.log(reservation);
                                 const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-                                const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
+                                const subTotal = Number(reservation.prix) * nbJours;
                                 return (
-                                    
                                     <tr key={index}>
                                         <td>{reservation.marque} {reservation.matricule}</td>
-                                        
                                         <td>{formatDate(reservation.DateDebut)} - {formatDate(reservation.DateFin)}</td>
                                         <td>{reservation.prix}</td>
                                         <td>{nbJours}</td>

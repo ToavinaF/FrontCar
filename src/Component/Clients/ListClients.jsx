@@ -69,7 +69,7 @@ const ListClients = () => {
                 <td>{client.name} {client.firstname}</td>
                 <td>{client.email}</td>
                 <td>{client.contact}</td>
-                <td>{client.Adresse}</td>
+                <td>{client.adresse}</td>
                 <td>{reservationCounts[client.id] || 0}</td>
                 <td>
                   <a href="#" className='trash' aria-label="Delete" onClick={(e) => {
