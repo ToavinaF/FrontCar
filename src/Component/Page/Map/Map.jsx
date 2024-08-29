@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -12,6 +12,7 @@ import { API_URL } from '../../../apiConfig';
 import { ApiCall } from '../../../ApiCall';
 import IconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import { Form } from 'react-bootstrap';
+import ApiService from '../../../axiosConfig';
 
 // Configuration des icônes par défaut pour Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,10 +29,25 @@ const Map = () => {
   const [center, setCenter] = useState([-18.9206054, 47.5197284]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredReservations, setFilteredReservations] = useState([]);
+  const [ViewMap, setViewMap] =useState([]);
+
+
+  
   useEffect(() => {
     fetchMaps();
+    mapLocal();
   }, []);
-
+//affichage des location dans le map
+const mapLocal = async () => {
+  try {
+    const response = await ApiService.get('viewMap');
+    setViewMap(response.data);
+    console.log('vouture:',response.data);
+  } catch (error) {
+    console.error('Error fetching maps:', error);
+  }
+}
+//////////////////////////////////
   const fetchMaps = async () => {
     try {
       const response = await ApiCall(`${API_URL}/reservations`,'GET');
@@ -118,27 +134,32 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <MarkerClusterGroup>
-          <MapCenter center={center} />
-          {filteredReservations.map((reservation) => {
-            const map = reservation.client?.map;
-            if (map) {
-              return (
-                <Marker key={reservation.id} position={[map.latitude, map.longitude]}>
-                  <Popup>
-                    <div>
-                      <strong>Client: {reservation.client.name}</strong><br />
-                      <strong>Matricule: {reservation.vehicule.matricule}</strong><br />
-                      Latitude: {map.latitude}<br />
-                      Longitude: {map.longitude}
-                    </div>
-                  </Popup>
-                </Marker>
-              );
-            }
-            return null;
-          })}
-        </MarkerClusterGroup>
+      <MarkerClusterGroup>
+        {ViewMap.map((item) => {
+          const { map_lieu, map_latitude, map_longitude, name, firstname, marque, model} = item;
+          if (map_latitude && map_longitude) {
+            return (
+              <Marker key={item.id} position={[map_latitude, map_longitude]}>
+                <Popup>
+                  <div>
+                    <strong>Client: {name} {firstname}</strong><br />
+                    <strong>Véhicule: {marque} {model}</strong><br />
+                    Lieu: {map_lieu}<br />
+                    Latitude: {map_latitude}<br />
+                    Longitude: {map_longitude}
+                    {item.photo && (
+                      <div>
+                        <img src={`${API_URL}/viewimage/${item.photo}`} alt="Client" style={{ width: '100px', height: 'auto' }} />
+                      </div>
+                    )}
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          }
+          return null;
+        })}
+      </MarkerClusterGroup>
       </MapContainer>
     </div>
   );
