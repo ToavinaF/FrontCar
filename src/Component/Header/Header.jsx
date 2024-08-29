@@ -9,6 +9,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import ApiService from '../../axiosConfig';
+import { toast } from 'react-toastify';
 
 
 
@@ -45,17 +46,17 @@ const Header = ({ activepage, setActivePage }) => {
         
     };
 
-    useEffect(() => {
-        const getCars = async () => {
-            try {
-                const response = await ApiService.get(`/ViewCar`);
-                setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
-            } catch (error) {
-                console.error('Erreur lors de la récupération des voitures:', error);
-            }
-        };
-        getCars();
-    }, []);
+    // useEffect(() => {
+    //     const getCars = async () => {
+    //         try {
+    //             const response = await ApiService.get(`/ViewCar`);
+    //             setViewCar(response.data.vehicules);
+    //         } catch (error) {
+    //             console.error('Erreur lors de la récupération des voitures:', error);
+    //         }
+    //     };
+    //     getCars();
+    // }, []);
 
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
     useEffect(() => {

@@ -8,22 +8,22 @@ import ApiService from '../../../axiosConfig';
 
 const Facture = () => {
     const { id } = useParams();
-    const location = useLocation(); // Récupérer l'emplacement pour accéder aux réservations sélectionnées
+    const location = useLocation();
     const [fact, setFact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [id]);
 
     const fetchData = async () => {
         setLoading(true);
         setError(null);
-        await new Promise(resolve => setTimeout(resolve, 2000));
         try {
             const response = await ApiService.get(`/factureindi/${id}`);
-            setFact(response.data); 
+            console.log("Réponse API:", response.data);
+            setFact(response.data.factureindi);
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
             setError("Erreur lors de la récupération des données.");
@@ -40,12 +40,15 @@ const Facture = () => {
         return <div>{error}</div>;
     }
 
+    if (!fact) {
+        return <div>Aucune donnée disponible</div>;
+    }
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    // Récupérer les réservations sélectionnées
     const selectedReservations = location.state?.selectedReservations || [];
     const totalPrice = selectedReservations.reduce((total, reservation) => {
         const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
@@ -53,7 +56,6 @@ const Facture = () => {
         return total + subTotal;
     }, 0);
 
-    // Calculer le nombre total de jours
     const totalDays = selectedReservations.reduce((total, reservation) => {
         const days = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
         return total + days;
@@ -65,7 +67,7 @@ const Facture = () => {
 
         Nom: ${fact.name}
         Date de réservation: ${formatDate(fact.created_at)}
-       
+
         Prix total: ${totalPrice}
         Matricule: ${selectedReservations.map(reservation => reservation.matricule).join(', ')}
         Marque: ${selectedReservations.map(reservation => reservation.marque).join(', ')}
@@ -146,14 +148,11 @@ const Facture = () => {
                         </thead>
                         <tbody>
                             {selectedReservations.map((reservation, index) => {
-                                console.log(reservation);
                                 const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-                                const subTotal = Number(reservation.prix) * nbJours; // Calculer le sous-total
+                                const subTotal = Number(reservation.prix) * nbJours;
                                 return (
-                                    
                                     <tr key={index}>
                                         <td>{reservation.marque} {reservation.matricule}</td>
-                                        
                                         <td>{formatDate(reservation.DateDebut)} - {formatDate(reservation.DateFin)}</td>
                                         <td>{reservation.prix}</td>
                                         <td>{nbJours}</td>

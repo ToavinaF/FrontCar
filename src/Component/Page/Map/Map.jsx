@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const Map = () => {
-  
+
   const [maps, setMaps] = useState([]);
   const [center, setCenter] = useState([-18.9206054, 47.5197284]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,9 +32,10 @@ const Map = () => {
     fetchMaps();
   }, []);
 
+
   const fetchMaps = async () => {
     try {
-      const response = await ApiCall(`${API_URL}/reservations`,'GET');
+      const response = await ApiCall(`${API_URL}/reservations`, 'GET');
       setMaps(response.data);
       if (response.data.length > 0) {
         setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);
@@ -43,7 +44,6 @@ const Map = () => {
       console.error('Error fetching maps:', error);
     }
   };
-
   const handleMapInteractions = (map) => {
     const popup = L.popup();
 
@@ -122,7 +122,7 @@ const Map = () => {
           <MapCenter center={center} />
           {filteredReservations.map((reservation) => {
             const map = reservation.client?.map;
-            if (map) {
+            if (map && map.latitude && map.longitude) {
               return (
                 <Marker key={reservation.id} position={[map.latitude, map.longitude]}>
                   <Popup>

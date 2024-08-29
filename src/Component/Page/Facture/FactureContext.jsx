@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Facture.scss';
-import axios from 'axios';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { IoCarSport } from 'react-icons/io5';
-import { API_URL } from '../../../apiConfig';
-import { ApiCall } from '../../../ApiCall';
+import ApiService from '../../../axiosConfig';
 
 const FactureContext = () => {
     const { id } = useParams();
@@ -15,14 +13,15 @@ const FactureContext = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [id]);
 
     const fetchData = async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await ApiCall(`${API_URL}/factureindi/${id}`, 'GET');
-            setFact(response.data.factureindi); 
+            const response = await ApiService.get(`/factureindi/${id}`);
+            console.log("Réponse API:", response.data);
+            setFact(response.data.factureindi);
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
             setError("Erreur lors de la récupération des données.");
@@ -39,19 +38,28 @@ const FactureContext = () => {
         return <div>{error}</div>;
     }
 
+    if (!fact) {
+        return <div>Aucune donnée disponible</div>;
+    }
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+    // Utilisez directement les données de fact pour l'affichage
+    const nbJours = Math.ceil((new Date(fact.DateFin) - new Date(fact.DateDebut)) / (1000 * 60 * 60 * 24));
+    const subTotal = Number(fact.prix) * nbJours;
+    const totalPrice = subTotal;
+
     const qrData = `
         Email: ${fact.email}
         Contact: ${fact.contact}
+
         Nom: ${fact.name}
-        Date de création: ${formatDate(fact.created_at)}
-        Date de début: ${formatDate(fact.DateDebut)}
-        Date de fin: ${formatDate(fact.DateFin)}
-        Prix total: ${fact.PriceTotal}
+        Date de réservation: ${formatDate(fact.created_at)}
+
+        Prix total: ${totalPrice}
         Matricule: ${fact.matricule}
         Marque: ${fact.marque}
     `;
@@ -130,19 +138,19 @@ const FactureContext = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                           <tr>
                                 <td>{fact.marque} {fact.matricule}</td>
                                 <td>{formatDate(fact.DateDebut)} - {formatDate(fact.DateFin)}</td>
                                 <td>{fact.prix}</td>
-                                <td>{Math.ceil((new Date(fact.DateFin) - new Date(fact.DateDebut)) / (1000 * 60 * 60 * 24))}</td>
-                                <td>{fact.PriceTotal}</td>
+                                <td>{nbJours}</td>
+                                <td>{subTotal}</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colSpan="3"></td>
                                 <td>Total</td>
-                                <td>{fact.PriceTotal}</td>
+                                <td>{totalPrice}</td>
                             </tr>
                         </tfoot>
                     </table>
