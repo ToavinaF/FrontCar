@@ -60,18 +60,22 @@ const ListCar = () => {
       toast.error('Utilisateur non connecté');
       return;
     }
-    await ApiService.delete(`/DeleteCar/${id}`,{
-      idconnecte:userId//envoi ID pour la Deleted_by
-    });
-  
-
-    setViewCar(ViewCar.filter(item => item.id !== id));
-    toast.success('Supprimer avec success!')
-    
+    try {
+      const response = await ApiService.delete(`/DeleteCar/${id}`);
+      if (response.status === 401) {
+        toast.error('Vous devez être connecté pour supprimer ce véhicule');
+        return;
+    }
+      setViewCar(ViewCar.filter(item => item.id !== id));
+      toast.success('Supprimé avec succès!');
+  } catch (error) {
+      toast.error('Erreur lors de la suppression');
+      console.error('Erreur:', error);
   }
   const handleEdit = async (id) => {
     navigate('/Home/modifCar/' + id);
   }
+}
 
 
   // messgae erreur

@@ -28,7 +28,7 @@ const Header = ({ activepage, setActivePage }) => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/logout");
+            const response = await ApiService.get('/logout');
             localStorage.removeItem('accessToken');
             localStorage.removeItem('userName');
             localStorage.removeItem('userFirstname');
@@ -50,7 +50,7 @@ const Header = ({ activepage, setActivePage }) => {
     //     const getCars = async () => {
     //         try {
     //             const response = await ApiService.get(`/ViewCar`);
-    //             setViewCar(response.data.vehicules);
+    //             setViewCar(response.data.vehicules); 
     //         } catch (error) {
     //             console.error('Erreur lors de la récupération des voitures:', error);
     //         }
