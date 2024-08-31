@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
 import {FaArchive, FaCar, FaCarAlt, FaChevronDown, FaUser, FaUsers } from 'react-icons/fa';
-import { MdDashboard, MdDelete } from 'react-icons/md';
+import { MdBuild, MdDashboard, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
@@ -60,6 +60,32 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 0 ? 'active' : ''}`}>
                             <li className='nav_link'>
                                 <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage(`HomeAll > Car`)}>
+                                    <FaCarAlt className='icon_list' /> {t('all car')}
+                                </NavLink>
+                            </li>
+                            <li className='nav_link'>
+                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Home > Add Car')}>
+                                    <RiPlayListAddFill className='icon_list' /> {t('add car')}
+                                </NavLink>
+                            </li>
+                            <li className='nav_link'>
+                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home > Historiques')}>
+                                    <FaHistory  className='icon_list_histo'/> {t('Historique')}
+                                </NavLink>
+                            </li>
+                        </div>
+                    </div>
+
+                    <div className='li-dash'>
+                        <div>
+                            <MdBuild className={`icon-dash ${activeDropdown === 3 ? 'active' : ''}`} onClick={() => handleDropdownClick(3)}/>
+                            <p>
+                                {t('Repair')} <FaChevronDown className={`down ${activeDropdown === 3 ? 'active' : ''}`} />
+                            </p>
+                        </div>
+                        <div className={`dropDown ${activeDropdown === 3 ? 'active' : ''}`}>
+                            <li className='nav_link'>
+                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage(`HomeAll > Repair`)}>
                                     <FaCarAlt className='icon_list' /> {t('all car')}
                                 </NavLink>
                             </li>
