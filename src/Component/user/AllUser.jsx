@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import ApiService from '../../axiosConfig';
 
 const AllUser = ({searchTerm}) => {
     const { t } = useTranslation();
@@ -20,7 +22,7 @@ const AllUser = ({searchTerm}) => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/users');
+            const response = await ApiService.get(`/users`);
             const filteredUsers = response.data.filter(user => user.id !== parseInt(loggedInUserId));
             setAllUserData(filteredUsers);
         } catch (error) {
@@ -40,7 +42,7 @@ const AllUser = ({searchTerm}) => {
         try {
             const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
     
-            await axios.delete(`http://127.0.0.1:8000/api/deleteUser/${id}`, {
+            await ApiService.delete(`/deleteUser/${id}`, {
                 data: { 
                     deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
                 }
@@ -103,7 +105,7 @@ const AllUser = ({searchTerm}) => {
                                 <p className="card-text">{t('allUser.role')}: {user.Role}</p>
                             </div>
                             <div className="user-image">
-                                <img src={`http://127.0.0.1:8000/storage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
+                                <img src={`${BASE_URL}/storage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
                             </div>
                         </div>
                         <div className="card-body">

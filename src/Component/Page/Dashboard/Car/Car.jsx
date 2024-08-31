@@ -12,6 +12,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdLinearScale } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { BASE_URL } from '../../../../apiConfig';
 
 const Car = ({ Vehicule }) => {
   const { t } = useTranslation();
@@ -47,7 +48,7 @@ const Car = ({ Vehicule }) => {
                   <h5><span><FaChartArea /></span></h5>
                 </div>
                 <div className='recommend__car-img'>
-                  <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${veh.photo}`} className="carimage" alt={t('Marque')} />
+                  <img src={`${BASE_URL}/storage/GalerieVehicule/${veh.photo}`} className="carimage" alt={t('Marque')} />
                 </div>
                 <div className='recommend__car-bottom'>
                   <h4><span>{veh.marque}</span></h4>

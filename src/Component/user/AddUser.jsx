@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import ApiService from '../../axiosConfig';
+import { useDropzone } from 'react-dropzone';
 
 function Register() {
     const { t } = useTranslation();
@@ -13,6 +15,7 @@ function Register() {
     const navigate = useNavigate();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [error, setError] = useState('');
+    const [acceptedFiles, setAcceptedFiles] = useState([]);
 
     const onSubmit = async (data) => {
         if (data.password !== data.password_confirmation) {
@@ -21,21 +24,18 @@ function Register() {
         }
 
         const formData = new FormData();
+        if (acceptedFiles.length > 0) {
+            formData.append('photo', acceptedFiles[0]);
+        }
         formData.append('name', data.name);
         formData.append('firstname', data.firstname);
         formData.append('email', data.email);
         formData.append('password', data.password);
         formData.append('password_confirmation', data.password_confirmation);
-        if (data.photo[0]) {
-            formData.append('photo', data.photo[0]);
-        }
-
+     
+console.log(data ,'ajout');
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await ApiService.post(`/register`, formData);
             console.log('Inscription réussie:', response.data);
             toast.success("Ajout User success");
             navigate('../../Home');
@@ -71,6 +71,16 @@ function Register() {
         setValue('photo', []);
     };
 
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'image/*',
+        onDrop: (acceptedFiles) => {
+            setAcceptedFiles(acceptedFiles);
+            if (acceptedFiles.length > 0) {
+                setImage(URL.createObjectURL(acceptedFiles[0]));
+            }
+        }
+    });
+
     return (
         <div className="container">
             <div className="registration-form">
@@ -79,29 +89,17 @@ function Register() {
                     <div className="form-fields">
                         <div className="form-group">
                             <label htmlFor="photo" className="photo-label">
-                                <div
-                                    className="dropzone"
-                                    onDrop={handleDrop}
-                                    onDragOver={handleDragOver}
-                                >
-                                    <input
-                                        id="photo"
-                                        type="file"
-                                        className="form-input"
-                                        name="photo"
-                                        accept="image/*"
-                                        {...register('photo')}
-                                        onChange={handleImageChange}
-                                    />
-                                    <FaPlusCircle className="icon" />
-                                    {image && (
-                                        <div className="image-preview-container">
-                                            <img src={image} alt="Preview" className="image-preview" />
-                                            <FaTimes className="remove-icon" onClick={handleRemoveImage} />
-                                        </div>
-                                    )}
-                                    {!image && <p className='photoProfol'><span>{t('register.profilePhoto')}</span></p>}
+
+                            <div {...getRootProps()} className="dropzone">
+                            <FaPlusCircle className="icon" />
+                            <input {...getInputProps()} />
+                            {image && (
+                                <div className="image-preview-container">
+                                    <img src={image} alt="Preview" className="image-preview" />
+                                    <FaTimes className="remove-icon" onClick={handleRemoveImage} />
                                 </div>
+                            )}
+                        </div>
                             </label>
                         </div>
                         <div className="form-group">

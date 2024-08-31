@@ -8,8 +8,8 @@ import Count from './count/Count';
 import './Dashboard.scss'
 import Skills from './Skills/Skills';
 import Utilisateur from './Utilisateur/Utilisateur';
-import axios from 'axios';
 import Map from '../Map/Map';
+import ApiService from '../../../axiosConfig';
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -18,13 +18,13 @@ const Dashboard = () => {
     const [User, SetUser] = useState([]);
     console.log(Vehicule);
     useEffect(() => {
-      fetchData();
+        fetchData();
     }, [])
     const fetchData = async () => {
       try {
-        const vehicul = await axios.get("http://127.0.0.1:8000/api/ViewCar")
+        const vehicul = await ApiService.get('/ViewCar')
         SetVehicule(vehicul.data.vehicules);
-        const UserAll = await axios.get("http://127.0.0.1:8000/api/users")
+        const UserAll = await ApiService.get('/users')
         SetUser(UserAll.data);
         console.log(UserAll.data);
       } catch (error) {
@@ -41,7 +41,7 @@ const Dashboard = () => {
             <div className='statics'>
                 <div className='stats'>
                     <h3 className='stats__titre'><span> {t('Statistiques de client par semaine')} </span> </h3>
-                    <CarChart/>
+                    <CarChart />
                 </div>
                 <div className='statiq'>
                     <div className='stats'>
@@ -50,11 +50,11 @@ const Dashboard = () => {
                     </div>
 
                 </div>
-                
+
             </div>
             <div className="recommend__car__wrapper">
-                <Car Vehicule={Vehicule}/>
-                <Utilisateur User={User}/>
+                <Car Vehicule={Vehicule} />
+                <Utilisateur User={User} />
             </div>
             <Map/>
             
