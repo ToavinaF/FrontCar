@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
 import {FaArchive, FaCar, FaCarAlt, FaChevronDown, FaUser, FaUsers } from 'react-icons/fa';
-import { MdDashboard, MdDelete } from 'react-icons/md';
+import { MdBuild, MdDashboard, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
 import Cookies from 'js-cookie';
