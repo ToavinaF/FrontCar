@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../axiosConfig';
+import { API_URL } from '../../apiConfig';
 
 const ListCar = () => {
   const location = useLocation();
@@ -122,7 +123,7 @@ const ListCar = () => {
                       }
                     </div>
                     <div className="photoCar">
-                      <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${list.photo}`} alt="" />
+                      <img src={`${API_URL}/viewimage/${list.photo}`} alt="" />
                     </div>
                     <div className="aprop">
                       <div className="icon">

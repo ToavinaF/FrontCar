@@ -16,6 +16,7 @@ header {
     top: 0;
     .text_logo {
         width: 25%;
+        margin:0 0 0 2%;
         h1 {
             color: white;
             text-align: center;
@@ -74,10 +75,10 @@ header {
         .icon_head {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: end;
             width: 10%;
             text-align: center;
-            margin: 1% 2% 0 10%;
+            margin: 1% -1% 0 10%;
             align-items: center;
             position: relative;
 

@@ -38,14 +38,14 @@ const ListClients = () => {
       return;
     }
 
-          await ApiService.delete(`/clients/${id}`,{
-          deletedBy: userId // Envoyer l'ID de l'utilisateur qui effectue la suppression
-        });
+          await ApiService.delete(`/clients/${id}`);
 
         setClients(clients.filter(client => client.id !== id));
-        toast.success(`Suppression du client réussie par l'utilisateur ID: ${response.data.deleted_by}`);
+        toast.success("Delete client success");
+        
 
 };
+
 
 
   return (

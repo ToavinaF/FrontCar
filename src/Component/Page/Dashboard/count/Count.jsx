@@ -57,7 +57,7 @@ const Count = () => {
                 </span>
             </div>
 
-            <div className='single__car'>
+            {/* <div className='single__car'>
                 <div className='card__content'>
                     <h4>message</h4>
                     <span>0</span>
@@ -65,7 +65,7 @@ const Count = () => {
                 <span className='card__icon'>
                     <FaCommentDots color='rgb(0, 255, 213)' />
                 </span>
-            </div>
+            </div> */}
         </div>
     );
 };

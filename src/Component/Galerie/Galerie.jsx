@@ -175,7 +175,7 @@ const Galerie = () => {
         {
           Galerie.map((image, i) => (
             <div className="BlockImg" key={i} onClick={() => OpenModal(i)}>
-              <img src={`${BASE_URL}/storage/GalerieVehicule/${image.image}`} alt={`Galerie image ${i}`} />
+              <img src={`${API_URL}/viewimage/${image.image}`} alt={`Galerie image ${i}`} />
 
               <div className='image-overlay'>
                 <div className="overlay-buttons" onClick={(e) => e.stopPropagation()}>
@@ -203,7 +203,7 @@ const Galerie = () => {
             <GrCaretPrevious className='prev-button' onClick={prevImage} />
             <MdDeleteForever className='delet' onClick={() => handDelete(Galerie[ImageIndex]?.id)} />
 
-            <img src={`${BASE_URL}/storage/GalerieVehicule/${Galerie[ImageIndex]?.image}`} alt={`Galerie image ${ImageIndex}`} className="modal-image" />
+            <img src={`${API_URL}/viewimage/${Galerie[ImageIndex]?.image}`} alt={`Galerie image ${ImageIndex}`} className="modal-image" />
             <GrCaretNext className='next-button' onClick={nextImage} />
           </div>
         </div>

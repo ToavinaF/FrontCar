@@ -9,6 +9,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import ApiService from '../../axiosConfig';
+import { toast } from 'react-toastify';
+import { Breadcrumbs } from '@mui/material';
+import { Typography } from 'antd';
 
 
 
@@ -27,14 +30,8 @@ const Header = ({ activepage, setActivePage }) => {
 
     const handleLogout = async () => {
         try {
-            const response = await ApiService.get('/logout');
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userFirstname');
-            localStorage.removeItem('email');
-            localStorage.removeItem('Role');
-            localStorage.removeItem('Job');
-            localStorage.removeItem('contact');
+            const response = await ApiService.post('/logout');
+            localStorage.clear();
             navigate('/');
             toast.success(response.data.message);
         }
@@ -42,21 +39,8 @@ const Header = ({ activepage, setActivePage }) => {
             console.error('Erreur lors de la deconnexion', error);
             toast.error('Erreur lors de la deconnexion');
         }
-        
+
     };
-
-    useEffect(() => {
-        const getCars = async () => {
-            try {
-                const response = await ApiService.get(`/ViewCar`);
-                setViewCar(response.data.vehicules); 
-            } catch (error) {
-                console.error('Erreur lors de la récupération des voitures:', error);
-            }
-        };
-        getCars();
-    }, []);
-
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
     useEffect(() => {
         const fetchData = async () => {
@@ -66,7 +50,16 @@ const Header = ({ activepage, setActivePage }) => {
             }
             try {
                 const response = await ApiService.post(`/recherche`, Recherche);
-                navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
+                navigate(`/Home/search?keyword=${Recherche.Keyword}`,
+                    {
+                        state:
+                        {
+                            results: response.data.result,
+                            results1: response.data.result1,
+                            results2: response.data.result2,
+                            results3: response.data.result3
+                        }
+                    });
             } catch (error) {
                 console.log('Vérifiez le code', error);
             }
@@ -123,7 +116,12 @@ const Header = ({ activepage, setActivePage }) => {
     return (
         <header>
             <div className="text_logo">
-                <h1 className='Modif'>{t(activepage)}</h1>
+                <Breadcrumbs
+                    separator=""
+                    aria-label="breadcrumb"
+                >
+                    <Typography color="textPrimary"><h1>{activepage}</h1></Typography>
+                </Breadcrumbs>
             </div>
             <div className="left_cont">
                 <div className="search">
@@ -138,10 +136,10 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="icon_head">
-                    <div>
+                    {/* <div>
                         <span>5</span>
                         <FaCommentDots className='icon' />
-                    </div>
+                    </div> */}
                     <div>
                         <span>{notifications.length}</span>
                         <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)} />
@@ -175,7 +173,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>
@@ -184,7 +182,7 @@ const Header = ({ activepage, setActivePage }) => {
                         <div className="menu">
                             <li>
                                 <NavLink to={'/Home/editUser/' + id}>
-                                    <FaRegUser className='icon' /> {t('Profile')}
+                                    <FaRegUser className='icon'/> {t('Profile')}
                                 </NavLink>
                             </li>
                             <li onClick={handleLogout}>
