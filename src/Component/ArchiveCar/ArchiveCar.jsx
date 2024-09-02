@@ -132,7 +132,7 @@ const ArchiveCar = () => {
                       <td className="btnPlace">
                         <button className='IconBtn force'>
                           <span className='tooltip'>Supprimer</span>
-                          <MdOutlineDelete onClick={() => handleDeleteClient(client.id, 'clients')}
+                          <MdOutlineDelete onClick={() => handleDelete(client.id, 'clients')}
                             className="btnIcon" />
                         </button>
 
