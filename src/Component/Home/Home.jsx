@@ -25,6 +25,9 @@ import Galerie from '../Galerie/Galerie'
 import Facture from '../Page/Facture/Facture'
 import Recherche from '../Header/Recherche'
 import Client from '../Clients/Client'
+import Liste from '../Page/Facture/Liste'
+import FactureContext from '../Page/Facture/FactureContext';
+
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
@@ -72,7 +75,11 @@ const Home = () => {
                         
                         <Route path="/AjoutUser" element={<AddUser/>}/>
                         <Route path='/facture/:id' element={<Facture/>}/>
+                        <Route path='/facture/:facture.id' element={<Facture/>}/>
+                        <Route path='/facturer/:id' element={<FactureContext/>}/>
+
                         <Route path='/client/:id' element={<Client/>}/>
+                        <Route path='/factures/:id' element={<Liste/>}/>
                     </Routes> }
 
 

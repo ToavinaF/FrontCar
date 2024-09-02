@@ -7,27 +7,25 @@ import { IoCarSport } from 'react-icons/io5';
 import { API_URL } from '../../../apiConfig';
 import { ApiCall } from '../../../ApiCall';
 
-const Facture = () => {
+const FactureContext = () => {
     const { id } = useParams();
-    const location = useLocation(); // Récupérer l'emplacement pour accéder aux réservations sélectionnées
     const [fact, setFact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+
     useEffect(() => {
         fetchData();
-    }, []); 
+    }, []);
 
     const fetchData = async () => {
         setLoading(true);
-        setError(null); 
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        setError(null);
         try {
-            const response = await ApiCall(`${API_URL}/factureindi/${id}`,'GET');
-            setFact(response.data); 
+            const response = await ApiCall(`${API_URL}/factureindi/${id}`, 'GET');
+            setFact(response.data.factureindi); 
         } catch (error) {
             console.log("Erreur lors de la récupération des données:", error);
-            setError("Erreur lors de la récupération des données."); 
+            setError("Erreur lors de la récupération des données.");
         } finally {
             setLoading(false);
         }
@@ -38,7 +36,7 @@ const Facture = () => {
     }
 
     if (error) {
-        return <div>{error}</div>; 
+        return <div>{error}</div>;
     }
 
     const formatDate = (dateString) => {
@@ -46,29 +44,16 @@ const Facture = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    // Récupérer les réservations sélectionnées
-    const selectedReservations = location.state?.selectedReservations || [];
-
-    // Calculer le prix total
-    const totalPrice = selectedReservations.reduce((total, reservation) => total + reservation.prix, 0);
-    
-    // Calculer le nombre total de jours
-    const totalDays = selectedReservations.reduce((total, reservation) => {
-        const days = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-        return total + days;
-    }, 0);
-
     const qrData = `
         Email: ${fact.email}
         Contact: ${fact.contact}
-
         Nom: ${fact.name}
-        Date de réservation: ${formatDate(fact.created_at)}
-        Date de début: ${formatDate(selectedReservations[0]?.DateDebut)}
-        Date de fin: ${formatDate(selectedReservations[0]?.DateFin)}
-        Prix total: ${totalPrice}
-        Matricule: ${selectedReservations.map(reservation => reservation.matricule).join(', ')}
-        Marque: ${selectedReservations.map(reservation => reservation.marque).join(', ')}
+        Date de création: ${formatDate(fact.created_at)}
+        Date de début: ${formatDate(fact.DateDebut)}
+        Date de fin: ${formatDate(fact.DateFin)}
+        Prix total: ${fact.PriceTotal}
+        Matricule: ${fact.matricule}
+        Marque: ${fact.marque}
     `;
 
     return (
@@ -115,7 +100,7 @@ const Facture = () => {
                             </li>
                             <li>
                                 <h3>Adresse</h3>
-                                <p>Adresse du prêteur</p>
+                                <p>{fact.adresse}</p>
                             </li>
                         </ul>
                     </div>
@@ -145,39 +130,24 @@ const Facture = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {selectedReservations.map((reservation, index) => {
-                                const nbJours = Math.ceil((new Date(reservation.DateFin) - new Date(reservation.DateDebut)) / (1000 * 60 * 60 * 24));
-                                const subTotal = reservation.prix * nbJours; // Calculer le sous-total
-                                return (
-                                    <tr key={index}>
-                                        <td>{reservation.marque} {reservation.matricule}</td>
-                                        <td>{formatDate(reservation.DateDebut)} - {formatDate(reservation.DateFin)}</td>
-                                        <td>{reservation.prix}</td>
-                                        <td>{nbJours}</td>
-                                        <td>{subTotal}</td>
-                                    </tr>
-                                );
-                            })}
+                            <tr>
+                                <td>{fact.marque} {fact.matricule}</td>
+                                <td>{formatDate(fact.DateDebut)} - {formatDate(fact.DateFin)}</td>
+                                <td>{fact.prix}</td>
+                                <td>{Math.ceil((new Date(fact.DateFin) - new Date(fact.DateDebut)) / (1000 * 60 * 60 * 24))}</td>
+                                <td>{fact.PriceTotal}</td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colSpan="3"></td>
                                 <td>Total</td>
-                                <td>{totalPrice}</td>
+                                <td>{fact.PriceTotal}</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
-                <div className='contents__free'>
-                    <h1>Méthode de paiement</h1>
-                    <form>
-                        <input type='radio' name='payment' className='input' value="cash" /> Espèces
-                        <input type='radio' name='payment' className='input' value="credit" /> Carte de crédit
-                        <input type='radio' name='payment' className='input' value="bank" /> Virement bancaire
-                        <input type='radio' name='payment' className='input' value="online" /> Paiement en ligne
-                        <input type='radio' name='payment' className='input' value="mobile" /> Paiement mobile
-                    </form>
-                </div>
+
                 <div className='qr__code'>
                     <h1>QR Code</h1>
                     <div className='qr'>
@@ -192,4 +162,4 @@ const Facture = () => {
     );
 }
 
-export default Facture;
+export default FactureContext;

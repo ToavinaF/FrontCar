@@ -49,7 +49,7 @@ const EditUser = () => {
                 setValue("Job", data.Job || "");
                 setValue("contact", data.contact || "");
                 setValue("Role", data.Role || "");
-                setImage(data.photo ? `${BASE_URL}/storage/${data.photo}` : null);
+                setImage(data.photo ? `${API_URL}/viewimage/${data.photo}` : null);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
