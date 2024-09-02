@@ -38,6 +38,9 @@ function Reservation() {
     const [maps, setMaps] = useState([]);
     const [currentMap, setCurrentMap] = useState(null);
     const [showMap, setShowMap] = useState(false);
+    const handleFocus = () => {
+        setShowMap(true);
+    };
     const [center, setCenter] = useState([-18.903288, 47.521504]);
     const [AjoutReservation, setAjoutReservation] = useState({
         name: '',
@@ -100,9 +103,6 @@ function Reservation() {
             } else {
                 setErrorMessage('');
             }
-        }
-        if (name === 'lieu') {
-            setShowMap(true);
         }
     };
 
@@ -411,6 +411,8 @@ function Reservation() {
             });
         }
     };
+
+    const [activeDis, setActiveDis] = useState(false); 
     return (
         <div className='ReservBlock reservation-container'>
             <form onSubmit={handleModif} className="contentReserv">
@@ -453,7 +455,8 @@ function Reservation() {
                         </div>
                         <div className="inputCarat">
                             <label htmlFor="lieu">Location de depart</label>
-                            <input type="text" className={`input ${errors.lieu ? 'input-error' : ''}`} name='lieu' value={AjoutReservation.lieu || ''} onChange={handleChange} />
+                            <input disabled={activeDis} type="text" className={`input ${errors.lieu ? 'input-error' : ''}`} name='lieu' value={AjoutReservation.lieu || ''} onChange={handleChange} onFocus={handleFocus}
+                            onClick={()=>setActiveDis(!activeDis)}/>
                         </div>
 
                         <div className="inputCarat">
