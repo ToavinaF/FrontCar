@@ -13,7 +13,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 // import required modules
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
-import { BASE_URL } from '../../../../apiConfig';
+import { API_URL, BASE_URL } from '../../../../apiConfig';
 
 const Utilisateur = ({ User }) => {
     const progressCircle = useRef(null);
@@ -56,7 +56,7 @@ const Utilisateur = ({ User }) => {
                                     <span> <BsThreeDotsVertical /></span>
                                 </div>
                                 <div className='image'>
-                                    <img src={`${BASE_URL}/storage/${user.photo}`} alt={user.name}  />
+                                    <img src={`${API_URL}/viewimage/${user.photo}`} alt={user.name}  />
                                 </div>
                                 <div className='detail'>
                                     <div className='nom'>

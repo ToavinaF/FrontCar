@@ -5,7 +5,6 @@ import { BsFillSuitcase2Fill } from 'react-icons/bs';
 import { GiCarDoor } from 'react-icons/gi';
 import { TbManualGearboxFilled } from 'react-icons/tb';
 import { NavLink, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
@@ -26,6 +25,7 @@ const DetailCar = () => {
     try {
       const list = await ApiCall(`${API_URL}/detail/${id}`,'GET');
       setCarDetail(list.data.detailCar);
+      console.log(list.data.detailCar);
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +41,7 @@ const DetailCar = () => {
   };
 
   useEffect(() => {
-    // fetchCar();
+    fetchCar();
     fetchGal();
   }, [id]);
 
@@ -75,7 +75,7 @@ const DetailCar = () => {
           {Galerie.map((view, index) => (
             <SwiperSlide key={index}>
               <div className='boucle'>
-                <img src={`${BASE_URL}/storage/GalerieVehicule/${view.image}`} alt={`Galerie image ${index}`} />
+                <img src={`${API_URL}/viewimage/${view.image}`} alt={`Galerie image ${index}`} />
               </div>
             </SwiperSlide>
           ))}
@@ -84,7 +84,7 @@ const DetailCar = () => {
           {Galerie.map((thumb, thumbIndex) => (
             <img
               key={thumbIndex}
-              src={`${BASE_URL}/storage/GalerieVehicule/${thumb.image}`}
+              src={`${API_URL}/viewimage/${thumb.image}`}
               alt={`Thumbnail ${thumbIndex}`}
               className='thumbnailImage'
               onClick={() => handleThumbnailClick(thumbIndex)}

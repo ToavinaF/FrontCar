@@ -3,8 +3,8 @@ import './ArchiveCar.scss'
 import { MdDeleteForever, MdOutlineDelete, MdRestorePage, MdSettingsBackupRestore } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { API_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
 import axios from 'axios';
+import ApiService from '../../axiosConfig';
 
 const ArchiveCar = () => {
   const [viewArchive, setViewArchive] = useState([]);
@@ -15,7 +15,7 @@ const ArchiveCar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await ApiCall(`${API_URL}/ArchiveCar`,'GET');
+      const response = await ApiService.get('/ArchiveCar');
       setViewArchive(response.data.Archive);
       console.log(response.data.Archive);
     } catch (error) {
@@ -25,14 +25,15 @@ const ArchiveCar = () => {
 
   // Supprimer définitivement
   const handDelete = async (id) => {
-    await ApiCall(`${API_URL}/DeleteForce/${id}`,'DELETE');
+    await ApiService.delete(`/DeleteForce/${id}`);
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Supprimé avec succès!');
   };
+  
 
   // Restaurer le véhicule
   const handRestore = async (id) => {
-    await ApiCall(`${API_URL}/retosreCar/${id}`,'GET');
+    await ApiService.get(`/retosreCar/${id}`);
     setViewArchive(viewArchive.filter(item => item.id !== id));
     toast.success('Restauré avec succès!');
   };
@@ -47,7 +48,7 @@ const ArchiveCar = () => {
   });
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/userDelete")
+    ApiService.get('/userDelete')
       .then((response) => {
         setDeletedEntities(response.data);
       })
@@ -62,7 +63,7 @@ const ArchiveCar = () => {
   // Supprimer définitivement
   const handleDelete = async (id, type) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/ForceDelet${type}/${id}`);
+      await ApiService.delete(`/ForceDelet${type}/${id}`);
       setDeletedEntities((prevState) => ({
         ...prevState,
         [type]: prevState[type].filter((item) => item.id !== id),
@@ -77,7 +78,7 @@ const ArchiveCar = () => {
   // Restaurer
   const handleRestore = async (id, type) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/api/restore${type}/${id}`);
+      await ApiService.patch(`/restore${type}/${id}`);
       setDeletedEntities((prevState) => ({
         ...prevState,
         [type]: prevState[type].filter((item) => item.id !== id),
@@ -131,7 +132,7 @@ const ArchiveCar = () => {
                       <td className="btnPlace">
                         <button className='IconBtn force'>
                           <span className='tooltip'>Supprimer</span>
-                          <MdOutlineDelete onClick={() => handleDelete(client.id, 'clients')}
+                          <MdOutlineDelete onClick={() => handleDeleteClient(client.id, 'clients')}
                             className="btnIcon" />
                         </button>
 

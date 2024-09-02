@@ -10,7 +10,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {ApiCall} from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 import { API_URL } from '../../apiConfig';
 
 const ListCar = () => {
@@ -39,7 +39,7 @@ const ListCar = () => {
 
   const fetchData = async () => {
     try {
-      const vehicl = await ApiCall(`${API_URL}/ViewCar`, 'GET');
+      const vehicl = await ApiService.get('/ViewCar');
       console.log(vehicl.data.vehicules);
       setViewCar(vehicl.data.vehicules);
 
@@ -61,18 +61,22 @@ const ListCar = () => {
       toast.error('Utilisateur non connecté');
       return;
     }
-    await ApiCall(`${API_URL}/DeleteCar/${id}`,'DELETE',{
-      idconnecte:userId//envoi ID pour la Deleted_by
-    });
-  
-
-    setViewCar(ViewCar.filter(item => item.id !== id));
-    toast.success('Supprimer avec success!')
-    
+    try {
+      const response = await ApiService.delete(`/DeleteCar/${id}`);
+      if (response.status === 401) {
+        toast.error('Vous devez être connecté pour supprimer ce véhicule');
+        return;
+    }
+      setViewCar(ViewCar.filter(item => item.id !== id));
+      toast.success('Supprimé avec succès!');
+  } catch (error) {
+      toast.error('Erreur lors de la suppression');
+      console.error('Erreur:', error);
   }
   const handleEdit = async (id) => {
     navigate('/Home/modifCar/' + id);
   }
+}
 
 
   // messgae erreur
@@ -119,7 +123,7 @@ const ListCar = () => {
                       }
                     </div>
                     <div className="photoCar">
-                      <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${list.photo}`} alt="" />
+                      <img src={`${API_URL}/viewimage/${list.photo}`} alt="" />
                     </div>
                     <div className="aprop">
                       <div className="icon">

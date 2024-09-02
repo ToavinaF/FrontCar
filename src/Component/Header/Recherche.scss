@@ -1,40 +1,43 @@
 .search-result {
     width: 100%;
-    height:auto;
+    height: auto;
 
-    .result_voiture{
+    .result_voiture {
         width: 100%;
         height: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .search_voiture{
+
+        .search_voiture {
             width: 100%;
             height: 200px;
-            background:var(--body-bg) ;
+            background: var(--body-bg);
             border-radius: 10px;
-            margin:2% 0 2% 0;
-            padding:5% 0 5% 0;
+            margin: 2% 0 2% 0;
+            padding: 5% 0 5% 0;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
             text-align: left;
             gap: 5%;
-            .image-vehi{
+
+            .image-vehi {
                 width: 20%;
                 height: 200px;
-                padding:2% 0 2% 0;
+                padding: 2% 0 2% 0;
                 object-fit: cover;
-                img{
+
+                img {
                     width: 300px;
                     height: 150px;
-                    object-fit: cover;   
+                    object-fit: cover;
                 }
-            }    
-        
-            .desc-vehi{
+            }
+
+            .desc-vehi {
                 // border:2px solid black;
                 width: 65%;
                 height: 200px;
@@ -45,26 +48,28 @@
                 align-items: center;
                 text-align: left;
                 padding: 2.2% 0 3% 5%;
-                .title{
+
+                .title {
                     width: 100%;
                     height: auto;
                     display: flex;
                     flex-direction: row;
                     justify-content: left;
-                    gap:2%;
+                    gap: 2%;
 
-                    h1{
-                        font-size:1.6rem;
+                    h1 {
+                        font-size: 1.6rem;
                         font-weight: bold;
                         text-align: right;
                     }
-                    p{
+
+                    p {
                         font-weight: bold;
-                        margin:6px 0 0 0;
+                        margin: 6px 0 0 0;
                     }
-                }    
-                
-                .parag{
+                }
+
+                .parag {
                     width: 100%;
                     height: auto;
                     display: flex;
@@ -73,12 +78,12 @@
                     align-items: center;
                     gap: 10%;
 
-                    p{
-                        font-size:1.8rem;
+                    p {
+                        font-size: 1.8rem;
                         color: #ffc107;
                         font-weight: bold;
 
-                        span{
+                        span {
                             font-weight: bold;
                             color: white;
                             font-size: 1rem;
@@ -86,30 +91,139 @@
                     }
                 }
 
-                .descri{
+                .descri {
                     width: 100%;
-                    margin:2% 0 0 0;
-                    .Voir{
-                        width:200px;
+                    margin: 2% 0 0 0;
+
+                    .Voir {
+                        width: 200px;
                         height: 35px;
                         background: #ffc107;
-                        padding:1.5% 5% 1.5% 5%;
+                        padding: 1.5% 5% 1.5% 5%;
                         border-radius: 5px;
                         font-weight: bold;
                         cursor: pointer;
                         transition: .3s;
-                        &:hover{
+
+                        &:hover {
                             background: black;
-                            color: #ffc107; 
+                            color: #ffc107;
                         }
                     }
                 }
-                
+
 
             }
-        
-        
-           }
+
+
+        }
+
+
+        .search_clients {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .clients {
+                width: 75%;
+                height: 180px;
+                display: flex;
+                flex-direction: row;
+                justify-content: right;
+                align-items: center;
+                background-color: white;
+                color: black;
+                padding: 2% 0 2% 0;
+                margin: 2% 0 2% 0;
+
+                .profil {
+                    width: 100%;
+                    height: 180px;
+
+                    img {
+                        width: 250px;
+                        height: 180px;
+                        object-fit: cover;
+                    }
+                }
+
+                .detail {
+                    width: 100%;
+                    height: 150px;
+                    text-align: left;
+                    padding: 2% 0 2% 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: right;
+                    margin: 0 0 5% 0;
+                    h1 {
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        text-overflow: ellipsis;
+                        span {
+                            color: black;
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    p {
+                        color: black;
+                        font-weight: bold;
+
+                        span {
+                            color: black;
+                            font-size: 1.5rem;
+
+                        }
+                    }
+
+                    .mail {
+                        font-weight: bold;
+                        color: #ffc107;
+
+                        span {
+                            color: black;
+                            font-size: 1.5rem;
+
+                        }
+                    }
+
+                    .num {
+                        font-weight: normal;
+                        text-align: start;
+                        margin: -5% 0 0 0;
+
+                        span {
+                            color: black;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+                .modif{
+                    width:100%;
+                    height: 150px;
+                    text-align: end;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .icon{
+                        font-size: 5rem;
+                        cursor: pointer;
+                        transition: .2s;
+                        margin:0 0 0 40%;
+                        &:hover{
+                            color: #ffc107;
+                        }
+                    }
+                }
+
+            }
+
+        }
     }
+
 
 }

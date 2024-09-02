@@ -7,8 +7,9 @@ import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+
+import ApiService from '../../axiosConfig';
+import { toast } from 'react-toastify';
 
 
 
@@ -26,28 +27,30 @@ const Header = ({ activepage, setActivePage }) => {
     };
 
     const handleLogout = async () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userFirstname');
-        localStorage.removeItem('email');
-        localStorage.removeItem('Role');
-        localStorage.removeItem('Job');
-        localStorage.removeItem('contact');
+        try {
+            const response = await ApiService.post('/logout');
+            localStorage.clear();
+            navigate('/');
+            toast.success(response.data.message);
+        }
+        catch (error) {
+            console.error('Erreur lors de la deconnexion', error);
+            toast.error('Erreur lors de la deconnexion');
+        }
 
-        navigate('/');
     };
 
-    useEffect(() => {
-        const getCars = async () => {
-            try {
-                const response = await ApiCall(`${API_URL}/ViewCar`,'GET');
-                setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
-            } catch (error) {
-                console.error('Erreur lors de la récupération des voitures:', error);
-            }
-        };
-        getCars();
-    }, []);
+    // useEffect(() => {
+    //     const getCars = async () => {
+    //         try {
+    //             const response = await ApiService.get(`/ViewCar`);
+    //             setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
+    //         } catch (error) {
+    //             console.error('Erreur lors de la récupération des voitures:', error);
+    //         }
+    //     };
+    //     getCars();
+    // }, []);
 
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
     useEffect(() => {
@@ -57,8 +60,17 @@ const Header = ({ activepage, setActivePage }) => {
                 return;
             }
             try {
-                const response = await ApiCall(`${API_URL}/recherche`,'POST', Recherche);
-                navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
+                const response = await ApiService.post(`/recherche`, Recherche);
+                navigate(`/Home/search?keyword=${Recherche.Keyword}`,
+                    {
+                        state:
+                        {
+                            results: response.data.result,
+                            results1: response.data.result1,
+                            results2: response.data.result2,
+                            results3: response.data.result3
+                        }
+                    });
             } catch (error) {
                 console.log('Vérifiez le code', error);
             }
@@ -79,9 +91,9 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await ApiCall(`${API_URL}/notifications`,'GET');
+                const response = await ApiService.get(`/notifications`);
                 setNotifications(response.data);
-        
+
             } catch (error) {
                 console.error('Erreur lors de la récupération des notifications:', error);
             }
@@ -94,7 +106,7 @@ const Header = ({ activepage, setActivePage }) => {
     const handleNotificationClick = async (notificationId) => {
         // Marquer la notification comme lue
         try {
-            await ApiCall(`${API_URL}/notifications/${notificationId}/read`,'POST');
+            await ApiService.post(`/notifications/${notificationId}/read`);
 
             // Mettre à jour l'état local pour refléter le changement
             setNotifications(prevNotifications =>
@@ -130,10 +142,10 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="icon_head">
-                    <div>
+                    {/* <div>
                         <span>5</span>
                         <FaCommentDots className='icon' />
-                    </div>
+                    </div> */}
                     <div>
                         <span>{notifications.length}</span>
                         <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)} />
@@ -146,9 +158,9 @@ const Header = ({ activepage, setActivePage }) => {
                                             className={`notification-item ${notification.is_read ? 'read' : ''}`}
                                             onClick={() => handleNotificationClick(notification.id)}
                                         >
-                                             {console.log(notification.message.trim())}
+                                            {console.log(notification.message.trim())}
                                             {notification.message.trim() === "nouveau client enregistre" ? (
-                                                <FaRegUser  className='notifUser'/>
+                                                <FaRegUser className='notifUser' />
                                             ) : (
                                                 <MdOutlineNotificationsActive className='notif' />
                                             )}
@@ -167,7 +179,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                    <img src={`${BASE_URL}/storage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>

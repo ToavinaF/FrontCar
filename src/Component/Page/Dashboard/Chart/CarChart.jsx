@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_URL } from '../../../../apiConfig';
 import { ApiCall } from '../../../../ApiCall';
+import ApiService from '../../../../axiosConfig';
 
 const CarChart = () => {
   const { t, i18n } = useTranslation();
@@ -12,7 +13,7 @@ const CarChart = () => {
   useEffect(() => {
     const fetchStatistique = async () => {
       try {
-        const response = await ApiCall(`${API_URL}/reservationschart`,'GET');
+        const response = await ApiService.get(`/reservationschart`);
         const data = response.data.map(item => ({
           name: item.date,
           Stats: item.count

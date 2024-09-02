@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import ApiService from '../../axiosConfig';
 
 const AllUser = ({searchTerm}) => {
     const { t } = useTranslation();
@@ -22,7 +22,7 @@ const AllUser = ({searchTerm}) => {
 
     const fetchData = async () => {
         try {
-            const response = await ApiCall(`${API_URL}/users`,'GET');
+            const response = await ApiService.get(`/users`);
             const filteredUsers = response.data.filter(user => user.id !== parseInt(loggedInUserId));
             setAllUserData(filteredUsers);
         } catch (error) {
@@ -40,16 +40,13 @@ const AllUser = ({searchTerm}) => {
     };
     const handleDeleteClick = async (id) => {
         try {
-            const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
-    
-            await ApiCall(`${API_URL}/deleteUser/${id}`,'DELETE', {
-                    deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
-                
-            });
+           
+            await ApiService.delete(`/deleteUser/${id}`);
+           
     
             setAllUserData(allUserData.filter(user => user.id !== id));
             toast.success("Delete User success");
-            toast.success(`Suppression du client réussie par l'utilisateur ID: ${loggedInUserId}`);
+           
         } catch (error) {
             toast.error("Delete User error");
             console.log('Erreur lors de la suppression de l\'utilisateur', error);
@@ -105,7 +102,7 @@ const AllUser = ({searchTerm}) => {
                                 <p className="card-text">{t('allUser.role')}: {user.Role}</p>
                             </div>
                             <div className="user-image">
-                                <img src={`${BASE_URL}/storage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
+                                <img src={`${API_URL}/viewimage/${user.photo}`} alt={user.name} className="rounded-circle border border-white" />
                             </div>
                         </div>
                         <div className="card-body">

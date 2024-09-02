@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SideBar.scss';
 import { IoCarSport } from 'react-icons/io5';
-import {FaArchive, FaCar, FaCarAlt, FaChevronDown, FaUser, FaUsers } from 'react-icons/fa';
+import { FaArchive, FaCar, FaCarAlt, FaChevronDown, FaUser, FaUsers } from 'react-icons/fa';
 import { MdDashboard, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import i18next from 'i18next';
@@ -18,6 +18,7 @@ const SideBar = ({ setActivePage }) => {
     const [role, setRole] = useState('');
     const { t } = useTranslation();
     const currentLanguageCode = Cookies.get('i18next') || 'en';
+    const userRole = localStorage.getItem('role');
 
     useEffect(() => {
         // Récupérer le rôle depuis localStorage et mettre à jour l'état
@@ -42,17 +43,17 @@ const SideBar = ({ setActivePage }) => {
             <div className="logo">
                 <IoCarSport className='icon_logo' />
             </div>
-            
+
             <div className="navlink">
                 <ul>
                     <NavLink to='/Home' className='li-dash' onClick={() => setActivePage('Dashboard')} >
-                        <MdDashboard className={`icon-dash ${activeDropdown === '' ? 'active' : ''}`} onClick={() => handleDropdownClick('')}/>
+                        <MdDashboard className={`icon-dash ${activeDropdown === '' ? 'active' : ''}`} onClick={() => handleDropdownClick('')} />
                         <p>{t('dashboard')}</p>
                     </NavLink>
 
                     <div className='li-dash'>
                         <div>
-                            <FaCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)}/>
+                            <FaCar className={`icon-dash ${activeDropdown === 0 ? 'active' : ''}`} onClick={() => handleDropdownClick(0)} />
                             <p>
                                 {t('car')} <FaChevronDown className={`down ${activeDropdown === 0 ? 'active' : ''}`} />
                             </p>
@@ -70,7 +71,7 @@ const SideBar = ({ setActivePage }) => {
                             </li>
                             <li className='nav_link'>
                                 <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home > Historiques')}>
-                                    <FaHistory  className='icon_list_histo'/> {t('Historique')}
+                                    <FaHistory className='icon_list_histo' /> {t('Historique')}
                                 </NavLink>
                             </li>
                         </div>
@@ -78,7 +79,7 @@ const SideBar = ({ setActivePage }) => {
 
                     <div className='li-dash'>
                         <div>
-                            <FaUser className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)}/>
+                            <FaUser className={`icon-dash ${activeDropdown === 1 ? 'active' : ''}`} onClick={() => handleDropdownClick(1)} />
                             <p>
                                 {t('user')} <FaChevronDown className={`down ${activeDropdown === 1 ? 'active' : ''}`} />
                             </p>
@@ -86,33 +87,34 @@ const SideBar = ({ setActivePage }) => {
                         <div className={`dropDown ${activeDropdown === 1 ? 'active' : ''}`}>
                             <li className='nav_link'>
                                 <NavLink to='/Home/listUser' className='nav_item' onClick={() => setActivePage('Home > All Users')}>
-                                    <FaUsers className='icon_list'/> {t('all_users')}
+                                    <FaUsers className='icon_list' /> {t('all_users')}
                                 </NavLink>
                             </li>
                             {role === 'superAdmin' && (
                                 <li className='nav_link'>
                                     <NavLink to='/Home/AjoutUser' className='nav_item' onClick={() => setActivePage('Home > Add User')}>
-                                        <FaUserPlus className='icon_list'/> {t('add_user')}
+                                        <FaUserPlus className='icon_list' /> {t('add_user')}
                                     </NavLink>
                                 </li>
                             )}
                             <li className='nav_link'>
-                                    <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('Home > All clients')}>
-                                        <PiUserListFill className='icon_list'/> {t('All-Clients')}
-                                    </NavLink>
-                                </li>
-                                {/* <li className='nav_link'>
-                                    <NavLink to='/Home/UsersDelete' className='nav_item' onClick={() => setActivePage('Home > delete')}>
-                                        <RiDeleteBin6Line  className='icon_list_histo'/> {t('All-delete')}
-                                    </NavLink>
-                                </li> */}
+                                <NavLink to='/Home/ListClients' className='nav_item' onClick={() => setActivePage('Home > All clients')}>
+                                    <PiUserListFill className='icon_list' /> {t('All-Clients')}
+                                </NavLink>
+                            </li>
                         </div>
                     </div>
 
-                    <NavLink to='/Home/ArchiveCar' className='li-dash' onClick={() => setActivePage('Home > Corbeille')}>
-                        <RiDeleteBin6Line className={`icon-dash ${activeDropdown === 2 ? 'active' : ''}`} onClick={() => handleDropdownClick(2)} />
-                        <p>{t('Corbeille')}</p>
-                    </NavLink>
+                    {
+                        userRole === 'superAdmin' ? (
+                            <NavLink to='/Home/ArchiveCar' className='li-dash' onClick={() => setActivePage('Home > Corbeille')}>
+                                <RiDeleteBin6Line className={`icon-dash ${activeDropdown === 2 ? 'active' : ''}`} onClick={() => handleDropdownClick(2)} />
+                                <p>{t('Corbeille')}</p>
+                            </NavLink>
+                        ) : (
+                            false
+                        )
+                    }
                 </ul>
             </div>
         </div>
