@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 import ApiService from '../../axiosConfig';
 import { toast } from 'react-toastify';
+import { Breadcrumbs } from '@mui/material';
+import { Typography } from 'antd';
 
 
 
@@ -39,19 +41,6 @@ const Header = ({ activepage, setActivePage }) => {
         }
 
     };
-
-    // useEffect(() => {
-    //     const getCars = async () => {
-    //         try {
-    //             const response = await ApiService.get(`/ViewCar`);
-    //             setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
-    //         } catch (error) {
-    //             console.error('Erreur lors de la récupération des voitures:', error);
-    //         }
-    //     };
-    //     getCars();
-    // }, []);
-
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
     useEffect(() => {
         const fetchData = async () => {
@@ -127,7 +116,12 @@ const Header = ({ activepage, setActivePage }) => {
     return (
         <header>
             <div className="text_logo">
-                <h1 className='Modif'>{t(activepage)}</h1>
+                <Breadcrumbs
+                    separator=""
+                    aria-label="breadcrumb"
+                >
+                    <Typography color="textPrimary"><h1>{activepage}</h1></Typography>
+                </Breadcrumbs>
             </div>
             <div className="left_cont">
                 <div className="search">
@@ -188,7 +182,7 @@ const Header = ({ activepage, setActivePage }) => {
                         <div className="menu">
                             <li>
                                 <NavLink to={'/Home/editUser/' + id}>
-                                    <FaRegUser className='icon' /> {t('Profile')}
+                                    <FaRegUser className='icon'/> {t('Profile')}
                                 </NavLink>
                             </li>
                             <li onClick={handleLogout}>
