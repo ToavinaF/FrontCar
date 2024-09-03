@@ -72,5 +72,7 @@
   "Reservation": "Reservation",
   "Recentez": "Recent Reservation",
   "hi": "Bonjour, bon retour !",
-  "EN" : "FR"
+  "EN" : "FR",
+  "password.Confirmation" : "Comfirmation de la mot de passe"
+
 }

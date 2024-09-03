@@ -143,7 +143,7 @@ console.log(data ,'ajout');
                             {errors.password && <p>{errors.password.message}</p>}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password_confirmation"><span>{t('passwordConfirmation')}</span></label>
+                            <label htmlFor="password_confirmation"><span>{t('password.Confirmation')}</span></label>
                             <input
                                 type="password"
                                 id="password_confirmation"

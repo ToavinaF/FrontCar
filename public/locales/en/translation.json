@@ -71,5 +71,6 @@
   "Reservation": "Reservation",
   "Recentez": "New Reservation",
   "hi" : "Hi, Welcome back!",
-  "EN": "EN" 
+  "EN": "EN" ,
+  "password.Confirmation" : "Password Confirmation"
 }
