@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     document.body.dir = currentLanguageCode === 'ar' ? 'rtl' : 'ltr';
-    document.title = t('app_title');
+    document.title = t('CarRint');
   }, [currentLanguageCode, t]);
 
   useEffect(() => {

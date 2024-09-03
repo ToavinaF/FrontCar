@@ -1,8 +1,11 @@
 import React from 'react'
+import ListCarBreakdown from './listCar/listCarBreakdown';
 
 function AddRepair() {
   return (
-    <div>AddRepair</div>
+    <div>
+      <ListCarBreakdown type={0}/>
+    </div>
   )
 }
 

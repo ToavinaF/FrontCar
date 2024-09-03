@@ -81,22 +81,22 @@ const SideBar = ({ setActivePage }) => {
                         <div>
                             <MdBuild className={`icon-dash ${activeDropdown === 3 ? 'active' : ''}`} onClick={() => handleDropdownClick(3)}/>
                             <p>
-                                {t('Repair')} <FaChevronDown className={`down ${activeDropdown === 3 ? 'active' : ''}`} />
+                                {t('Maintenance')} <FaChevronDown className={`down ${activeDropdown === 3 ? 'active' : ''}`} />
                             </p>
                         </div>
                         <div className={`dropDown ${activeDropdown === 3 ? 'active' : ''}`}>
                             <li className='nav_link'>
-                                <NavLink className={`nav_item `} to='/Home/listcar' onClick={() => setActivePage(`HomeAll > Repair`)}>
-                                    <FaCarAlt className='icon_list' /> {t('all car')}
+                                <NavLink className={`nav_item `} to='/Home/list-car-breakdown' onClick={() => setActivePage(`Home > Car Breakdown`)}>
+                                    <FaCarAlt className='icon_list' /> {t('all Car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/addcar' className='nav_item' onClick={() => setActivePage('Home > Add Car')}>
+                                <NavLink to='/Home/add-car-breakdown' className='nav_item' onClick={() => setActivePage('Home > Add Car Breakdown')}>
                                     <RiPlayListAddFill className='icon_list' /> {t('add car')}
                                 </NavLink>
                             </li>
                             <li className='nav_link'>
-                                <NavLink to='/Home/Historique' className='nav_item' onClick={() => setActivePage('Home > Historiques')}>
+                                <NavLink to='/Home/historique-car-breakdown' className='nav_item' onClick={() => setActivePage('Home > Historiques')}>
                                     <FaHistory  className='icon_list_histo'/> {t('Historique')}
                                 </NavLink>
                             </li>

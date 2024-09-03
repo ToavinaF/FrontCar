@@ -1,8 +1,12 @@
 import React from 'react'
+import ListCarBreakdown from './listCar/listCarBreakdown';
 
-function ListRepair() {
+function ListRepair({searchTerm}) {
+
   return (
-    <div>ListRepair</div>
+    <div>
+      <ListCarBreakdown type={1} searchTerm={searchTerm}/>
+    </div>
   )
 }
 
