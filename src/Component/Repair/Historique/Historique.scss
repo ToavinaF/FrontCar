@@ -1,0 +1,120 @@
+.Historique {
+    width: 100%;
+    height: auto;
+    padding: 2% 5px 0 5px;
+
+    .table-content {
+        width: 100%;
+        height: auto;
+        background: var(--body-bg);
+        margin:2% 0 0 0;
+        padding:2% 0% 2% 0%;
+        border-radius: 10px;
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0% 0 2% 0%;
+            padding: 0 0 2% 4%;
+            font-weight: 500;
+            // border-bottom:1px solid white;
+        }
+
+
+
+        .table {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            padding: 0 4% 0 4%;
+            align-items: center;
+
+            table {
+                width: 100%;
+                height: auto;
+                text-align: center;
+
+                tr {
+                    position: relative;
+                    padding: 0% 0 2% 0;
+                    z-index: 0;
+                    th {
+                        padding: 2% 0 2% 0;
+                        border-bottom: 1px solid var(--blanch);
+                    }
+
+                    td {
+                        padding: 3% 0 0% 0;
+                        color: #828690;
+                        border-bottom: 1px solid var(--blanch);
+                        text-align: center;
+                        .id-col{
+                            color: var(--heading-color);
+                        }
+                        .donner{
+                            color:var(--text-color);
+                        }
+
+                        .three {
+                            font-size: 2rem;
+                            background: #fcf00723;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            text-align: center;
+                            padding: 2px 2px 2px 2px;
+                            color: var(--heading-color);
+                            border: .5px solid #fcf00734;
+                            margin: -10% 0 25% 0;
+
+                            &.active{
+                                background: black;
+
+                            }
+                        }
+
+                        .regle {
+                            color: red;
+                            font-weight: 600;
+                        }
+                        .editData{
+                            border-radius: 25px;
+                            background-color: var(--blanch);
+                            color: var(--body-bg);
+                            text-align: center;
+                            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                        }
+                    }
+
+                    .menu {
+                        position: absolute;
+                        width: 150Px;
+                        height: 60px;
+                        margin: -7% 0 0 -15%;
+                        background: #2f363e;
+                        border-radius: 5px;
+                        z-index: 1;
+                        ul {
+                            li {
+                                list-style-type: none;
+                                background: #fcf00723;
+                                padding: 2% 2% 2% 2%;
+
+
+                                a {
+                                    text-decoration: none;
+                                    color: var(--blanch);
+                                    cursor: pointer;
+                                    &:hover{
+                                        font-weight: bold;
+                                        color: #828690;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
