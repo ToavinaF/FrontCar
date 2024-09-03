@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../../axiosConfig';
 import { API_URL } from '../../../apiConfig';
 import { Typography } from '@mui/material';
+import Loader from '../../Page/loader/Loader';
 
 const ListCarBreakdown = ({type}) => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const ListCarBreakdown = ({type}) => {
   const [ViewCar, setViewCar] = useState([]);
   const [maintenances, setMaintenances] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
+  const [loader, setloader] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -40,6 +42,7 @@ const ListCarBreakdown = ({type}) => {
   };
 
   const fetchData = async () => {
+    setloader(true);
     try {
       const vehicl = await ApiService.get('/ViewCar');
       if(type==0){
@@ -56,6 +59,7 @@ const ListCarBreakdown = ({type}) => {
     } catch (error) {
       console.error('Erreur lors de l\'appel API:', error.response || error.message || error);
     }
+    setloader(false);
   };
   const handleMenu = (index) => {
     if (ShowMenu === index) {
@@ -106,7 +110,12 @@ const ListCarBreakdown = ({type}) => {
     navigate('/Home/galerie/' + id);
   }
 
-
+  if(loader){
+    return (
+        <Loader />
+    )
+    }
+  else
   return (
     <>
       <div className="contenaire">

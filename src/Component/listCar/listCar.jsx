@@ -12,7 +12,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../axiosConfig';
 import { API_URL } from '../../apiConfig';
-import { Loader } from 'rsuite';
+import { Skeleton } from 'antd';
+import { Box, CircularProgress } from '@mui/material';
+import Loader from '../Page/loader/Loader';
 
 const ListCar = () => {
   const location = useLocation();
@@ -21,6 +23,7 @@ const ListCar = () => {
   const navigate = useNavigate();
   const [ViewCar, setViewCar] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
+  const [loader, setloader] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -39,6 +42,7 @@ const ListCar = () => {
   };
 
   const fetchData = async () => {
+    setloader(true);
     try {
       const vehicl = await ApiService.get('/ViewCar');
       console.log(vehicl.data.vehicules);
@@ -47,6 +51,7 @@ const ListCar = () => {
     } catch (error) {
       console.error('Erreur lors de l\'appel API:', error.response || error.message || error);
     }
+    setloader(false);
   };
   const handleMenu = (index) => {
     if (ShowMenu === index) {
@@ -97,12 +102,14 @@ const ListCar = () => {
     navigate('/Home/galerie/' + id);
   }
 
-
+if(loader){
+  return (
+    <Loader />
+  )
+}
+else
   return (
     <>
-        {/* <div style={{ height: 200, background: '#000' }}>
-          <Loader inverse center content="loading..." />
-        </div> */}
       <div className="contenaire">
         {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
           <p onClick={handleClick} >{message}</p>

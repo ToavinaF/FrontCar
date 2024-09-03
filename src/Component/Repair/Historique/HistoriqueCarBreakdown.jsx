@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../../axiosConfig';
 import { CircularProgress } from '@mui/material';
+import Loader from '../../Page/loader/Loader';
 
 function HistoriqueCarBreakdown() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function HistoriqueCarBreakdown() {
     const [selectedVehicule, setSelectedVehicule] = useState({});
     const [statut, setStatut] = useState("");
     const [load, setload] = useState(false);
+    const [loader, setloader] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,12 +32,14 @@ function HistoriqueCarBreakdown() {
     }, []);
 
     const fetchHistorique = async () => {
+        setloader(true);
         try {
             const response = await ApiService.get('/maintenance/historique');
             setHisto(response.data);
         } catch (error) {
             toast.error("Erreur lors de la récupération de l'historique.");
         } 
+        setloader(false);
     };
 
   
@@ -65,6 +69,12 @@ function HistoriqueCarBreakdown() {
             second: '2-digit'
           });
     }
+    if(loader){
+        return (
+            <Loader />
+        )
+        }
+    else
     return (
         <div className='Historique'>
             <div>
