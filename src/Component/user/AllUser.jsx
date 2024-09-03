@@ -40,16 +40,13 @@ const AllUser = ({searchTerm}) => {
     };
     const handleDeleteClick = async (id) => {
         try {
-            const loggedInUserId = localStorage.getItem('id'); // Récupérer l'ID de l'utilisateur depuis le localStorage
-    
-            await ApiService.delete(`/deleteUser/${id}`, {
-                data: { 
-                    deleted_by: loggedInUserId // Envoyer l'ID de l'utilisateur qui supprime
-                }
-            });
+           
+            await ApiService.delete(`/deleteUser/${id}`);
+           
     
             setAllUserData(allUserData.filter(user => user.id !== id));
             toast.success("Delete User success");
+           
         } catch (error) {
             toast.error("Delete User error");
             console.log('Erreur lors de la suppression de l\'utilisateur', error);

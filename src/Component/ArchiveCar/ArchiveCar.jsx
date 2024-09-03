@@ -63,7 +63,7 @@ const ArchiveCar = () => {
   // Supprimer définitivement
   const handleDelete = async (id, type) => {
     try {
-      await ApiService.delete(`/DeleteForce/${id}`);
+      await ApiService.delete(`/ForceDelet${type}/${id}`);
       setDeletedEntities((prevState) => ({
         ...prevState,
         [type]: prevState[type].filter((item) => item.id !== id),
@@ -132,7 +132,7 @@ const ArchiveCar = () => {
                       <td className="btnPlace">
                         <button className='IconBtn force'>
                           <span className='tooltip'>Supprimer</span>
-                          <MdOutlineDelete onClick={() => handleDeleteClient(client.id, 'clients')}
+                          <MdOutlineDelete onClick={() => handleDelete(client.id, 'clients')}
                             className="btnIcon" />
                         </button>
 
