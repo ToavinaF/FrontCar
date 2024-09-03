@@ -5,13 +5,14 @@ import { FaCommentDots, FaRegUser } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import { GrLanguage } from "react-icons/gr";
 import ApiService from '../../axiosConfig';
 import { toast } from 'react-toastify';
 import { Breadcrumbs } from '@mui/material';
 import { Typography } from 'antd';
+import i18next from 'i18next';
 
 
 
@@ -23,6 +24,7 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
+    const [activelang, setactivelang] = useState('EN');
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -113,6 +115,13 @@ const Header = ({ activepage, setActivePage }) => {
         // Afficher ou masquer les notifications
         setShowNotifications(!showNotifications);
     };
+
+    // change language
+    const handleLanguageChange = (code) => {
+        i18next.changeLanguage(code);
+        Cookies.set('i18next', code);
+        // console.log('Language changed to:', code);
+    }
     return (
         <header>
             <div className="text_logo">
@@ -182,7 +191,7 @@ const Header = ({ activepage, setActivePage }) => {
                         <div className="menu">
                             <li>
                                 <NavLink to={'/Home/editUser/' + id}>
-                                    <FaRegUser className='icon'/> {t('Profile')}
+                                    <FaRegUser className='icon' /> {t('Profile')}
                                 </NavLink>
                             </li>
                             <li onClick={handleLogout}>
@@ -190,6 +199,22 @@ const Header = ({ activepage, setActivePage }) => {
                             </li>
                         </div>
                     </div>
+                </div>
+                <div className="language">
+                    <div className="iclan" onClick={()=>handleClick(1)}>
+                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`}/>
+                        <p className='pchang'>{t('EN')}</p>
+                    </div>
+                    <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
+                        <li><button className='flag-icon flag-icon-fr' 
+                        onClick={()=>handleLanguageChange('fr')} 
+                        title='Français'>
+                        </button></li>
+                        <li><button className='flag-icon flag-icon-gb' 
+                        onClick={()=>handleLanguageChange('en')} 
+                        title='English'>
+                        </button></li>
+                    </ul>
                 </div>
             </div>
         </header>

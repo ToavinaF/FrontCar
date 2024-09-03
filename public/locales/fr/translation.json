@@ -71,5 +71,6 @@
   "jours": "/jours",
   "Reservation": "Reservation",
   "Recentez": "Recent Reservation",
-  "hi": "Bonjour, bon retour !"
+  "hi": "Bonjour, bon retour !",
+  "EN" : "FR"
 }
