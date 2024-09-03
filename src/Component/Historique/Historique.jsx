@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../axiosConfig';
+import Loader from '../Page/loader/Loader';
 
 function Historique() {
     const navigate = useNavigate();
@@ -18,11 +19,14 @@ function Historique() {
     const [vehicules, setVehicules] = useState([]);
     const [selectedVehicule, setSelectedVehicule] = useState({});
     const [statut, setStatut] = useState("");
+    const [loader, setloader] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
+            setloader(true);
             await fetchHistorique();
             await fetchVehicules();
+            setloader(false);
         };
         fetchData();
     }, []);
@@ -144,6 +148,12 @@ function Historique() {
     const handleEditRes = (id) => {
         navigate(`/Home/modifres/${id}`);
     }
+    if(loader){
+    return (
+        <Loader />
+    )
+    }
+    else
     return (
         <div className='Historique'>
             <div>

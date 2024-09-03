@@ -8,20 +8,21 @@ import { NavLink } from 'react-router-dom';
 import { API_URL } from '../../apiConfig';
 import { ApiCall } from '../../ApiCall';
 import ApiService from '../../axiosConfig';
+import Loader from '../Page/loader/Loader';
 
 const ListClients = () => {
   const [clients, setClients] = useState([]);
   const [reservationCounts, setReservationCounts] = useState({});
+  const [loader, setloader] = useState(true);
 
-
-  useEffect(() => {
-    // Fetch clients data
-    ApiService.get('/clients')
+  const fetchData=async()=>{
+    setloader(true);
+      await ApiService.get('/clients')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
     // Fetch reservation counts
-    ApiService.get('/countReservedClient')
+    await ApiService.get('/countReservedClient')
       .then(response => {
         const counts = response.data.count.reduce((acc, item) => {
           acc[item.id_client] = item.total;
@@ -30,6 +31,12 @@ const ListClients = () => {
         setReservationCounts(counts);
       })
       .catch(error => console.error('Error fetching reservation counts:', error));
+      setloader(false);
+  }
+  useEffect(() => {
+    // Fetch clients data
+    fetchData();
+    
   }, []);
   const handleDeleteClick = async (id) => {
     const userId = localStorage.getItem('id');
@@ -47,7 +54,12 @@ const ListClients = () => {
 };
 
 
-
+if(loader){
+  return (
+      <Loader />
+  )
+  }
+  else
   return (
     <div className='content-user'>
       <div className='All-user'>
