@@ -6,7 +6,7 @@ import { GiCarDoor } from "react-icons/gi";
 import { TbManualGearboxFilled } from "react-icons/tb";
 import { MdDeleteForever, MdOutlineInsertPhoto, MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,7 +14,6 @@ import ApiService from '../../axiosConfig';
 import { API_URL } from '../../apiConfig';
 
 const ListCar = () => {
-  const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
