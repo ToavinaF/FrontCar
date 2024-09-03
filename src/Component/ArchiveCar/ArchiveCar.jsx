@@ -5,15 +5,15 @@ import { toast } from 'react-toastify';
 import { API_URL } from '../../apiConfig';
 import axios from 'axios';
 import ApiService from '../../axiosConfig';
+import Loader from '../Page/loader/Loader';
 
 const ArchiveCar = () => {
   const [viewArchive, setViewArchive] = useState([]);
+  const [loader, setloader] = useState(true);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
+    setloader(true);
     try {
       const response = await ApiService.get('/ArchiveCar');
       setViewArchive(response.data.Archive);
@@ -21,6 +21,7 @@ const ArchiveCar = () => {
     } catch (error) {
       console.error("Erreur lors de la récupération des archives:", error);
     }
+    setloader(false);
   };
 
   // Supprimer définitivement
@@ -47,17 +48,24 @@ const ArchiveCar = () => {
     users: [],
   });
 
-  useEffect(() => {
+  const fechAllData = async()=>{
+    setloader(true);
     ApiService.get('/userDelete')
-      .then((response) => {
-        setDeletedEntities(response.data);
-      })
-      .catch((error) => {
-        console.error(
-          "There was an error fetching the deleted entities!",
-          error
-        );
-      });
+    .then((response) => {
+      setDeletedEntities(response.data);
+    })
+    .catch((error) => {
+      console.error(
+        "There was an error fetching the deleted entities!",
+        error
+      );
+    });
+    setloader(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+    fechAllData();
   }, []);
 
   // Supprimer définitivement
@@ -91,7 +99,12 @@ const ArchiveCar = () => {
   };
 
   // end users and clients deleted
-
+  if(loader){
+    return (
+        <Loader />
+    )
+    }
+    else
   return (
     <div className='ContArchive'>
       <div className="table-Archive">
