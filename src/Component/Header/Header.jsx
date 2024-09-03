@@ -97,7 +97,7 @@ const Header = ({ activepage, setActivePage }) => {
         try {
             await ApiService.post(`/notifications/${notificationId}/read`);
 
-            // Mettre à jour l'état local pour refléter le changement
+            // Mettre à jour l'état
             setNotifications(prevNotifications =>
                 prevNotifications.map(notification =>
                     notifications.id === notificationId
