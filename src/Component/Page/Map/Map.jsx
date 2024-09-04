@@ -7,6 +7,9 @@ import './Map.scss';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import IconUrl from 'leaflet/dist/images/marker-icon.png';
 import ShadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
+import { API_URL } from '../../../apiConfig';
+import { ApiCall } from '../../../ApiCall';
 import IconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import { Form } from 'react-bootstrap';
 
@@ -31,7 +34,7 @@ const Map = () => {
 
   const fetchMaps = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/reservations');
+      const response = await ApiCall(`${API_URL}/reservations`,'GET');
       setMaps(response.data);
       if (response.data.length > 0) {
         setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);

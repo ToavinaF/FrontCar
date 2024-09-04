@@ -4,6 +4,7 @@ import './Login.scss';
 import { IoCarSport } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../../TokenContext';
+import ApiService from '../../axiosConfig';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8000/api/login', {
+            const response = await ApiService.post(`/login`,{
                 email,
                 password,
             }, {
@@ -39,7 +40,7 @@ const Login = () => {
                 localStorage.setItem('photo', response.data.photo);
                 localStorage.setItem('firstname', response.data.userFirstname);
                 localStorage.setItem('userId', response.data.userId);
-
+                localStorage.setItem('auth', response.data.auth);
 
                 // Rediriger vers la page d'accueil ou autre page protégée
                 navigate('/home');

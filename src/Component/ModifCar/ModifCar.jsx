@@ -12,6 +12,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/swiper-bundle.min.css'; // Importer les styles Swiper
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_URL, BASE_URL } from '../../apiConfig';
+import ApiService from '../../axiosConfig';
 
 
 const ModifCar = () => {
@@ -70,7 +72,7 @@ const ModifCar = () => {
 
   const fetchGal = async () => {
     try {
-      const galView = await axios.get("http://127.0.0.1:8000/api/viewGalerie/" + id);
+      const galView = await ApiService.get(`/viewGalerie/${id}`);
       setCurrentGalerie(galView.data.galerie);
       console.log(galView.data.galerie);
     } catch (error) {
@@ -84,7 +86,7 @@ const ModifCar = () => {
 
   const fetchModif = async () => {
     try {
-      const affiche = await axios.get("http://127.0.0.1:8000/api/detail/" + id);
+      const affiche = await ApiService.get(`/detail/${id}`);
 
       setFormData(affiche.data.detailCar);
       setCurrentImage(affiche.data.detailCar.photo || []);
@@ -120,7 +122,7 @@ const ModifCar = () => {
       data.append('images[]', file);
     });
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/updateCare/" + id, data, {
+      const response = await ApiService.post(`/updateCare/${id}`, data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -151,7 +153,7 @@ const ModifCar = () => {
   const handDelete = async (id) => {
     try {
       console.log(id);
-      await axios.delete('http://127.0.0.1:8000/api/PhotoDelete/' + id);
+      await ApiService.delelte(`/PhotoDelete/${id}`);
       const newGalerie = currentGalerie.filter((item) => {
         return (
           item.id !== id
@@ -176,7 +178,7 @@ const ModifCar = () => {
                         currentGalerie.map((imageName, index) => (
                           <div key={index} className="partImg" onClick={(e) => e.stopPropagation()}>
                             <div className="image-container">
-                              <img src={`http://127.0.0.1:8000/storage/GalerieVehicule/${imageName.image}`} alt={`Current ${index}`} />
+                              <img src={`${BASE_URL}/storage/GalerieVehicule/${imageName.image}`} alt={`Current ${index}`} />
                               <div className="cach"><CiTrash className='check' onClick={() => handDelete(imageName.id)} /></div>
                             </div>
                           </div>

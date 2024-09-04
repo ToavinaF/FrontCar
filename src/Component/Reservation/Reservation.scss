@@ -1,3 +1,26 @@
+// .rs-picker-toggle{
+//     background-color:#292929 !important;
+// }
+// .rs-calendar{
+//     background-color:#292929 !important;
+//     color: aliceblue !important;
+// }
+
+// .rs-picker-toggle-input {
+//     background-color: #292929 !important; /* Couleur de fond de l'input */
+//     color: white !important; /* Couleur du texte dans l'input */
+//     border: 1px solid #444444 !important; /* Bordure de l'input */
+//     // padding: 8px; /* Ajuster le padding si nécessaire */
+// }
+
+// .rs-picker-toggle-value {
+//     background-color: #292929 !important;
+//     color: white !important; /* Texte des dates */
+//   }
+  
+//   .rs-picker-toggle-placeholder {
+//     color: grey !important; /* Couleur du placeholder */
+//   }
 .ReservBlock {
     width: 110%;
     height: auto;
@@ -7,6 +30,7 @@
     align-items: center;
     justify-content: space-evenly;
     color: var(--blanch);
+
     // border: solid 2px white;
     .success-message {
         background-color: var(--color-principal);
@@ -154,15 +178,23 @@
                         border-radius: 10px;
                         color: white;
                         font-size: 1.2rem;
-                        margin:5% 0 0 2px;
+                        margin: 5% 0 0 2px;
                     }
 
-                    .inputrange{
-                        background: #292929;
-                        margin:3% 0 0 0;
+                    .inputrange {
+                        background-color: #292929;
+                        margin: 3% 0 0 0;
                     }
                 }
+                .map{
+                    width: 600px;
+                    height: 600px;
+                    position: absolute;
+                    top:1%;
+                    left: 50%;
+                    z-index: 10000;
 
+                }
             }
 
             .NavRight {
@@ -173,7 +205,7 @@
                 flex-direction: column;
                 justify-content: space-around;
                 align-items: center;
-                padding:2% 0 2% 0;
+                padding: 2% 0 2% 0;
 
                 .imgCar {
                     width: 70%;
@@ -246,4 +278,3 @@
 
     }
 }
-  

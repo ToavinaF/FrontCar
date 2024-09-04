@@ -6,7 +6,8 @@ export const ApiCall = async (url, method, data = null, config = {}) => {
     const response = await axios({
       url,
       method,
-      data,
+      data: method === 'DELETE' ? undefined : data,
+      params: method === 'DELETE' ? data : undefined,
       ...config,
     });
     return response;
