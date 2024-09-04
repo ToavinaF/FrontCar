@@ -11,7 +11,7 @@ import ApiService from '../../../axiosConfig';
 import { CircularProgress } from '@mui/material';
 import Loader from '../../Page/loader/Loader';
 
-function HistoriqueCarBreakdown() {
+function HistoriqueCarBreakdown({searchTerm}) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [Histo, setHisto] = useState([]);
@@ -69,6 +69,9 @@ function HistoriqueCarBreakdown() {
             second: '2-digit'
           });
     }
+    const filteredhisto = useMemo(()=>{
+        return Histo.filter(val=>(val.label+' '+val.vehicules.marque + ' '+val.vehicules.description+' '+val.vehicules.matricule+' '+formatDate(val.created_at)).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+      },[searchTerm,Histo])
     if(loader){
         return (
             <Loader />
@@ -97,7 +100,7 @@ function HistoriqueCarBreakdown() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Histo.map((histo, index) => (
+                                {filteredhisto.map((histo, index) => (
                                     <tr key={index}>
                                         <td><strong className='id-col'>{index}</strong></td>
                                         <td>{histo.label}</td>

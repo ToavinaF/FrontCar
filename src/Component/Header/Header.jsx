@@ -16,7 +16,7 @@ import i18next from 'i18next';
 
 
 
-const Header = ({ activepage, setActivePage }) => {
+const Header = ({ activepage, onChange,searchTerm }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -139,7 +139,8 @@ const Header = ({ activepage, setActivePage }) => {
                         <input
                             type='text'
                             placeholder="Search here..."
-                            onChange={handleSearch}
+                            onChange={onChange}
+                            value={searchTerm}
                             name="Keyword"
                         />
                     </div>

@@ -39,12 +39,15 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const accesstoken = localStorage.getItem('accessToken');
     console.log(accesstoken)
+    const handleChange=(event)=>{
+        setSearchTerm(event.target.value);
+    }
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} setSearchTerm={setSearchTerm}/>
+                    <Header  activepage={activePage} searchTerm={searchTerm} onChange={handleChange}/>
                     <Theme/>
                 </div>
                 <div className="content">
@@ -88,10 +91,10 @@ const Home = () => {
                         <Route path='/factures/:id' element={<Liste/>}/>
 
                         <Route path="/list-car-breakdown" element={<ListRepair searchTerm={searchTerm}/>} />
-                        <Route path='/add-car-breakdown' element={<AddRepair />} />
+                        <Route path='/add-car-breakdown' element={<AddRepair searchTerm={searchTerm}/>} />
                         <Route path="/add-car-breakdown/detail/:id" element={<DetailCarBreakdown type={0}/>} />
                         <Route path="/car-breakdown/detail/:id/:idMain" element={<DetailCarBreakdown type={1}/>} />
-                        <Route path="/historique-car-breakdown" element={<HistoriqueCarBreakdown/>} />
+                        <Route path="/historique-car-breakdown" element={<HistoriqueCarBreakdown searchTerm={searchTerm}/>} />
                     </Routes> }
 
 
