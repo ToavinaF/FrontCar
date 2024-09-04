@@ -39,7 +39,7 @@ const ListCar = () => {
   const fetchData = async () => {
     try {
       const vehicl = await ApiService.get('/ViewCar');
-      console.log(vehicl.data.vehicules);
+      // console.log(vehicl.data.vehicules);git 
       setViewCar(vehicl.data.vehicules);
 
     } catch (error) {
