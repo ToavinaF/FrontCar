@@ -78,11 +78,10 @@ const ListCar = () => {
       toast.error('Erreur lors de la suppression');
       console.error('Erreur:', error);
     }
-    const handleEdit = async (id) => {
-      navigate('/Home/modifCar/' + id);
-    }
   }
-
+  const handleEdit = async (id) => {
+    navigate('/Home/modifCar/' + id);
+  }
 
   // messgae erreur
   const [count, setCount] = useState(3);
