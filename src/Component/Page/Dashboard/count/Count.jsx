@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import{FaTaxi, FaCar, FaCommentDots, FaUsers} from 'react-icons/fa';
+import{FaTaxi, FaCar, FaCommentDots, FaUsers, FaUserCircle} from 'react-icons/fa';
 import{FiCamera, FiCalendar} from 'react-icons/fi';
 import ApiService from '../../../../axiosConfig';
 
@@ -8,6 +8,7 @@ const Count = () => {
     const [Reserv, SetReser]= useState(0);
     const [Counter ,SetCount ]= useState(0);
     const [Countvehi, SetCountVehi] = useState(0);
+    const [counterCli , SetCounterCli] = useState(0);
     useEffect(()=>{
         fetchData();
     },[])
@@ -17,6 +18,7 @@ const Count = () => {
             SetCount(usercount.data.counter);
             SetCountVehi(usercount.data.vehi);
             SetReser(usercount.data.res);
+            SetCounterCli(usercount.data.cli);
             console.log(usercount);
         } catch (error) {
             console.log("verifier le code");
@@ -59,11 +61,11 @@ const Count = () => {
 
             <div className='single__car'>
                 <div className='card__content'>
-                    <h4>message</h4>
-                    <span>0</span>
+                    <h4>Client</h4>
+                    <span>{counterCli}</span>
                 </div>
                 <span className='card__icon'>
-                    <FaCommentDots color='rgb(0, 255, 213)' />
+                    <FaUserCircle  color='rgb(0, 255, 213)' />
                 </span>
             </div>
         </div>

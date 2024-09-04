@@ -5,14 +5,18 @@ import { FaCommentDots, FaRegUser } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import { GrLanguage } from "react-icons/gr";
 import ApiService from '../../axiosConfig';
+import { toast } from 'react-toastify';
+import { Breadcrumbs } from '@mui/material';
+import { Typography } from 'antd';
+import i18next from 'i18next';
 
 
 
-const Header = ({ activepage, setActivePage }) => {
+const Header = ({ activepage, onChange, searchTerm }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -20,6 +24,7 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
+    const [activelang, setactivelang] = useState('EN');
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -27,14 +32,8 @@ const Header = ({ activepage, setActivePage }) => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/logout");
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userFirstname');
-            localStorage.removeItem('email');
-            localStorage.removeItem('Role');
-            localStorage.removeItem('Job');
-            localStorage.removeItem('contact');
+            const response = await ApiService.post('/logout');
+            localStorage.clear();
             navigate('/');
             toast.success(response.data.message);
         }
@@ -42,21 +41,8 @@ const Header = ({ activepage, setActivePage }) => {
             console.error('Erreur lors de la deconnexion', error);
             toast.error('Erreur lors de la deconnexion');
         }
-        
+
     };
-
-    useEffect(() => {
-        const getCars = async () => {
-            try {
-                const response = await ApiService.get(`/ViewCar`);
-                setViewCar(response.data.vehicules); // Ajustez le chemin selon votre réponse API
-            } catch (error) {
-                console.error('Erreur lors de la récupération des voitures:', error);
-            }
-        };
-        getCars();
-    }, []);
-
     const [Recherche, SetRecherche] = useState({ Keyword: '' });
     useEffect(() => {
         const fetchData = async () => {
@@ -66,7 +52,16 @@ const Header = ({ activepage, setActivePage }) => {
             }
             try {
                 const response = await ApiService.post(`/recherche`, Recherche);
-                navigate(`/Home/search?keyword=${Recherche.Keyword}`, { state: { results: response.data.result, results1: response.data.result1 } });
+                navigate(`/Home/search?keyword=${Recherche.Keyword}`,
+                    {
+                        state:
+                        {
+                            results: response.data.result,
+                            results1: response.data.result1,
+                            results2: response.data.result2,
+                            results3: response.data.result3
+                        }
+                    });
             } catch (error) {
                 console.log('Vérifiez le code', error);
             }
@@ -120,10 +115,22 @@ const Header = ({ activepage, setActivePage }) => {
         // Afficher ou masquer les notifications
         setShowNotifications(!showNotifications);
     };
+
+    // change language
+    const handleLanguageChange = (code) => {
+        i18next.changeLanguage(code);
+        Cookies.set('i18next', code);
+        // console.log('Language changed to:', code);
+    }
     return (
         <header>
             <div className="text_logo">
-                <h1 className='Modif'>{t(activepage)}</h1>
+                <Breadcrumbs
+                    separator=""
+                    aria-label="breadcrumb"
+                >
+                    <Typography color="textPrimary"><h1>{activepage}</h1></Typography>
+                </Breadcrumbs>
             </div>
             <div className="left_cont">
                 <div className="search">
@@ -132,16 +139,17 @@ const Header = ({ activepage, setActivePage }) => {
                         <input
                             type='text'
                             placeholder="Search here..."
-                            onChange={handleSearch}
+                            onChange={onChange}
+                            value={searchTerm}
                             name="Keyword"
                         />
                     </div>
                 </div>
                 <div className="icon_head">
-                    <div>
+                    {/* <div>
                         <span>5</span>
                         <FaCommentDots className='icon' />
-                    </div>
+                    </div> */}
                     <div>
                         <span>{notifications.length}</span>
                         <IoIosNotifications className='icon' onClick={() => handleNotificationClick(notifications.id)} />
@@ -175,7 +183,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="profil_show">
-                <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
+                    <img src={`http://127.0.0.1:8000/api/viewimage/${image}` || 'default-profile.png'} alt="Profile" />
                     <div className="cont-prof" onClick={() => handleClick(0)}>
                         <h1 className='nametitle'>{name}</h1>
                         <p className='prole'>{role}</p>
@@ -192,6 +200,22 @@ const Header = ({ activepage, setActivePage }) => {
                             </li>
                         </div>
                     </div>
+                </div>
+                <div className="language">
+                    <div className="iclan" onClick={() => handleClick(1)}>
+                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`} />
+                        <p className='pchang'>{t('EN')}</p>
+                    </div>
+                    <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
+                        <li><button className='flag-icon flag-icon-fr'
+                            onClick={() => handleLanguageChange('fr')}
+                            title='Français'>
+                        </button></li>
+                        <li><button className='flag-icon flag-icon-gb'
+                            onClick={() => handleLanguageChange('en')}
+                            title='English'>
+                        </button></li>
+                    </ul>
                 </div>
             </div>
         </header>

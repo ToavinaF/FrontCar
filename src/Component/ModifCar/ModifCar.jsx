@@ -178,7 +178,7 @@ const ModifCar = () => {
                         currentGalerie.map((imageName, index) => (
                           <div key={index} className="partImg" onClick={(e) => e.stopPropagation()}>
                             <div className="image-container">
-                              <img src={`${BASE_URL}/storage/GalerieVehicule/${imageName.image}`} alt={`Current ${index}`} />
+                              <img src={`${API_URL}/viewimage/${imageName.image}`} alt={`Current ${index}`} />
                               <div className="cach"><CiTrash className='check' onClick={() => handDelete(imageName.id)} /></div>
                             </div>
                           </div>

@@ -16,20 +16,12 @@ header {
     top: 0;
     .text_logo {
         width: 25%;
+        margin:0 0 0 2%;
         h1 {
             color: white;
             text-align: center;
             font-size: 30px;
         }
-        // .Modif{
-        //     color: #333;
-        //     display: flex;
-        //     border: solid 2px red;
-        //     align-items: center;
-        //     justify-content: center;
-        //     flex-direction: column;
-        //     text-align: center;
-        // }
         .active {
             display: none;
         }
@@ -74,10 +66,10 @@ header {
         .icon_head {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: end;
             width: 10%;
             text-align: center;
-            margin: 1% 2% 0 10%;
+            margin: 1% -1% 0 10%;
             align-items: center;
             position: relative;
 
@@ -301,6 +293,51 @@ header {
                     }
                 }
             }
+        }
+
+        .language{
+            width: 5%;
+            height: auto;
+            padding:1% 0 0 0;
+            margin: 0% 0 0 -4%;
+            cursor: pointer;
+
+            .iclan{
+                text-align: left;
+                .lgchange{
+                    font-size:20px;
+                    &.active{
+                        color: white;
+                    }
+                }
+                .pchang{
+                    text-align: left;
+                    font-size: .7rem;
+                    margin:0 0 0 2.7px;
+                    color: white;
+                }
+            }
+
+            .listlang{
+                display: none;
+                width: 100px;
+                height:auto;
+                padding:4px 0 4px 0;
+                position: absolute;
+                background-color: #828690;
+                right: 3%;
+                text-align: center;
+                border-radius: 10px 0px 10px 10px;
+                &.active{
+                    display: block;
+                }
+
+                li{
+                    list-style-type: none;
+                    font-size: 1.2rem;
+                }
+            }
+            
         }
     }
 }

@@ -1,31 +1,55 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import './DetailCar.scss';
+import './Login.scss';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from 'react-icons/bs';
+import { MdCarRepair } from "react-icons/md";
+import { PiNotepadDuotone } from "react-icons/pi";
+import { TbLicense } from "react-icons/tb";
 import { GiCarDoor } from 'react-icons/gi';
 import { TbManualGearboxFilled } from 'react-icons/tb';
-import { NavLink, useParams } from 'react-router-dom';
+import { Navigate, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 import { useTranslation } from 'react-i18next';
-import { API_URL, BASE_URL } from '../../apiConfig';
-import { ApiCall } from '../../ApiCall';
+import { API_URL, BASE_URL } from '../../../apiConfig';
+import { ApiCall } from '../../../ApiCall';
+import { TextField } from '@mui/material';
 
-const DetailCar = () => {
-  const { id } = useParams();
+const DetailCarBreakdown = ({type}) => {
+  const { id,idMain } = useParams();
+  const location = useLocation()
+  const navigate = useNavigate(location);
   const [CarDetail, setCarDetail] = useState([]);
   const [Galerie, setGalerie] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [maintenance,setMaintenance] = useState(
+   { 
+      id:'',
+      label:'',
+      etat:0,
+      vehicule_id:parseInt(id)
+    }
+  )
   const swiperRef = useRef(null);
 
   const fetchCar = async () => {
     try {
-      const list = await ApiCall(`${API_URL}/detail/${id}`,'GET');
-      setCarDetail(list.data.detailCar);
-      console.log(list.data.detailCar);
+      if(type==0){
+        const list = await ApiCall(`${API_URL}/detail/${id}`,'GET');
+        setCarDetail(list.data.detailCar);
+        console.log(list.data.detailCar);
+      }else{
+        const list = await ApiCall(`${API_URL}/maintenance/${idMain}`,'GET');
+        setCarDetail(list.data.vehicules);
+        setMaintenance(list.data);
+        setIdVehicule(list.data.vehicule_id);
+        console.log(list.data.vehicules);
+      }
+      
     } catch (error) {
       console.error(error);
     }
@@ -52,6 +76,28 @@ const DetailCar = () => {
       swiperRef.current.slideTo(index);
     }
     setActiveIndex(index);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log("maintenances",maintenance);
+      
+      if(type==0){
+        const list = await ApiCall(`${API_URL}/maintenance/add`,'POST',maintenance);
+        //setCarDetail(list.data);
+        console.log(list.data);
+        navigate('/Home/list-car-breakdown')
+      }
+      else{
+        const repair = {...maintenance,etat:1};
+        const list = await ApiCall(`${API_URL}/maintenance/update`,'POST',repair);
+        console.log(list.data);
+        navigate('/Home/list-car-breakdown')
+      }
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -123,14 +169,41 @@ const DetailCar = () => {
           </div>
           <h1>{CarDetail.transmission}</h1>
         </div>
-        <h1>{CarDetail.prix}Ar/jrs</h1>
-        <NavLink className='btn' to={`/Home/reservation/${CarDetail.id}`}>
-          <FaCalendarAlt className='ico' />
-          <span className='text'>Reservation</span>
-        </NavLink>
+        <div className='IconType'>
+          <div className='icon'>
+            <TbLicense className='iconImg' />
+            <h1>{t('Matricule')}</h1>
+          </div>
+          <h1>{CarDetail.matricule}</h1>
+        </div>
+        {type==0?
+        <div className="IconType">
+          <TextField
+          id="outlined-multiline-flexible"
+          label={t('Motif')}
+          multiline
+          fullWidth={true}
+          maxRows={4}
+          value={maintenance.label}
+          onChange={(event)=>setMaintenance({...maintenance,label:event.target.value})}   
+        />
+        </div>
+        :
+        <div className='IconType'>
+          <div className='icon'>
+          <PiNotepadDuotone className='iconImg' />
+            <h1>{t('Motif')}</h1>
+          </div>
+          <h1>{maintenance.label}</h1>
+        </div>
+        }
+        <div className='btn' onClick={handleSubmit}>
+          <MdCarRepair className='ico' />
+          <span className='text'>{type==0?'Add car breakdown':'Fixed Car'}</span>
+        </div>
       </div>
     </div>
   );
 };
 
-export default DetailCar;
+export default DetailCarBreakdown;

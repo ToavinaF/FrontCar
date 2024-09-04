@@ -64,11 +64,12 @@
     "job": "Job",
     "role": "Role"
   },
-  "Nombre de bagage": "Number of language",
+  "Nombre de bagage": "Number of bagage",
   "Boite de vitesse": "Gearbox",
   "Automatique": "Automatic",
   "jours": "/day",
   "Reservation": "Reservation",
   "Recentez": "New Reservation",
-  "hi" : "Hi, Welcome back!"
+  "hi" : "Hi, Welcome back!",
+  "EN": "EN" 
 }

@@ -28,17 +28,26 @@ import Client from '../Clients/Client'
 import Liste from '../Page/Facture/Liste'
 import FactureContext from '../Page/Facture/FactureContext';
 
+import DetailCarBreakdown from '../Repair/DetailCar/DetailCarBreakdown';
+import ListCarBreakdown from '../Repair/listCar/listCarBreakdown';
+import AddRepair from '../Repair/AddRepair';
+import ListRepair from '../Repair/ListRepair';
+import HistoriqueCarBreakdown from '../Repair/Historique/HistoriqueCarBreakdown'
+
 const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
     const accesstoken = localStorage.getItem('accessToken');
     console.log(accesstoken)
+    const handleChange=(event)=>{
+        setSearchTerm(event.target.value);
+    }
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} setSearchTerm={setSearchTerm}/>
+                    <Header  activepage={activePage} searchTerm={searchTerm} onChange={handleChange}/>
                     <Theme/>
                 </div>
                 <div className="content">
@@ -80,6 +89,12 @@ const Home = () => {
 
                         <Route path='/client/:id' element={<Client/>}/>
                         <Route path='/factures/:id' element={<Liste/>}/>
+
+                        <Route path="/list-car-breakdown" element={<ListRepair searchTerm={searchTerm}/>} />
+                        <Route path='/add-car-breakdown' element={<AddRepair searchTerm={searchTerm}/>} />
+                        <Route path="/add-car-breakdown/detail/:id" element={<DetailCarBreakdown type={0}/>} />
+                        <Route path="/car-breakdown/detail/:id/:idMain" element={<DetailCarBreakdown type={1}/>} />
+                        <Route path="/historique-car-breakdown" element={<HistoriqueCarBreakdown searchTerm={searchTerm}/>} />
                     </Routes> }
 
 
