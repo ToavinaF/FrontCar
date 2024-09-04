@@ -24,7 +24,7 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const [activelang, setactivelang] = useState('EN');
+    const [Activelang, setActivelang] = useState('EN');
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -207,7 +207,7 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                     <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
                         <li><button className='flag-icon flag-icon-fr' 
-                        onClick={()=>handleLanguageChange('fr')} 
+                        onClick={()=>{handleLanguageChange('fr')}}
                         title='Français'>
                         </button></li>
                         <li><button className='flag-icon flag-icon-gb' 
