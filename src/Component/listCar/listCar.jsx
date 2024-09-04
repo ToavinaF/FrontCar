@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './listCar.scss';
 import { FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from "react-icons/bs";
@@ -16,7 +16,7 @@ import { Skeleton } from 'antd';
 import { Box, CircularProgress } from '@mui/material';
 import Loader from '../Page/loader/Loader';
 
-const ListCar = () => {
+const ListCar = ({searchTerm}) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -101,6 +101,9 @@ const ListCar = () => {
   const handGalerie = async (id) => {
     navigate('/Home/galerie/' + id);
   }
+  const filteredCar = useMemo(()=>{
+    return ViewCar.filter(val=>(val.marque + ' '+val.description+' '+val.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,ViewCar])
 
 if(loader){
   return (
@@ -117,7 +120,7 @@ else
         }
 
         {
-          ViewCar.map((list, i) => {
+          filteredCar.map((list, i) => {
             return (
               <div key={i} className="ListBlock">
                 <div className='barNav'>

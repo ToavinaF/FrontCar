@@ -71,8 +71,8 @@ const Home = () => {
                       
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path='/search' element={<Recherche/>}/>
-                        <Route path="/listcar" element={<ListCar/>} />
-                        <Route path="/ArchiveCar" element={<ArchiveCar/>}/>
+                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
+                        <Route path="/ArchiveCar" element={<ArchiveCar searchTerm={searchTerm}/>}/>
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />

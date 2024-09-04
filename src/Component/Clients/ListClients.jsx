@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './ListClients.scss';
 import { FaRegTrashAlt } from "react-icons/fa";
 import axios from 'axios';
@@ -10,7 +10,7 @@ import { ApiCall } from '../../ApiCall';
 import ApiService from '../../axiosConfig';
 import Loader from '../Page/loader/Loader';
 
-const ListClients = () => {
+const ListClients = ({searchTerm}) => {
   const [clients, setClients] = useState([]);
   const [reservationCounts, setReservationCounts] = useState({});
   const [loader, setloader] = useState(true);
@@ -52,6 +52,9 @@ const ListClients = () => {
         
 
 };
+const filteredClient = useMemo(()=>{
+  return clients.filter(val=>(val.name + ' '+val.email+' '+val.contact+' '+val.adresse).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+},[searchTerm,clients])
 
 
 if(loader){
@@ -76,7 +79,7 @@ if(loader){
             </tr>
           </thead>
           <tbody>
-            {clients.map(client => (
+            {filteredClient.map(client => (
               <tr key={client.id}>
                 <td>{client.name} {client.firstname}</td>
                 <td>{client.email}</td>
