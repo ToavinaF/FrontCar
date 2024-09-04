@@ -49,7 +49,8 @@ const Map = () => {
 
   const fetchMaps = async () => {
     try {
-      const response = await ApiCall(`${API_URL}/reservations`, 'GET');
+      // const response = await ApiCall(`${API_URL}/reservations`, 'GET');
+      const response = await ApiService.get('/reservations')
       setMaps(response.data);
       if (response.data.length > 0) {
         setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);
@@ -58,7 +59,6 @@ const Map = () => {
       console.error('Error fetching maps:', error);
     }
   };
-
   const handleMapInteractions = (map) => {
     const popup = L.popup();
 
