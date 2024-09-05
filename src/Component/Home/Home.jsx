@@ -59,7 +59,7 @@ const Home = () => {
                         <Route path='/Profile' element={<Profil />} />
                         <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
-                        <Route path="/ListClients" element={<ListClients/>} />
+                        <Route path="/ListClients" element={<ListClients  searchTerm={searchTerm}/>} />
                         <Route path='/usersDelete' element={<UsersDelete/>}/>
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
