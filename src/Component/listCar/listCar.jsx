@@ -24,7 +24,6 @@ const ListCar = ({searchTerm}) => {
   const [ViewCar, setViewCar] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
   const [loader, setloader] = useState(true);
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -105,19 +104,19 @@ const ListCar = ({searchTerm}) => {
     return ViewCar.filter(val=>(val.marque + ' '+val.description+' '+val.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
   },[searchTerm,ViewCar])
 
-if(loader){
-  return (
-    <Loader />
-  )
-}
-else
-  return (
-    <>
-      <div className="contenaire">
-        {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
-          <p onClick={handleClick} >{message}</p>
-        </div>
-        }
+  if (loader) {
+    return (
+      <Loader />
+    )
+  }
+  else
+    return (
+      <>
+        <div className="contenaire">
+          {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
+            <p onClick={handleClick} >{message}</p>
+          </div>
+          }
 
         {
           filteredCar.map((list, i) => {
@@ -167,9 +166,9 @@ else
             )
           })
         }
-      </div>
-    </>
-  );
+        </div>
+      </>
+    );
 }
 
 export default ListCar;

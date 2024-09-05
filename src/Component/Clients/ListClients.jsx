@@ -15,9 +15,9 @@ const ListClients = ({searchTerm}) => {
   const [reservationCounts, setReservationCounts] = useState({});
   const [loader, setloader] = useState(true);
 
-  const fetchData=async()=>{
+  const fetchData = async () => {
     setloader(true);
-      await ApiService.get('/clients')
+    await ApiService.get('/clients')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
@@ -31,12 +31,12 @@ const ListClients = ({searchTerm}) => {
         setReservationCounts(counts);
       })
       .catch(error => console.error('Error fetching reservation counts:', error));
-      setloader(false);
+    setloader(false);
   }
   useEffect(() => {
     // Fetch clients data
     fetchData();
-    
+
   }, []);
   const handleDeleteClick = async (id) => {
     const userId = localStorage.getItem('id');
@@ -45,11 +45,11 @@ const ListClients = ({searchTerm}) => {
       return;
     }
 
-          await ApiService.delete(`/clients/${id}`);
+    await ApiService.delete(`/clients/${id}`);
 
-        setClients(clients.filter(client => client.id !== id));
-        toast.success("Delete client success");
-        
+    setClients(clients.filter(client => client.id !== id));
+    toast.success("Delete client success");
+
 
 };
 const filteredClient = useMemo(()=>{
@@ -57,10 +57,10 @@ const filteredClient = useMemo(()=>{
 },[searchTerm,clients])
 
 
-if(loader){
-  return (
+  if (loader) {
+    return (
       <Loader />
-  )
+    )
   }
   else
   return (
