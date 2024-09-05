@@ -38,25 +38,26 @@ const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
     const accesstoken = localStorage.getItem('accessToken');
-    console.log(accesstoken)
+    const [ResultSearch,setResultSearch] = useState([]);
+    // console.log('liste test :', ResultSearch);
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} setSearchTerm={setSearchTerm}/>
+                    <Header  activepage={activePage} setSearchTerm={setSearchTerm} setResultSearch={setResultSearch}/>
                     <Theme/>
                 </div>
                 <div className="content">
                     
                     { <Routes>
                         <Route path='/dashboard' element={<Dashboard />} />
-                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
+                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm} ResultSearch={ResultSearch}/>} />
                         <Route path='/addcar' element={<Addcar />} />
                         <Route path='/Profile' element={<Profil />} />
-                        <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
+                        <Route path='/listUser' element={<AllUser searchTerm={searchTerm} ResultSearch={ResultSearch}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
-                        <Route path="/ListClients" element={<ListClients/>} />
+                        <Route path="/ListClients" element={<ListClients ResultSearch={ResultSearch} />} />
                         <Route path='/usersDelete' element={<UsersDelete/>}/>
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
@@ -75,7 +76,7 @@ const Home = () => {
                         <Route path="/reservation" element={<Reservation/>} />
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
-                        <Route path='/Historique' element={<Historique searchTerm={searchTerm}/>}/>
+                        <Route path='/Historique' element={<Historique searchTerm={searchTerm} ResultSearch={ResultSearch}/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
 
                         

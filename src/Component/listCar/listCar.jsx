@@ -16,7 +16,7 @@ import { Skeleton } from 'antd';
 import { Box, CircularProgress } from '@mui/material';
 import Loader from '../Page/loader/Loader';
 
-const ListCar = () => {
+const ListCar = ({ ResultSearch }) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -102,71 +102,124 @@ const ListCar = () => {
     navigate('/Home/galerie/' + id);
   }
 
-if(loader){
-  return (
-    <Loader />
-  )
-}
-else
-  return (
-    <>
-      <div className="contenaire">
-        {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
-          <p onClick={handleClick} >{message}</p>
-        </div>
-        }
+  if (loader) {
+    return (
+      <Loader />
+    )
+  }
+  else
+    return (
+      <>
+        <div className="contenaire">
+          {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
+            <p onClick={handleClick} >{message}</p>
+          </div>
+          }
 
-        {
-          ViewCar.map((list, i) => {
-            return (
-              <div key={i} className="ListBlock">
-                <div className='barNav'>
-                  <h1 className='tlt'>{list.marque}</h1>
-                  <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
-                  {
-                    ShowMenu === i && (
-                      <div className="menu">
-                        <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
-                        <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
-                        <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
+          {
+            ResultSearch ? (
+              <>
+                {
+                  ResultSearch.map((list, i) => (
+                    <div key={i} className="ListBlock">
+                      <div className='barNav'>
+                        <h1 className='tlt'>{list.marque}</h1>
+                        <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
+                        {
+                          ShowMenu === i && (
+                            <div className="menu">
+                              <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
+                              <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
+                              <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
+                            </div>
+                          )
+                        }
                       </div>
-                    )
-                  }
-                </div>
-                <div className="photoCar">
-                  <img src={`${API_URL}/viewimage/${list.photo}`} alt="" />
-                </div>
-                <div className="aprop">
-                  <div className="icon">
-                    <span className='tooltip'>Place</span>
-                    <FaUser className='imgIcon' />
-                    <h3> {list.place} </h3>
-                  </div>
-                  <div className="icon">
-                    <span className='tooltip'>Bagage</span>
-                    <BsFillSuitcase2Fill className='imgIcon' />
-                    <h3>{list.bagage} </h3>
-                  </div>
-                  <div className="icon">
-                    <span className='tooltip'>Porte</span>
-                    <GiCarDoor className='imgIcon' />
-                    <h3>{list.porte} </h3>
-                  </div>
-                  <div className="icon">
-                    <span className='tooltip'>Transmission</span>
-                    <TbManualGearboxFilled className='imgIcon' />
-                    <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
-                  </div>
-                </div>
-                <h2>{list.prix}Ar/jrs</h2>
-                <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
-              </div>
+                      <div className="photoCar">
+                        <img src={`${API_URL}/viewimage/${list.photo}`} alt="" />
+                      </div>
+                      <div className="aprop">
+                        <div className="icon">
+                          <span className='tooltip'>Place</span>
+                          <FaUser className='imgIcon' />
+                          <h3> {list.place} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Bagage</span>
+                          <BsFillSuitcase2Fill className='imgIcon' />
+                          <h3>{list.bagage} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Porte</span>
+                          <GiCarDoor className='imgIcon' />
+                          <h3>{list.porte} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Transmission</span>
+                          <TbManualGearboxFilled className='imgIcon' />
+                          <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
+                        </div>
+                      </div>
+                      <h2>{list.prix}Ar/jrs</h2>
+                      <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
+                    </div>
+                  ))
+                }
+              </>
+            ) : (
+              <>
+                {
+                  ViewCar.map((list, i) => (
+                    <div key={i} className="ListBlock">
+                      <div className='barNav'>
+                        <h1 className='tlt'>{list.marque}</h1>
+                        <span onClick={() => handleMenu(i)}><CgDetailsMore className='bar' /></span>
+                        {
+                          ShowMenu === i && (
+                            <div className="menu">
+                              <button onClick={() => handleEdit(list.id)}><MdUpdate className='del' />Modifier</button>
+                              <button onClick={() => handDelete(list.id)}><MdDeleteForever className='del' />Supprimer</button>
+                              <button onClick={() => handGalerie(list.id)}><MdOutlineInsertPhoto className='del' />Gallerie</button>
+                            </div>
+                          )
+                        }
+                      </div>
+                      <div className="photoCar">
+                        <img src={`${API_URL}/viewimage/${list.photo}`} alt="" />
+                      </div>
+                      <div className="aprop">
+                        <div className="icon">
+                          <span className='tooltip'>Place</span>
+                          <FaUser className='imgIcon' />
+                          <h3> {list.place} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Bagage</span>
+                          <BsFillSuitcase2Fill className='imgIcon' />
+                          <h3>{list.bagage} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Porte</span>
+                          <GiCarDoor className='imgIcon' />
+                          <h3>{list.porte} </h3>
+                        </div>
+                        <div className="icon">
+                          <span className='tooltip'>Transmission</span>
+                          <TbManualGearboxFilled className='imgIcon' />
+                          <h3>{list.transmission === 'Automatique' ? 'Auto.' : 'Man.'}</h3>
+                        </div>
+                      </div>
+                      <h2>{list.prix}Ar/jrs</h2>
+                      <NavLink className='btn' to={`/Home/detail/${list.id}`}>{t('Details')}</NavLink>
+                    </div>
+                  ))
+                }
+              </>
             )
-          })
-        }
-      </div>
-    </>
-  );
+          }
+        </div>
+      </>
+    );
 }
 
 export default ListCar;

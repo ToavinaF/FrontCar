@@ -42,7 +42,7 @@ const mapLocal = async () => {
   try {
     const response = await ApiService.get('viewMap');
     setViewMap(response.data);
-    console.log('vouture:',response.data);
+    // console.log('vouture:',response.data);
   } catch (error) {
     console.error('Error fetching maps:', error);
   }

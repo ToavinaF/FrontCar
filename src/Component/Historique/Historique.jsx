@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../axiosConfig';
 import Loader from '../Page/loader/Loader';
 
-function Historique() {
+function Historique({ResultSearch}) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [Histo, setHisto] = useState([]);
@@ -179,98 +179,199 @@ function Historique() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Histo.map((histo, index) => (
-                                    <tr key={index}>
-                                        <td><strong className='id-col'>{histo.id_locations}</strong></td>
-                                        <td>{histo.client_name}</td>
-                                        <td>{editingId === histo.id_locations ? (selectedVehicule.marque || histo.marque) : histo.marque}</td>
-                                        <td>
-                                            {editingId === histo.id_locations ? (
-                                                <select value={editedData.vehicule_id} onChange={handleVehiculeChange}>
-                                                    <option value="" className="editData">{histo.matricule}</option>
-                                                    {vehicules.map(vehicule => (
-                                                        <option key={vehicule.id} value={vehicule.id}>{vehicule.matricule}</option>
-                                                    ))}
-                                                </select>
-                                            ) : (
-                                                histo.matricule
-                                            )}
-                                        </td>
-                                        <td>{editingId === histo.id_locations ? (selectedVehicule.prix || histo.prix) : histo.prix}</td>
-                                        <td>
-                                            {editingId === histo.id_locations ? (
-                                                <input
-                                                    type="date" className="editData"
-                                                    value={editedData.DateDebut}
-                                                    onChange={e => setEditedData(prevData => ({
-                                                        ...prevData,
-                                                        DateDebut: e.target.value,
-                                                        PriceTotal: calculateTotalPrice(e.target.value, editedData.DateFin, selectedVehicule.prix)
-                                                    }))}
-                                                />
-                                            ) : (
-                                                histo.DateDebut
-                                            )}
-                                        </td>
-                                        <td>
-                                            {editingId === histo.id_locations ? (
-                                                <input
-                                                    type="date" className="editData"
-                                                    value={editedData.DateFin}
-                                                    onChange={e => setEditedData(prevData => ({
-                                                        ...prevData,
-                                                        DateFin: e.target.value,
-                                                        PriceTotal: calculateTotalPrice(editedData.DateDebut, e.target.value, selectedVehicule.prix)
-                                                    }))}
-                                                />
-                                            ) : (
-                                                histo.DateFin
-                                            )}
-                                        </td>
-                                        <td>
-                                            {editingId === histo.id_locations ? (
-                                                <select value={editedData.statut} onChange={handleStatutChange} className="editData">
-                                                    <option value="pending">En attente</option>
-                                                    <option value="confirmed">Confirmée</option>
-                                                    <option value="uncofirmed">Annulée</option>
-                                                </select>
-                                            ) : (
-                                                histo.statut
-                                            )}
-                                        </td>
-                                        <td>{editingId === histo.id_locations ? editedData.PriceTotal : histo.PriceTotal}</td>
-                                        <td>
-                                            <BsThreeDots
-                                                className={`three ${isActive === index ? 'active' : ''}`}
-                                                onClick={() => handleMenu(index)}
-                                            />
-                                            {isActive === index && (
-                                                <div className='menu'>
-                                                    <ul>
-                                                        <li>
-                                                            <a onClick={() => suppr(histo.id_locations)}>Supprimer</a>
-                                                        </li>
-                                                        <li>
-                                                            {editingId === histo.id_locations ? (
-                                                                <a onClick={() => handleSave(histo.id_locations)}>Sauvegarder</a>
-                                                            ) : (
-                                                                <>
-                                                                    <a onClick={() => handleEdit(histo)}>Modifier</a> <br />
-                                                                    <a onClick={() => handleEditRes(histo.id_locations)}>ModifRes</a>
-                                                                </>
-                                                            )}
-                                                        </li>
-                                                        {editingId === histo.id_locations && (
-                                                            <li>
-                                                                <a onClick={() => setEditingId(null)}>Annuler</a>
-                                                            </li>
+                                {
+                                    ResultSearch ? (
+                                        <>
+                                            {ResultSearch.map((histo, index) => (
+                                                <tr key={index}>
+                                                    <td><strong className='id-col'>{histo.id}</strong></td>
+                                                    <td>{histo.name}</td>
+                                                    <td>{editingId === histo.id ? (selectedVehicule.marque || histo.marque) : histo.marque}</td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <select value={editedData.vehicule_id} onChange={handleVehiculeChange}>
+                                                                <option value="" className="editData">{histo.matricule}</option>
+                                                                {vehicules.map(vehicule => (
+                                                                    <option key={vehicule.id} value={vehicule.id}>{vehicule.matricule}</option>
+                                                                ))}
+                                                            </select>
+                                                        ) : (
+                                                            histo.matricule
                                                         )}
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
+                                                    </td>
+                                                    <td>{editingId === histo.id_locations ? (selectedVehicule.prix || histo.prix) : histo.prix}</td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <input
+                                                                type="date" className="editData"
+                                                                value={editedData.DateDebut}
+                                                                onChange={e => setEditedData(prevData => ({
+                                                                    ...prevData,
+                                                                    DateDebut: e.target.value,
+                                                                    PriceTotal: calculateTotalPrice(e.target.value, editedData.DateFin, selectedVehicule.prix)
+                                                                }))}
+                                                            />
+                                                        ) : (
+                                                            histo.DateDebut
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <input
+                                                                type="date" className="editData"
+                                                                value={editedData.DateFin}
+                                                                onChange={e => setEditedData(prevData => ({
+                                                                    ...prevData,
+                                                                    DateFin: e.target.value,
+                                                                    PriceTotal: calculateTotalPrice(editedData.DateDebut, e.target.value, selectedVehicule.prix)
+                                                                }))}
+                                                            />
+                                                        ) : (
+                                                            histo.DateFin
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <select value={editedData.statut} onChange={handleStatutChange} className="editData">
+                                                                <option value="pending">En attente</option>
+                                                                <option value="confirmed">Confirmée</option>
+                                                                <option value="uncofirmed">Annulée</option>
+                                                            </select>
+                                                        ) : (
+                                                            histo.statut
+                                                        )}
+                                                    </td>
+                                                    <td>{editingId === histo.id_locations ? editedData.PriceTotal : histo.PriceTotal}</td>
+                                                    <td>
+                                                        <BsThreeDots
+                                                            className={`three ${isActive === index ? 'active' : ''}`}
+                                                            onClick={() => handleMenu(index)}
+                                                        />
+                                                        {isActive === index && (
+                                                            <div className='menu'>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a onClick={() => suppr(histo.id_locations)}>Supprimer</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        {editingId === histo.id_locations ? (
+                                                                            <a onClick={() => handleSave(histo.id_locations)}>Sauvegarder</a>
+                                                                        ) : (
+                                                                            <>
+                                                                                <a onClick={() => handleEdit(histo)}>Modifier</a> <br />
+                                                                                <a onClick={() => handleEditRes(histo.id_locations)}>ModifRes</a>
+                                                                            </>
+                                                                        )}
+                                                                    </li>
+                                                                    {editingId === histo.id_locations && (
+                                                                        <li>
+                                                                            <a onClick={() => setEditingId(null)}>Annuler</a>
+                                                                        </li>
+                                                                    )}
+                                                                </ul>
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    ):(
+                                        <>
+                                            {Histo.map((histo, index) => (
+                                                <tr key={index}>
+                                                    <td><strong className='id-col'>{histo.id_locations}</strong></td>
+                                                    <td>{histo.client_name}</td>
+                                                    <td>{editingId === histo.id_locations ? (selectedVehicule.marque || histo.marque) : histo.marque}</td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <select value={editedData.vehicule_id} onChange={handleVehiculeChange}>
+                                                                <option value="" className="editData">{histo.matricule}</option>
+                                                                {vehicules.map(vehicule => (
+                                                                    <option key={vehicule.id} value={vehicule.id}>{vehicule.matricule}</option>
+                                                                ))}
+                                                            </select>
+                                                        ) : (
+                                                            histo.matricule
+                                                        )}
+                                                    </td>
+                                                    <td>{editingId === histo.id_locations ? (selectedVehicule.prix || histo.prix) : histo.prix}</td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <input
+                                                                type="date" className="editData"
+                                                                value={editedData.DateDebut}
+                                                                onChange={e => setEditedData(prevData => ({
+                                                                    ...prevData,
+                                                                    DateDebut: e.target.value,
+                                                                    PriceTotal: calculateTotalPrice(e.target.value, editedData.DateFin, selectedVehicule.prix)
+                                                                }))}
+                                                            />
+                                                        ) : (
+                                                            histo.DateDebut
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <input
+                                                                type="date" className="editData"
+                                                                value={editedData.DateFin}
+                                                                onChange={e => setEditedData(prevData => ({
+                                                                    ...prevData,
+                                                                    DateFin: e.target.value,
+                                                                    PriceTotal: calculateTotalPrice(editedData.DateDebut, e.target.value, selectedVehicule.prix)
+                                                                }))}
+                                                            />
+                                                        ) : (
+                                                            histo.DateFin
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {editingId === histo.id_locations ? (
+                                                            <select value={editedData.statut} onChange={handleStatutChange} className="editData">
+                                                                <option value="pending">En attente</option>
+                                                                <option value="confirmed">Confirmée</option>
+                                                                <option value="uncofirmed">Annulée</option>
+                                                            </select>
+                                                        ) : (
+                                                            histo.statut
+                                                        )}
+                                                    </td>
+                                                    <td>{editingId === histo.id_locations ? editedData.PriceTotal : histo.PriceTotal}</td>
+                                                    <td>
+                                                        <BsThreeDots
+                                                            className={`three ${isActive === index ? 'active' : ''}`}
+                                                            onClick={() => handleMenu(index)}
+                                                        />
+                                                        {isActive === index && (
+                                                            <div className='menu'>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a onClick={() => suppr(histo.id_locations)}>Supprimer</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        {editingId === histo.id_locations ? (
+                                                                            <a onClick={() => handleSave(histo.id_locations)}>Sauvegarder</a>
+                                                                        ) : (
+                                                                            <>
+                                                                                <a onClick={() => handleEdit(histo)}>Modifier</a> <br />
+                                                                                <a onClick={() => handleEditRes(histo.id_locations)}>ModifRes</a>
+                                                                            </>
+                                                                        )}
+                                                                    </li>
+                                                                    {editingId === histo.id_locations && (
+                                                                        <li>
+                                                                            <a onClick={() => setEditingId(null)}>Annuler</a>
+                                                                        </li>
+                                                                    )}
+                                                                </ul>
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    )
+                                }
                             </tbody>
 
                         </table>
