@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './Historique.scss';
 import { BsThreeDots } from "react-icons/bs";
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../axiosConfig';
 import Loader from '../Page/loader/Loader';
 
-function Historique() {
+function Historique({searchTerm}) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [Histo, setHisto] = useState([]);
@@ -148,6 +148,9 @@ function Historique() {
     const handleEditRes = (id) => {
         navigate(`/Home/modifres/${id}`);
     }
+    const filteredHisto = useMemo(()=>{
+        return Histo.filter(val=>(val.marque + ' '+val.description+' '+val.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+      },[searchTerm,Histo])
     if(loader){
     return (
         <Loader />
@@ -179,7 +182,7 @@ function Historique() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Histo.map((histo, index) => (
+                                {filteredHisto.map((histo, index) => (
                                     <tr key={index}>
                                         <td><strong className='id-col'>{histo.id_locations}</strong></td>
                                         <td>{histo.client_name}</td>

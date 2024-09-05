@@ -16,7 +16,7 @@ import i18next from 'i18next';
 
 
 
-const Header = ({ activepage, onChange,searchTerm }) => {
+const Header = ({ activepage, onChange, searchTerm }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -202,18 +202,18 @@ const Header = ({ activepage, onChange,searchTerm }) => {
                     </div>
                 </div>
                 <div className="language">
-                    <div className="iclan" onClick={()=>handleClick(1)}>
-                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`}/>
+                    <div className="iclan" onClick={() => handleClick(1)}>
+                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`} />
                         <p className='pchang'>{t('EN')}</p>
                     </div>
                     <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
-                        <li><button className='flag-icon flag-icon-fr' 
-                        onClick={()=>{handleLanguageChange('fr')}}
-                        title='Français'>
+                        <li><button className='flag-icon flag-icon-fr'
+                            onClick={() => handleLanguageChange('fr')}
+                            title='Français'>
                         </button></li>
-                        <li><button className='flag-icon flag-icon-gb' 
-                        onClick={()=>handleLanguageChange('en')} 
-                        title='English'>
+                        <li><button className='flag-icon flag-icon-gb'
+                            onClick={() => handleLanguageChange('en')}
+                            title='English'>
                         </button></li>
                     </ul>
                 </div>
