@@ -24,7 +24,6 @@ const ListCar = ({ ResultSearch }) => {
   const [ViewCar, setViewCar] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
   const [loader, setloader] = useState(true);
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -45,7 +44,6 @@ const ListCar = ({ ResultSearch }) => {
     setloader(true);
     try {
       const vehicl = await ApiService.get('/ViewCar');
-      console.log(vehicl.data.vehicules);
       setViewCar(vehicl.data.vehicules);
 
     } catch (error) {
