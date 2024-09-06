@@ -38,28 +38,26 @@ const Home = () => {
     const [activePage, setActivePage] = useState('Dashboard');
     const [searchTerm, setSearchTerm] = useState("");
     const accesstoken = localStorage.getItem('accessToken');
+    const [ResultSearch,setResultSearch]= useState([]);
     console.log(accesstoken)
-    const handleChange=(event)=>{
-        setSearchTerm(event.target.value);
-    }
     return (
         <div>
             <div className='content-fluid'>
                 <div className='head_content'>
                     <SideBar setActivePage={setActivePage}  />
-                    <Header  activepage={activePage} searchTerm={searchTerm} onChange={handleChange}/>
+                    <Header  setResultSearch={setResultSearch} setSearchTerm={setSearchTerm} activepage={activePage} searchTerm={searchTerm}/>
                     <Theme/>
                 </div>
                 <div className="content">
                     
                     { <Routes>
                         <Route path='/dashboard' element={<Dashboard />} />
-                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
+                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm} ResultSearch={ResultSearch}/>} />
                         <Route path='/addcar' element={<Addcar />} />
                         <Route path='/Profile' element={<Profil />} />
-                        <Route path='/listUser' element={<AllUser searchTerm={searchTerm}/>} />
+                        <Route path='/listUser' element={<AllUser searchTerm={searchTerm} ResultSearch={ResultSearch}/>} />
                         <Route path="/AjoutUser" element={<AddUser />} />
-                        <Route path="/ListClients" element={<ListClients/>} />
+                        <Route path="/ListClients" element={<ListClients  searchTerm={searchTerm}/>} />
                         <Route path='/usersDelete' element={<UsersDelete/>}/>
 
                         <Route path="/detail/:id" element={<DeatilCar/>} />
@@ -71,14 +69,14 @@ const Home = () => {
                       
                         <Route path='/' element={<Dashboard/>}/>
                         <Route path='/search' element={<Recherche/>}/>
-                        <Route path="/listcar" element={<ListCar/>} />
-                        <Route path="/ArchiveCar" element={<ArchiveCar/>}/>
+                        <Route path="/listcar" element={<ListCar searchTerm={searchTerm}/>} />
+                        <Route path="/ArchiveCar" element={<ArchiveCar searchTerm={searchTerm}/>}/>
                         <Route path='/addcar' element={<Addcar/>}/>
                         <Route path="/detail" element={<DeatilCar/>} />
                         <Route path="/reservation" element={<Reservation/>} />
                         <Route path='/Profile' element={<Profil/>}/>
                         <Route path='/listUser' element={<AllUser/>}/>
-                        <Route path='/Historique' element={<Historique searchTerm={searchTerm}/>}/>
+                        <Route path='/Historique' element={<Historique searchTerm={searchTerm} ResultSearch={ResultSearch}/>}/>
                         <Route path='/EditUser/:id' element={<EditUser/>}/>
 
                         

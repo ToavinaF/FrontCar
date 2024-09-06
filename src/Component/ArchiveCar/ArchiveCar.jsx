@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import './ArchiveCar.scss'
 import { MdDeleteForever, MdOutlineDelete, MdRestorePage, MdSettingsBackupRestore } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -7,7 +7,7 @@ import axios from 'axios';
 import ApiService from '../../axiosConfig';
 import Loader from '../Page/loader/Loader';
 
-const ArchiveCar = () => {
+const ArchiveCar = ({searchTerm}) => {
   const [viewArchive, setViewArchive] = useState([]);
   const [loader, setloader] = useState(true);
 
@@ -50,7 +50,7 @@ const ArchiveCar = () => {
 
   const fechAllData = async()=>{
     setloader(true);
-    ApiService.get('/userDelete')
+    await ApiService.get('/userDelete')
     .then((response) => {
       setDeletedEntities(response.data);
     })
@@ -97,6 +97,15 @@ const ArchiveCar = () => {
       toast.error("Erreur lors de la restauration!");
     }
   };
+  const filteredCar = useMemo(()=>{
+    return viewArchive.filter(val=>(val.marque + ' '+val.description+' '+val.matricule).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,viewArchive])
+  const filteredUser = useMemo(()=>{
+    return deletedEntities.users.filter(val=>(val.name + ' '+val.email+' '+val.deleted_by_user.name).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,deletedEntities])
+  const filteredClient = useMemo(()=>{
+    return deletedEntities.clients.filter(val=>(val.name + ' '+val.email+' '+val.deleted_by_client.name).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,deletedEntities])
 
   // end users and clients deleted
   if(loader){
@@ -131,7 +140,7 @@ const ArchiveCar = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {deletedEntities.clients.map((client) => (
+                  {filteredClient.clients.map((client) => (
                     <tr key={`client-${client.id}`}>
                       <td>{client.id}</td>
                       <td>{client.name}</td>
@@ -157,7 +166,7 @@ const ArchiveCar = () => {
                       </td>
                     </tr>
                   ))}
-                  {deletedEntities.users.map((user) => (
+                  {filteredUser.users.map((user) => (
                     <tr key={`user-${user.id}`}>
                       <td>{user.id}</td>
                       <td>{user.name}</td>
@@ -195,7 +204,7 @@ const ArchiveCar = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {viewArchive.map((archive, i) => (
+                  {filteredCar.map((archive, i) => (
                     <tr key={i}>
                       <td>{archive.marque}</td>
                       <td>{archive.matricule}</td>
