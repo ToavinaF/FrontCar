@@ -40,7 +40,6 @@ const Map = () => {
     try {
       const response = await ApiService.get('viewMap');
       setViewMap(response.data);
-      console.log('voiture:', response.data);
       setFilteredReservations(response.data); // Affiche les emplacements par défaut
     } catch (error) {
       console.error('Error fetching maps:', error);
@@ -49,8 +48,7 @@ const Map = () => {
 
   const fetchMaps = async () => {
     try {
-      // const response = await ApiCall(`${API_URL}/reservations`, 'GET');
-      const response = await ApiService.get('/reservations')
+      const response = await ApiService.get('/reservations');
       setMaps(response.data);
       if (response.data.length > 0) {
         setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);
@@ -59,6 +57,7 @@ const Map = () => {
       console.error('Error fetching maps:', error);
     }
   };
+
   const handleMapInteractions = (map) => {
     const popup = L.popup();
 
@@ -106,7 +105,6 @@ const Map = () => {
   useEffect(() => {
     const filtered = ViewMap.filter((item) =>
       item.marque.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      
       item.matricule.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredReservations(filtered);
@@ -117,8 +115,8 @@ const Map = () => {
       );
       setCenter(bounds.getCenter());
     } else {
-      // Si aucune recherche, réinitialiser à tous les emplacements
-      setFilteredReservations(ViewMap);
+      // Réinitialiser à tous les emplacements si la recherche est vide
+      setFilteredReservations([]);
     }
   }, [searchQuery, ViewMap]);
 
@@ -149,31 +147,35 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <MarkerClusterGroup>
-          {filteredReservations.map((item) => {
-            const { map_lieu, map_latitude, map_longitude, name, firstname, marque, model, matricule } = item;
-            if (map_latitude && map_longitude) {
-              return (
-                <Marker key={item.id} position={[map_latitude, map_longitude]}>
-                  <Popup>
-                    <div>
-                      <strong>Client: {name} {firstname}</strong><br />
-                      <strong>Véhicule: {marque} {model}</strong><br />
-                      <strong>Matricule: {matricule}</strong><br/>
-                      Lieu: {map_lieu}<br />
-                      Latitude: {map_latitude}<br />
-                      Longitude: {map_longitude}
-                      {item.photo && (
-                        <div>
-                          <img src={`${API_URL}/viewimage/${item.photo}`} alt="Client" style={{ width: '100px', height: 'auto' }} />
-                        </div>
-                      )}
-                    </div>
-                  </Popup>
-                </Marker>
-              );
-            }
-            return null;
-          })}
+          {filteredReservations.length > 0 ? (
+            filteredReservations.map((item) => {
+              const { map_lieu, map_latitude, map_longitude, name, firstname, marque, model, matricule } = item;
+              if (map_latitude && map_longitude) {
+                return (
+                  <Marker key={item.id} position={[map_latitude, map_longitude]}>
+                    <Popup>
+                      <div>
+                        <strong>Client: {name} {firstname}</strong><br />
+                        <strong>Véhicule: {marque} {model}</strong><br />
+                        <strong>Matricule: {matricule}</strong><br/>
+                        Lieu: {map_lieu}<br />
+                        Latitude: {map_latitude}<br />
+                        Longitude: {map_longitude}
+                        {item.photo && (
+                          <div>
+                            <img src={`${API_URL}/viewimage/${item.photo}`} alt="Client" style={{ width: '100px', height: 'auto' }} />
+                          </div>
+                        )}
+                      </div>
+                    </Popup>
+                  </Marker>
+                );
+              }
+              return null;
+            })
+          ) : (
+            <p>Aucun résultat trouvé</p>
+          )}
         </MarkerClusterGroup>
         <MapCenter />
       </MapContainer>
