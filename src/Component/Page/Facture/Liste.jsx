@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-
 const Liste = () => {
     const { id } = useParams(); // Récupérer l'ID du client depuis les paramètres d'URL
     const [factures, setFactures] = useState([]);
@@ -11,25 +10,22 @@ const Liste = () => {
 
     useEffect(() => {
         const fetchFactures = async () => {
-           
             setError(null);
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/api/factures/client/${id}`);
                 setFactures(response.data.factures);
             } catch (error) {
-                console.error('Erreur lors du chargement des factures :', error);
                 setError("Erreur lors du chargement des factures.");
-            } 
+            } finally {
+                setLoading(false); // Assurez-vous de mettre à jour l'état de chargement
+            }
         };
 
         fetchFactures();
     }, [id]); // Recharger les données lorsque l'ID du client change
 
-   
-
-    if (error) {
-        return <div>{error}</div>;
-    }
+    if (loading) return <div>Chargement...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className='content-user'>
@@ -51,7 +47,10 @@ const Liste = () => {
                                 <td>{facture.client_name}</td>
                                 <td>{facture.total_price}</td>
                                 <td>
-                                    <NavLink to={`/Home/facturer/${id}`} className='nav_item'>
+                                    <NavLink 
+                                        to={`/Home/facturer/${facture.id}`} 
+                                        state={{ selectedReservations: facture.reservations }}
+                                        className='nav_item'>
                                         Voir les détails
                                     </NavLink>
                                 </td>

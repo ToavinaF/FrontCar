@@ -16,7 +16,7 @@ import i18next from 'i18next';
 
 
 
-const Header = ({ activepage, setActivePage }) => {
+const Header = ({ activepage,setSearchTerm,searchTerm,setResultSearch }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -24,7 +24,8 @@ const Header = ({ activepage, setActivePage }) => {
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const [activelang, setactivelang] = useState('EN');
+    const [Activelang, setActivelang] = useState('EN');
+    const path = window.location.pathname;
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -47,21 +48,33 @@ const Header = ({ activepage, setActivePage }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (Recherche.Keyword.trim() === '') {
-                navigate('/Home')
-                return;
+                setResultSearch(null);
+                if(path == '/Home/search'){
+                    navigate('/Home');
+                    return;
+                }
             }
             try {
                 const response = await ApiService.post(`/recherche`, Recherche);
-                navigate(`/Home/search?keyword=${Recherche.Keyword}`,
-                    {
-                        state:
-                        {
-                            results: response.data.result,
-                            results1: response.data.result1,
-                            results2: response.data.result2,
-                            results3: response.data.result3
-                        }
-                    });
+                if(path === '/Home'){
+                    navigate(`/Home/search`,
+                        {state:
+                            {
+                                results: response.data.result,
+                                results1: response.data.result1,
+                                results2: response.data.result2,
+                                results3: response.data.result3
+                            }
+                        });
+                }else if(path === '/Home/listcar'){
+                    setResultSearch(response.data.result);
+                }else if(path === '/Home/Historique'){
+                    setResultSearch(response.data.result1);
+                }else if(path === '/Home/listUser'){
+                    setResultSearch(response.data.result2);
+                }else if(path === '/Home/ListClients'){
+                    setResultSearch(response.data.result3);
+                }
             } catch (error) {
                 console.log('Vérifiez le code', error);
             }
@@ -69,10 +82,17 @@ const Header = ({ activepage, setActivePage }) => {
         fetchData();
     }, [Recherche]);
 
-    const handleSearch = (e) => {
+    // const handleSearch = (e) => {
+    //     SetRecherche((prevRecherche) => ({
+    //         ...prevRecherche,
+    //         [e.target.name]: e.target.value
+    //     }));
+    // };
+    const handleChange = (event) => {
+        setSearchTerm(event.target.value);
         SetRecherche((prevRecherche) => ({
             ...prevRecherche,
-            [e.target.name]: e.target.value
+            [event.target.name]: event.target.value
         }));
     };
 
@@ -139,7 +159,8 @@ const Header = ({ activepage, setActivePage }) => {
                         <input
                             type='text'
                             placeholder="Search here..."
-                            onChange={handleSearch}
+                            onChange={handleChange}
+                            value={searchTerm}
                             name="Keyword"
                         />
                     </div>
@@ -201,18 +222,18 @@ const Header = ({ activepage, setActivePage }) => {
                     </div>
                 </div>
                 <div className="language">
-                    <div className="iclan" onClick={()=>handleClick(1)}>
-                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`}/>
+                    <div className="iclan" onClick={() => handleClick(1)}>
+                        <GrLanguage className={`lgchange ${Active === 1 ? 'active' : ''}`} />
                         <p className='pchang'>{t('EN')}</p>
                     </div>
                     <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
-                        <li><button className='flag-icon flag-icon-fr' 
-                        onClick={()=>handleLanguageChange('fr')} 
-                        title='Français'>
+                        <li><button className='flag-icon flag-icon-fr'
+                            onClick={() => handleLanguageChange('fr')}
+                            title='Français'>
                         </button></li>
-                        <li><button className='flag-icon flag-icon-gb' 
-                        onClick={()=>handleLanguageChange('en')} 
-                        title='English'>
+                        <li><button className='flag-icon flag-icon-gb'
+                            onClick={() => handleLanguageChange('en')}
+                            title='English'>
                         </button></li>
                     </ul>
                 </div>

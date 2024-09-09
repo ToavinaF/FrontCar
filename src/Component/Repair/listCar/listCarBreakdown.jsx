@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './listCar.scss';
 import { FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from "react-icons/bs";
@@ -15,7 +15,7 @@ import { API_URL } from '../../../apiConfig';
 import { Typography } from '@mui/material';
 import Loader from '../../Page/loader/Loader';
 
-const ListCarBreakdown = ({type}) => {
+const ListCarBreakdown = ({type,searchTerm}) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -53,11 +53,11 @@ const ListCarBreakdown = ({type}) => {
         setMaintenances(vehicl.data)
         setViewCar(vehicl.data.vehicules.filter(val=>val.etat==0));
       }
-      console.log(vehicl.data.vehicules);
+      //console.log(vehicl.data.vehicules);
       
 
     } catch (error) {
-      console.error('Erreur lors de l\'appel API:', error.response || error.message || error);
+      console.error('Erreur lors de l\'appel API:', error?.response || error?.message || error);
     }
     setloader(false);
   };
@@ -109,6 +109,12 @@ const ListCarBreakdown = ({type}) => {
   const handGalerie = async (id) => {
     navigate('/Home/galerie/' + id);
   }
+  const filteredCar = useMemo(()=>{
+    return ViewCar.filter(val=>(val.marque + ' '+val.description+' '+val.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,ViewCar])
+  const filteredMain = useMemo(()=>{
+    return maintenances.filter(val=>(val.label+' '+val.vehicules.marque + ' '+val.vehicules.description+' '+val.vehicules.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,maintenances])
 
   if(loader){
     return (
@@ -123,14 +129,14 @@ const ListCarBreakdown = ({type}) => {
           <p onClick={handleClick} >{message}</p>
         </div>
         }
-        {ViewCar.length<=0 && maintenances.length<=0 ?(
+        {filteredCar.length<=0 && maintenances.length<=0 ?(
         <Typography variant="h6" component="div">
           {t("No broken down car.")}
         </Typography>):null
         }
         {
           type==0?
-          ViewCar.map((list, i) => {
+          filteredCar.map((list, i) => {
                 return (
                   <div key={i} className="ListBlock">
                     <div className='barNav'>
@@ -177,7 +183,7 @@ const ListCarBreakdown = ({type}) => {
                 )
               })
               :
-              maintenances.map((list, i) => {
+              filteredMain.map((list, i) => {
                 return (
                   <div key={i} className="ListBlock">
                     <div className='barNav'>

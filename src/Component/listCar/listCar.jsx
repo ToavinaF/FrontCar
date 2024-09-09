@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './listCar.scss';
 import { FaUser } from 'react-icons/fa';
 import { BsFillSuitcase2Fill } from "react-icons/bs";
@@ -16,7 +16,7 @@ import { Skeleton } from 'antd';
 import { Box, CircularProgress } from '@mui/material';
 import Loader from '../Page/loader/Loader';
 
-const ListCar = () => {
+const ListCar = ({searchTerm}) => {
   const location = useLocation();
   const [message, setMessage] = useState(null);
   const { t } = useTranslation();
@@ -24,7 +24,6 @@ const ListCar = () => {
   const [ViewCar, setViewCar] = useState([]);
   const [ShowMenu, setShowMenu] = useState(null)
   const [loader, setloader] = useState(true);
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -45,7 +44,7 @@ const ListCar = () => {
     setloader(true);
     try {
       const vehicl = await ApiService.get('/ViewCar');
-      console.log(vehicl.data.vehicules);
+      // console.log(vehicl.data.vehicules);git 
       setViewCar(vehicl.data.vehicules);
 
     } catch (error) {
@@ -101,23 +100,26 @@ const ListCar = () => {
   const handGalerie = async (id) => {
     navigate('/Home/galerie/' + id);
   }
+  const filteredCar = useMemo(()=>{
+    return ViewCar.filter(val=>(val.marque + ' '+val.description+' '+val.matricule+' ').toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+  },[searchTerm,ViewCar])
 
-if(loader){
-  return (
-    <Loader />
-  )
-}
-else
-  return (
-    <>
-      <div className="contenaire">
-        {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
-          <p onClick={handleClick} >{message}</p>
-        </div>
-        }
+  if (loader) {
+    return (
+      <Loader />
+    )
+  }
+  else
+    return (
+      <>
+        <div className="contenaire">
+          {message && <div className={`Error ${count === 0 ? 'active' : ''}`} onClick={handleClick}  >
+            <p onClick={handleClick} >{message}</p>
+          </div>
+          }
 
         {
-          ViewCar.map((list, i) => {
+          filteredCar.map((list, i) => {
             return (
               <div key={i} className="ListBlock">
                 <div className='barNav'>
@@ -164,9 +166,9 @@ else
             )
           })
         }
-      </div>
-    </>
-  );
+        </div>
+      </>
+    );
 }
 
 export default ListCar;

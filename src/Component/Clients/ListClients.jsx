@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './ListClients.scss';
 import { FaRegTrashAlt } from "react-icons/fa";
 import axios from 'axios';
@@ -10,14 +10,14 @@ import { ApiCall } from '../../ApiCall';
 import ApiService from '../../axiosConfig';
 import Loader from '../Page/loader/Loader';
 
-const ListClients = () => {
+const ListClients = ({searchTerm}) => {
   const [clients, setClients] = useState([]);
   const [reservationCounts, setReservationCounts] = useState({});
   const [loader, setloader] = useState(true);
 
-  const fetchData=async()=>{
+  const fetchData = async () => {
     setloader(true);
-      await ApiService.get('/clients')
+    await ApiService.get('/clients')
       .then(response => setClients(response.data))
       .catch(error => console.error('Error fetching clients:', error));
 
@@ -31,12 +31,12 @@ const ListClients = () => {
         setReservationCounts(counts);
       })
       .catch(error => console.error('Error fetching reservation counts:', error));
-      setloader(false);
+    setloader(false);
   }
   useEffect(() => {
     // Fetch clients data
     fetchData();
-    
+
   }, []);
   const handleDeleteClick = async (id) => {
     const userId = localStorage.getItem('id');
@@ -45,19 +45,22 @@ const ListClients = () => {
       return;
     }
 
-          await ApiService.delete(`/clients/${id}`);
+    await ApiService.delete(`/clients/${id}`);
 
-        setClients(clients.filter(client => client.id !== id));
-        toast.success("Delete client success");
-        
+    setClients(clients.filter(client => client.id !== id));
+    toast.success("Delete client success");
+
 
 };
+const filteredClient = useMemo(()=>{
+  return clients.filter(val=>(val.name + ' '+val.email+' '+val.contact+' '+val.adresse).toLocaleLowerCase().match(searchTerm.toLocaleLowerCase()))
+},[searchTerm,clients])
 
 
-if(loader){
-  return (
+  if (loader) {
+    return (
       <Loader />
-  )
+    )
   }
   else
   return (
@@ -76,7 +79,7 @@ if(loader){
             </tr>
           </thead>
           <tbody>
-            {clients.map(client => (
+            {filteredClient.map(client => (
               <tr key={client.id}>
                 <td>{client.name} {client.firstname}</td>
                 <td>{client.email}</td>
