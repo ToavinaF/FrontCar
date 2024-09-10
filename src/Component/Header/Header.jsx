@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './Header.scss';
 import axios from 'axios';
 import { FaCommentDots, FaRegUser } from "react-icons/fa";
 import { IoIosNotifications, IoIosSearch } from "react-icons/io";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { CiLogout } from 'react-icons/ci';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Await, Link, NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { GrLanguage } from "react-icons/gr";
 import ApiService from '../../axiosConfig';
@@ -16,7 +16,7 @@ import i18next from 'i18next';
 
 
 
-const Header = ({ activepage,setSearchTerm,searchTerm,setResultSearch }) => {
+const Header = ({ activepage, setSearchTerm, searchTerm, setResultSearch,setloader }) => {
     const [Active, setActive] = useState(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -26,6 +26,7 @@ const Header = ({ activepage,setSearchTerm,searchTerm,setResultSearch }) => {
     const id = localStorage.getItem('id');
     const [Activelang, setActivelang] = useState('EN');
     const path = window.location.pathname;
+    // console.log(path);
 
     const handleClick = (index) => {
         setActive(Active === index ? null : index);
@@ -44,50 +45,61 @@ const Header = ({ activepage,setSearchTerm,searchTerm,setResultSearch }) => {
         }
 
     };
-    const [Recherche, SetRecherche] = useState({ Keyword: '' });
-    useEffect(() => {
-        const fetchData = async () => {
-            if (Recherche.Keyword.trim() === '') {
-                setResultSearch(null);
-                if(path == '/Home/search'){
-                    navigate('/Home');
-                    return;
-                }
-            }
-            try {
-                const response = await ApiService.post(`/recherche`, Recherche);
-                if(path === '/Home'){
-                    navigate(`/Home/search`,
-                        {state:
-                            {
-                                results: response.data.result,
-                                results1: response.data.result1,
-                                results2: response.data.result2,
-                                results3: response.data.result3
-                            }
-                        });
-                }else if(path === '/Home/listcar'){
-                    setResultSearch(response.data.result);
-                }else if(path === '/Home/Historique'){
-                    setResultSearch(response.data.result1);
-                }else if(path === '/Home/listUser'){
-                    setResultSearch(response.data.result2);
-                }else if(path === '/Home/ListClients'){
-                    setResultSearch(response.data.result3);
-                }
-            } catch (error) {
-                console.log('Vérifiez le code', error);
-            }
-        };
-        fetchData();
-    }, [Recherche]);
 
-    // const handleSearch = (e) => {
-    //     SetRecherche((prevRecherche) => ({
-    //         ...prevRecherche,
-    //         [e.target.name]: e.target.value
-    //     }));
-    // };
+    // recherche start
+    
+    const [Recherche, SetRecherche] = useState({ Keyword: '' });
+    const [timeoutId, SetTimeoutId] = useState(null);
+    useEffect(() => {
+        if(timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        if(Recherche.Keyword.trim() === ''){
+            setloader(false);
+            setResultSearch(null);
+            if (path === '/Home/search') {
+                navigate('/Home');
+            }
+            return
+        }else{
+            setloader(true);
+            const newtimeout = setTimeout(()=>{
+                fetchData();
+            },2000);
+            SetTimeoutId(newtimeout);
+        }
+        return ()=>clearTimeout(timeoutId);
+    }, [Recherche, path]);
+    
+    const fetchData = async () => {
+        try {
+            const response = await ApiService.post(`/recherche`, Recherche);
+            if (path === '/Home') {
+                navigate(`/Home/search`, {
+                    state: {
+                        results: response.data.result,
+                        results1: response.data.result1,
+                        results2: response.data.result2,
+                        results3: response.data.result3
+                    }
+                });
+            } else if (path === '/Home/listcar') {
+                setResultSearch(response.data.result);
+            } else if (path === '/Home/Historique') {
+                setResultSearch(response.data.result1);
+            } else if (path === '/Home/listUser') {
+                setResultSearch(response.data.result2);
+            } else if (path === '/Home/ListClients') {
+                setResultSearch(response.data.result3);
+            }
+        } catch (error) {
+            console.error('Vérifiez le code', error);
+        } finally {
+            setloader(false);
+        }
+    };
+    
+    
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
         SetRecherche((prevRecherche) => ({
@@ -95,6 +107,9 @@ const Header = ({ activepage,setSearchTerm,searchTerm,setResultSearch }) => {
             [event.target.name]: event.target.value
         }));
     };
+
+
+    // Recherche End
 
     // notification par nouvelle reservation
     const [notifications, setNotifications] = useState([]);

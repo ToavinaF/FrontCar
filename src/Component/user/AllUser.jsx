@@ -8,6 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { API_URL, BASE_URL } from '../../apiConfig';
 import ApiService from '../../axiosConfig';
+import Loader from '../Page/loader/Loader';
 
 const AllUser = ({ searchTerm, ResultSearch }) => {
     const { t } = useTranslation();
@@ -56,6 +57,7 @@ const AllUser = ({ searchTerm, ResultSearch }) => {
     const handleEditClick = (id) => {
         navigate('/Home/editUser/' + id);
     };
+
 
     return (
         <div className="user-list">
