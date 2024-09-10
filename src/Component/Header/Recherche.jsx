@@ -14,8 +14,9 @@ import { RxAvatar } from "react-icons/rx";
 import { CiMail, CiPhone } from "react-icons/ci";
 import { BsHandbag } from "react-icons/bs";
 import { LiaUserEditSolid } from "react-icons/lia";
+import Loader from '../Page/loader/Loader';
 
-const Recherche = () => {
+const Recherche = ({loader}) => {
     const location = useLocation();
     const { results, results1, results2, results3 } = location.state || { results: [], results1: [], results2: [], results3: [] };
     const Navigate = useNavigate();
@@ -25,6 +26,13 @@ const Recherche = () => {
     const editUser = (id) => {
         Navigate('/Home/editUser/' + id);
     }
+
+    if (loader) {
+        return (
+          <Loader />
+        )
+      }
+    else
     return (
         <>
             <div className="search-result">
@@ -33,7 +41,7 @@ const Recherche = () => {
                         results.map((car) => (
                             <div className="search_voiture" key={car.id}>
                                 <div className="image-vehi">
-                                    <img src={`${BASE_URL}/storage/GalerieVehicule/${car.photo}`} alt="" />
+                                    <img src={`${API_URL}/viewimage/${car.photo}`} alt="" />
                                 </div>
                                 <div className="desc-vehi">
                                     <div className="title">
