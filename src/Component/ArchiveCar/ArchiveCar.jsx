@@ -140,7 +140,7 @@ const ArchiveCar = ({searchTerm}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredClient.clients.map((client) => (
+                  {filteredClient.map((client) => (
                     <tr key={`client-${client.id}`}>
                       <td>{client.id}</td>
                       <td>{client.name}</td>
@@ -166,7 +166,7 @@ const ArchiveCar = ({searchTerm}) => {
                       </td>
                     </tr>
                   ))}
-                  {filteredUser.users.map((user) => (
+                  {filteredUser.map((user) => (
                     <tr key={`user-${user.id}`}>
                       <td>{user.id}</td>
                       <td>{user.name}</td>

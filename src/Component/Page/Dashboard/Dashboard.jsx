@@ -16,7 +16,6 @@ const Dashboard = () => {
 
     const [Vehicule, SetVehicule] = useState([]);
     const [User, SetUser] = useState([]);
-    console.log(Vehicule);
     useEffect(() => {
         fetchData();
     }, [])
@@ -26,7 +25,6 @@ const Dashboard = () => {
         SetVehicule(vehicul.data.vehicules);
         const UserAll = await ApiService.get('/users')
         SetUser(UserAll.data);
-        console.log(UserAll.data);
       } catch (error) {
         console.log("verifier le code");
       }

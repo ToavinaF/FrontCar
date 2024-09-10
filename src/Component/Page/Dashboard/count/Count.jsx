@@ -19,7 +19,7 @@ const Count = () => {
             SetCountVehi(usercount.data.vehi);
             SetReser(usercount.data.res);
             SetCounterCli(usercount.data.cli);
-            console.log(usercount);
+            // console.log(usercount);
         } catch (error) {
             console.log("verifier le code");
         }
