@@ -31,6 +31,7 @@ const Map = () => {
   const [ViewMap, setViewMap] = useState([]);
 
   useEffect(() => {
+    fetchMaps();
     mapLocal();
   }, []);
 
@@ -40,6 +41,18 @@ const Map = () => {
       const response = await ApiService.get('viewMap');
       setViewMap(response.data);
       setFilteredReservations(response.data); // Affiche les emplacements par défaut
+    } catch (error) {
+      console.error('Error fetching maps:', error);
+    }
+  };
+
+  const fetchMaps = async () => {
+    try {
+      const response = await ApiService.get('/reservations');
+      setMaps(response.data);
+      if (response.data.length > 0) {
+        setCenter([response.data[0].client.map.latitude, response.data[0].client.map.longitude]);
+      }
     } catch (error) {
       console.error('Error fetching maps:', error);
     }

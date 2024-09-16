@@ -90,7 +90,7 @@ const Client = () => {
     };
 
     const handleRemoveReservation = (reservation) => {
-        setSelectedReservations(prevSelected => 
+        setSelectedReservations(prevSelected =>
             prevSelected.filter(selected => selected.id_locations !== reservation.id_locations)
         );
         toast.info(`Réservation de ${reservation.marque} retirée de la facture !`);
@@ -186,7 +186,7 @@ const Client = () => {
                 )}
                 {client && selectedReservations.length === 0 && (
                     <div className='factur'>
-                        <button className='factures' onClick={handleNavigateToListeFactures}>Afficher tous les listes des factures</button>
+                        <button className='factures' onClick={handleNavigateToListeFactures}>listes des factures</button>
                     </div>
                 )}
                 <div className='list'>

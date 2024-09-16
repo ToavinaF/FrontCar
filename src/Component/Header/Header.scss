@@ -14,14 +14,17 @@ header {
     position: fixed;
     right: 0;
     top: 0;
+
     .text_logo {
         width: 25%;
-        margin:0 0 0 2%;
+        margin: 0 0 0 2%;
+
         h1 {
             color: white;
             text-align: center;
             font-size: 30px;
         }
+
         .active {
             display: none;
         }
@@ -96,7 +99,7 @@ header {
                 z-index: 0;
                 cursor: pointer;
 
-                &:hover + .notification-dropdown {
+                &:hover+.notification-dropdown {
                     display: block;
                 }
             }
@@ -147,18 +150,20 @@ header {
                     color: #ccc;
                 }
             }
+
             .notifications-box {
                 position: absolute;
                 top: 175%;
-                right:5%;
+                right: 5%;
                 width: 350px;
-                background:#232226;
+                background: #232226;
                 // border: 1px solid #ffe241;
                 border-radius: 4px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
                 max-height: 300px;
                 overflow-y: auto;
+
                 .notification-item {
                     padding: 10px;
                     border-bottom: 1px solid #ffffff;
@@ -166,16 +171,19 @@ header {
                     flex-direction: row;
                     align-items: center;
                     justify-content: flex-start;
-                    margin:0 10px;
-                    .notif{
+                    margin: 0 10px;
+
+                    .notif {
                         font-size: 2rem;
                         color: rgb(0, 251, 0);
                     }
-                    .notifUser{
+
+                    .notifUser {
                         font-size: 2rem;
                         color: rgb(0, 226, 251);
                     }
-                    .detailNotif{
+
+                    .detailNotif {
                         width: auto;
                         height: 100%;
                         display: flex;
@@ -183,15 +191,18 @@ header {
                         align-items: flex-start;
                         justify-content: center;
                         margin-left: 5%;
-                        h1{
+
+                        h1 {
                             font-size: 1rem;
                             color: white;
                         }
                     }
                 }
+
                 .notification-item:last-child {
                     border-bottom: none;
                 }
+
                 p {
                     margin: 0;
                     font-size: 14px;
@@ -210,19 +221,20 @@ header {
             padding: 0% 2% 0% 3%;
             margin: 0 0 0 4%;
             border-left: 2px solid #828690;
-            
+
             img {
                 width: 40px;
                 height: 40px;
                 border-radius: 10px;
                 margin: 0% 0 0 0;
             }
-            
+
             .cont-prof {
                 width: 100%;
                 height: auto;
                 padding: 0 2% 0 10%;
                 cursor: pointer;
+
                 .nametitle {
                     font-size: 1rem;
                     color: white;
@@ -295,49 +307,67 @@ header {
             }
         }
 
-        .language{
+        .language {
             width: 5%;
             height: auto;
-            padding:1% 0 0 0;
+            padding: 1% 0 0 0;
             margin: 0% 0 0 -4%;
             cursor: pointer;
 
-            .iclan{
+            .iclan {
                 text-align: left;
-                .lgchange{
-                    font-size:20px;
-                    &.active{
+
+                .lgchange {
+                    font-size: 20px;
+
+                    &.active {
                         color: white;
                     }
                 }
-                .pchang{
+
+                .pchang {
                     text-align: left;
                     font-size: .7rem;
-                    margin:0 0 0 2.7px;
+                    margin: 0 0 0 2.7px;
                     color: white;
                 }
             }
 
-            .listlang{
+            .listlang {
                 display: none;
                 width: 100px;
-                height:auto;
-                padding:4px 0 4px 0;
+                height: auto;
+                padding: 0px 0 0px 0;
                 position: absolute;
                 background-color: #828690;
                 right: 3%;
                 text-align: center;
                 border-radius: 10px 0px 10px 10px;
-                &.active{
+                overflow: hidden;
+
+                &.active {
                     display: block;
                 }
 
-                li{
+                li {
                     list-style-type: none;
-                    font-size: 1.2rem;
+                    font-size: 1rem;
+                    text-align: center;
+                    padding: 3px 0 3px 0;
+
+                    button {
+                        all: unset;
+                        color: white;
+                        text-align: center;
+                    }
+
+                    &:hover {
+                        // border-radius: 10px 0px 10px 10px;
+                        background-color: #171a1d;
+                    }
                 }
             }
-            
+
         }
     }
 }

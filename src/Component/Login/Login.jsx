@@ -5,6 +5,7 @@ import { IoCarSport } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../../TokenContext';
 import ApiService from '../../axiosConfig';
+import { Loader } from 'rsuite';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const Login = () => {
         event.preventDefault();
 
         try {
+            setloading(true);
             const response = await ApiService.post(`/login`,{
                 email,
                 password,
@@ -55,8 +57,10 @@ const Login = () => {
                 setError('Something went wrong. Please try again.');
             }
         }
+        setloading(false);
     };
 
+    const [loading, setloading] = useState(false); 
     return (
         <div className='content-login'>
             <div className="cont-log">
@@ -100,11 +104,18 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="inp-lab">
-                        <button type='submit'>Sign Me in</button>
+                        <button type='submit' disabled={loading ? true : false }>
+                            {
+                                loading ? 
+                                <Loader speed="fast" content="Connexion en cours" style={{marginTop:'5px',}}/>
+                                :
+                                'Sign Me in'                            
+                            }
+                        </button>
                     </div>
-                    <div className="signup">
+                    {/* <div className="signup">
                         <p>Don't have an account? <a href="/register">Sign Up</a></p>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

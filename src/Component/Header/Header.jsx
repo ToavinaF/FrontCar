@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import './Header.scss';
 import axios from 'axios';
 import { FaCommentDots, FaRegUser } from "react-icons/fa";
@@ -65,7 +65,7 @@ const Header = ({ activepage, setSearchTerm, searchTerm, setResultSearch,setload
             setloader(true);
             const newtimeout = setTimeout(()=>{
                 fetchData();
-            },2000);
+            },1000);
             SetTimeoutId(newtimeout);
         }
         return ()=>clearTimeout(timeoutId);
@@ -74,7 +74,7 @@ const Header = ({ activepage, setSearchTerm, searchTerm, setResultSearch,setload
     const fetchData = async () => {
         try {
             const response = await ApiService.post(`/recherche`, Recherche);
-            if (path === '/Home') {
+            if (path === '/Home' || path === '/home') {
                 navigate(`/Home/search`, {
                     state: {
                         results: response.data.result,
@@ -242,13 +242,15 @@ const Header = ({ activepage, setSearchTerm, searchTerm, setResultSearch,setload
                         <p className='pchang'>{t('EN')}</p>
                     </div>
                     <ul className={`listlang ${Active === 1 ? 'active' : ''}`}>
-                        <li><button className='flag-icon flag-icon-fr'
+                        <li><button className='flag-icon'
                             onClick={() => handleLanguageChange('fr')}
                             title='Français'>
+                            FR
                         </button></li>
-                        <li><button className='flag-icon flag-icon-gb'
+                        <li><button className='flag-icon'
                             onClick={() => handleLanguageChange('en')}
                             title='English'>
+                            EN
                         </button></li>
                     </ul>
                 </div>
